@@ -4,9 +4,9 @@
       {{ audioName }}
     </div>
     <div class="audio-btn-container">
-      <!-- <img class="play-previous-btn"
+      <img class="play-previous-btn"
            src="./icon-play-previous.png"
-           @click="audioPrevHandler"> -->
+           @click="audioPrevHandler">
       <img class="play-start-btn"
            src="./icon-play-start.png"
            v-if="!audioPlay"
@@ -15,9 +15,9 @@
            src="./icon-play-pause.png"
            v-else
            @click="audioPlayHandler">
-      <!-- <img class="play-next-btn"
+      <img class="play-next-btn"
            src="./icon-play-next.png"
-           @click="audioNextHandler"> -->
+           @click="audioNextHandler">
     </div>
     <div class="audio-progress-container"
          ref="audioProgressContainer">
@@ -36,7 +36,7 @@
       </div>
     </div>
     <audio ref="audio"
-           :src="audioUrl"
+           :src="audioList && audioList[currentAudioIndex]"
            @ended="onEnded"
            @timeupdate="onTimeUpdate"
            @loadedmetadata="onLoadedmetadata">
@@ -50,10 +50,9 @@ export default {
   name: 'AudioPlayer',
   props: {
     // 音频地址
-    audioUrl: {
-      required: true,
-      default: '',
-      type: String
+    audioList: {
+      default: null,
+      type: Array
     },
     // 音频名称
     audioName: {
@@ -63,6 +62,7 @@ export default {
   },
   data() {
     return {
+      currentAudioIndex: 0, // 当前音频索引
       audioPlay: false, // 音频是否正在播放
       audioDuration: '', // 音频持续时间
       audioDurationFormatAfter: '', // 音频持续时间（格式化后）
@@ -74,7 +74,7 @@ export default {
   methods: {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata() {
-      console.dir(this.$refs.audio)
+      console.dir(this.$refs.audio.duration)
       this.audioDuration = this.$refs.audio.duration
       this.initAudioProgressDrag()
     },
@@ -193,9 +193,23 @@ export default {
     },
     // 切换上一首
     audioPrevHandler() {
+      if (this.currentAudioIndex <= 0) {
+        return
+      }
+      this.currentAudioIndex--
+      this.$nextTick(() => {
+        this.play()
+      })
     },
     // 切换下一首
     audioNextHandler() {
+      if (this.currentAudioIndex + 1 >= this.audioList.length) {
+        return
+      }
+      this.currentAudioIndex++
+      this.$nextTick(() => {
+        this.play()
+      })
     }
   }
 }
