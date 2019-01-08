@@ -1,7 +1,7 @@
 <template>
   <div>
     <AudiPlayer audio-url="http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3"
-                audio-name="标题" />
+                audio-name="我是音频名称" />
   </div>
 </template>
 

@@ -57,7 +57,7 @@ export default {
       default: '',
       type: String
     },
-    // 音频名字
+    // 音频名称
     audioName: {
       default: '',
       type: String
