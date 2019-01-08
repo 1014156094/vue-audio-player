@@ -29,10 +29,24 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/strongly-recommended",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "no-debugger": "off",
+      "space-before-function-paren": "off",
+      "vue/html-closing-bracket-newline": "off",
+      "vue/max-attributes-per-line": [
+        2,
+        {
+          "singleline": 1,
+          "multiline": {
+            "max": 1,
+            "allowFirstLine": true
+          }
+        }
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

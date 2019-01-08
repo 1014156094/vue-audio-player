@@ -1,11 +1,12 @@
 <template>
   <section class="audio-conatiner">
-    <div class="audio-name">{{ audioName }}</div>
+    <div class="audio-name">
+      {{ audioName }}
+    </div>
     <div class="audio-btn-container">
-      <!-- openAppAudioDetail -->
-      <img class="play-previous-btn"
+      <!-- <img class="play-previous-btn"
            src="./icon-play-previous.png"
-           @click="audioPrevHandler">
+           @click="audioPrevHandler"> -->
       <img class="play-start-btn"
            src="./icon-play-start.png"
            v-if="!audioPlay"
@@ -14,45 +15,45 @@
            src="./icon-play-pause.png"
            v-else
            @click="audioPlayHandler">
-      <!-- openAppAudioDetail -->
-      <img class="play-next-btn"
+      <!-- <img class="play-next-btn"
            src="./icon-play-next.png"
-           @click="audioNextHandler">
+           @click="audioNextHandler"> -->
     </div>
-    <!-- 滑动进度条 -->
-    <div class="audio-progress-container">
-      <div class="audio-progress" />
+    <div class="audio-progress-container"
+         ref="audioProgressContainer">
+      <div class="audio-progress"
+           ref="audioProgress" />
       <img class="audio-progress-point"
-           src="./icon-play-progress-point.png">
+           src="./icon-play-progress-point.png"
+           ref="audioProgressPoint">
     </div>
     <div class="audio-time-container">
-      <div class="audio-current-time">{{ audioCurrentTimeFormatAfter || '00:00' }}</div>
-      <div class="audio-duration">{{ audioDurationFormatAfter }}</div>
+      <div class="audio-current-time">
+        {{ audioCurrentTimeFormatAfter || '00:00' }}
+      </div>
+      <div class="audio-duration">
+        {{ audioDurationFormatAfter }}
+      </div>
     </div>
-    <!-- 播放器控件 -->
-    <!-- <audio-control id="audioControl"
-                   ref="audioControl"
-                   :url="audioUrl"
-                   @onPlaying="onPlaying"
-                   @onTimeUpdate="onTimeUpdate"
-                   @onEnded="onEnded"
-                   @onCanplay="onCanplay" /> -->
     <audio id="audioControl"
-           preload="metadata"
            ref="audio"
            :src="audioUrl"
            @ended="onEnded"
            @playing="onPlaying"
-           @timeupdate="onTimeUpdate">浏览器太老咯，请升级浏览器吧~</audio>
+           @timeupdate="onTimeUpdate"
+           @loadedmetadata="onLoadedmetadata">
+      浏览器太老咯，请升级浏览器吧~
+    </audio>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'audio-player',
+  name: 'AudioPlayer',
   props: {
     // 音频地址
     audioUrl: {
+      required: true,
       default: '',
       type: String
     },
@@ -62,9 +63,8 @@ export default {
       type: String
     }
   },
-  data () {
+  data() {
     return {
-      audioDOM: '', // 音频DOM
       audioPlay: false, // 音频是否正在播放
       audioDuration: '', // 音频持续时间
       audioDurationFormatAfter: '', // 音频持续时间（格式化后）
@@ -72,66 +72,54 @@ export default {
       audioCurrentTime: '', // 音频播放当时时间
       audioCurrentTimeFormatAfter: '', // 音频播放当时时间（格式化后）
       audioDetail: '', // 音频详情
-      audioControl: null, // 音频控件
       audioDragProgress: false // 是否正在拖拽音频进度
     }
   },
-  created () {
-    // 初始化音频
-    this.$nextTick(() => {
+  methods: {
+    // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
+    onLoadedmetadata() {
       console.dir(this.$refs.audio)
-      console.log(this.$refs.audio.duration)
       this.audioDuration = this.$refs.audio.duration
       this.initAudioProgressDrag()
-    })
-  },
-  methods: {
+    },
     // 正在播放音频中
-    onTimeUpdate (val) {
-      this.progressValue = this.audioControl.currentTime / (this.audioControl.duration / 100)
-      this.audioCurrentTimeFormatAfter = this.formatTime(this.audioControl.currentTime)
+    onTimeUpdate(val) {
+      this.progressValue = this.$refs.audio.currentTime / (this.$refs.audio.duration / 100)
+      this.audioCurrentTimeFormatAfter = this.formatTime(this.$refs.audio.currentTime)
 
       // 正在拖拽进度
       if (this.audioDragProgress) {
         return
       }
-      let audioProgressContainer = document.querySelector('.audio-progress-container')
-      let audioProgress = document.querySelector('.audio-progress')
-      let audioProgressPoint = document.querySelector('.audio-progress-point')
 
       // 设置播放进度条
-      audioProgress.style.width =
-        this.audioControl.currentTime / this.audioControl.duration * audioProgressContainer.offsetWidth + 'px'
+      this.$refs.audioProgress.style.width =
+        this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressContainer.offsetWidth + 'px'
       // 设置播放进度拖拽点
-      audioProgressPoint.style.left =
-        this.audioControl.currentTime /
-        this.audioControl.duration *
-        (audioProgressContainer.offsetWidth - audioProgressPoint.offsetWidth / 2) +
+      this.$refs.audioProgressPoint.style.left =
+        this.$refs.audio.currentTime /
+        this.$refs.audio.duration *
+        (this.$refs.audioProgressContainer.offsetWidth - this.$refs.audioProgressPoint.offsetWidth / 2) +
         'px'
     },
     // 格式化时间
-    formatTime (second) {
+    formatTime(second) {
       return [parseInt((second / 60) % 60), parseInt(second % 60)].join(':').replace(/\b(\d)\b/g, '0$1')
     },
     // 音频播放
-    onPlaying (val) {
+    onPlaying(val) {
       if (this.canAddView) {
         this.addViews()
         this.canAddView = false
       }
-      console.log(' onPlaying')
     },
     // 播放音频完毕执行事件
-    onEnded () {
-      this.audioNextHandler()
+    onEnded() {
+      this.pause()
     },
     // 初始化音频进度的拖拽逻辑
-    initAudioProgressDrag () {
-      let audioProressPoint = document.querySelector('.audio-progress-point')
-      let audioProgress = document.querySelector('.audio-progress')
-      let audioProgressContainer = document.querySelector('.audio-progress-container')
-
-      audioProressPoint.addEventListener(
+    initAudioProgressDrag() {
+      this.$refs.audioProgressPoint.addEventListener(
         'touchstart',
         event => {
           // 设置拖拽中
@@ -139,38 +127,36 @@ export default {
         },
         false
       )
-      audioProressPoint.addEventListener(
+      this.$refs.audioProgressPoint.addEventListener(
         'touchmove',
         event => {
           let touch = event.touches[0]
 
           // 超出范围
           if (
-            touch.pageX < audioProgressContainer.offsetLeft ||
-            touch.pageX > audioProgressContainer.offsetLeft + audioProgressContainer.offsetWidth
+            touch.pageX < this.$refs.audioProgressContainer.offsetLeft ||
+            touch.pageX > this.$refs.audioProgressContainer.offsetLeft + this.$refs.audioProgressContainer.offsetWidth
           ) {
             return
           }
           // 设置点点
-          audioProressPoint.style.left =
-            touch.pageX - audioProressPoint.offsetWidth / 2 - audioProgressContainer.offsetLeft + 'px'
+          this.$refs.audioProgressPoint.style.left =
+            touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 - this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置进度条
-          audioProgress.style.width = touch.pageX - audioProgressContainer.offsetLeft + 'px'
+          this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置当前时间
           this.audioCurrentTime =
-            audioProgress.offsetWidth / audioProgressContainer.offsetWidth * this.audioDuration
+            this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.audioDuration
           // 设置当前时间（格式化后）
           this.audioCurrentTimeFormatAfter = this.formatTime(this.audioCurrentTime)
         },
         false
       )
-      audioProressPoint.addEventListener(
+      this.$refs.audioProgressPoint.addEventListener(
         'touchend',
         event => {
           // 设置播放位置
-          if (this.audioDOM) {
-            this.audioDOM.currentTime = this.audioCurrentTime
-          }
+          this.$refs.audio.currentTime = this.audioCurrentTime
           // 设置未拖拽
           this.audioDragProgress = false
         },
@@ -178,90 +164,45 @@ export default {
       )
 
       this.initAudioProgressClick()
-      console.log('初始化音频进度的拖拽逻辑', this.audioPlay)
     },
     // 初始化音频进度的点击逻辑
-    initAudioProgressClick () {
-      let audioProressPoint = document.querySelector('.audio-progress-point')
-      let audioProgress = document.querySelector('.audio-progress')
-      let audioProgressContainer = document.querySelector('.audio-progress-container')
-
-      audioProgressContainer.addEventListener('click', event => {
+    initAudioProgressClick() {
+      this.$refs.audioProgressContainer.addEventListener('click', event => {
         let touch = event
-        debugger
 
         // 设置点点
-        audioProressPoint.style.left =
-          touch.pageX - audioProressPoint.offsetWidth / 2 - audioProgressContainer.offsetLeft + 'px'
+        this.$refs.audioProgressPoint.style.left =
+          touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 - this.$refs.audioProgressContainer.offsetLeft + 'px'
         // 设置进度条
-        audioProgress.style.width = touch.pageX - audioProgressContainer.offsetLeft + 'px'
+        this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
         // 设置当前时间
         this.audioCurrentTime =
-          audioProgress.offsetWidth / audioProgressContainer.offsetWidth * this.audioDuration
+          this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.audioDuration
         // 设置当前时间（格式化后）
         this.audioCurrentTimeFormatAfter = this.formatTime(this.audioCurrentTime)
         // 设置播放位置
-        if (this.audioDOM) {
-          this.audioDOM.currentTime = this.audioCurrentTime
-        }
+        this.$refs.audio.currentTime = this.audioCurrentTime
       })
-      console.log('初始化音频进度的点击逻辑', this.audioPlay)
     },
-    // 权限判断播放
-    validateAudioPlay () {
-      this.audioDOM = document.getElementById('audioControl')
-      this.audioControl = document.getElementById('audioControl')
+    // 暂停播放
+    pause() {
+      this.$refs.audio.pause()
+      this.audioPlay = false
     },
     // 点击播放or暂停
-    audioPlayHandler () {
+    audioPlayHandler() {
       if (!this.audioPlay) {
         this.$refs.audio.play()
         this.audioPlay = true
-        this.validateAudioPlay()
-        console.log('开始', this.audioPlay)
       } else {
-        this.$refs.audio.pause()
-        this.audioPlay = false
-        console.log('暂停', this.audioPlay)
+        this.pause()
       }
     },
     // 切换上一首
-    audioPrevHandler () {
-      let index = 0
-      if (this.performList.length > 0) {
-        for (let i in this.performList) {
-          if (this.performList[i].file.url === this.audioUrl) { index = i }
-        }
-      }
-      let currentIndex = index - 1 < 0 ? this.performList.length - 1 : --index
-      this.audioUrl = this.performList[currentIndex].file.url
-      this.audioName = this.performList[currentIndex].title
-      this.audioDetail = this.performList[currentIndex]
-      this.currentPerform = this.performList[currentIndex]
-
-      this.progressValue = 0
-      setTimeout(() => { this.validateAudioPlay() }, 500)
-
-      console.log('切换上一首', this.audioName)
+    audioPrevHandler() {
     },
     // 切换下一首
-    audioNextHandler () {
-      let index = 0
-      if (this.performList.length > 0) {
-        for (let i in this.performList) {
-          if (this.performList[i].file.url === this.audioUrl) { index = i }
-        }
-      }
-      let currentIndex = index < (this.performList.length - 1) ? ++index : 0
-      this.audioUrl = this.performList[currentIndex].file.url
-      this.audioName = this.performList[currentIndex].title
-      this.audioDetail = this.performList[currentIndex]
-      this.currentPerform = this.performList[currentIndex]
-
-      this.progressValue = 0
-      setTimeout(() => { this.validateAudioPlay() }, 500)
-
-      console.log('切换下一首', this.audioName)
+    audioNextHandler() {
     }
   }
 }
