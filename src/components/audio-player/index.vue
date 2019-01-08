@@ -35,11 +35,9 @@
         {{ audioDurationFormatAfter }}
       </div>
     </div>
-    <audio id="audioControl"
-           ref="audio"
+    <audio ref="audio"
            :src="audioUrl"
            @ended="onEnded"
-           @playing="onPlaying"
            @timeupdate="onTimeUpdate"
            @loadedmetadata="onLoadedmetadata">
       浏览器太老咯，请升级浏览器吧~
@@ -68,11 +66,9 @@ export default {
       audioPlay: false, // 音频是否正在播放
       audioDuration: '', // 音频持续时间
       audioDurationFormatAfter: '', // 音频持续时间（格式化后）
-      audioTimer: '', // 音频播放计时器
       audioCurrentTime: '', // 音频播放当时时间
       audioCurrentTimeFormatAfter: '', // 音频播放当时时间（格式化后）
-      audioDetail: '', // 音频详情
-      audioDragProgress: false // 是否正在拖拽音频进度
+      audioDragging: false // 是否正在拖拽音频进度
     }
   },
   methods: {
@@ -88,7 +84,7 @@ export default {
       this.audioCurrentTimeFormatAfter = this.formatTime(this.$refs.audio.currentTime)
 
       // 正在拖拽进度
-      if (this.audioDragProgress) {
+      if (this.audioDragging) {
         return
       }
 
@@ -106,13 +102,6 @@ export default {
     formatTime(second) {
       return [parseInt((second / 60) % 60), parseInt(second % 60)].join(':').replace(/\b(\d)\b/g, '0$1')
     },
-    // 音频播放
-    onPlaying(val) {
-      if (this.canAddView) {
-        this.addViews()
-        this.canAddView = false
-      }
-    },
     // 播放音频完毕执行事件
     onEnded() {
       this.pause()
@@ -123,7 +112,7 @@ export default {
         'touchstart',
         event => {
           // 设置拖拽中
-          this.audioDragProgress = true
+          this.audioDragging = true
         },
         false
       )
@@ -158,7 +147,7 @@ export default {
           // 设置播放位置
           this.$refs.audio.currentTime = this.audioCurrentTime
           // 设置未拖拽
-          this.audioDragProgress = false
+          this.audioDragging = false
         },
         false
       )
@@ -184,6 +173,11 @@ export default {
         this.$refs.audio.currentTime = this.audioCurrentTime
       })
     },
+    // 开始播放
+    play() {
+      this.$refs.audio.play()
+      this.audioPlay = true
+    },
     // 暂停播放
     pause() {
       this.$refs.audio.pause()
@@ -192,8 +186,7 @@ export default {
     // 点击播放or暂停
     audioPlayHandler() {
       if (!this.audioPlay) {
-        this.$refs.audio.play()
-        this.audioPlay = true
+        this.play()
       } else {
         this.pause()
       }
