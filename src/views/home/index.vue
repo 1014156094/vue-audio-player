@@ -5,13 +5,13 @@
 </template>
 
 <script>
-// import AudioPlayer from '../../../packages'
+import AudioPlayer from '../../../packages/audio-player'
 // import AudioPlayer from '@/components/audio-player'
 
 export default {
-  // components: {
-  //   AudioPlayer
-  // },
+  components: {
+    AudioPlayer
+  },
   data() {
     return {
       audioList: [

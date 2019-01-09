@@ -1,7 +1,13 @@
-import AudioPlayer from './audio-player'
+import AudioPlayer from './audio-player/index.vue'
+
+const components = [
+  AudioPlayer
+]
 
 const install = Vue => {
-  Vue.component(AudioPlayer.name, AudioPlayer)
+  components.forEach(Component => {
+    Vue.component(Component.name, Component)
+  })
 }
 
 /* istanbul ignore if */
@@ -9,7 +15,10 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export default {
-  install,
+export {
   AudioPlayer
+}
+
+export default {
+  install
 }
