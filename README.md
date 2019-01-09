@@ -62,5 +62,10 @@ export default {
 | before-next | 下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 
+## 事件
+| 参数 | 说明 | 回调 |
+| - | - | - |
+| ended | 音频播放结束后触发 | - |
+
 ## 作者
 `小七`
