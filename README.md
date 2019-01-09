@@ -18,6 +18,13 @@ npm run serve
 npm run build
 ```
 
+## 特性
+- 经过童星汇APP线上业务检验的组件
+- 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
+
+## 线上演示
+![image](https://github.com/1014156094/vue-audio-player/blob/master/plublic/qrcode.png)
+
 ## 注意事项
 组件CSS使用 `less` 预编译语言
 
@@ -38,7 +45,10 @@ export default {
   },
   data() {
     return {
-      audioList: ['http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3', 'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3']
+      audioList: [
+        'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3',
+        'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
+      ]
     }
   }
 }
@@ -48,10 +58,10 @@ export default {
 ## Props
 | 参数 | 说明 | 类型 | 默认值 |
 | - | - | - | - |
-| audio-list | 音频链接列表 | `Array` | - |
-| before-play | 播放前的回调函数<br>调用done()后开始播放 | `(done)=>void` | - |
-| before-prev | 上一首前的回调函数<br>调用done()后开始播放上一首 | `(done)=>void` | - |
-| before-next | 下一首前的回调函数<br>调用done()后开始播放下一首 | `(done)=>void` | - |
+| audio-list | 音频播放列表 | `Array` | - |
+| before-play | 播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
+| before-prev | 上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
+| before-next | 下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 
 ## 作者

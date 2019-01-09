@@ -1,6 +1,7 @@
 <template>
   <div>
-    <AudiPlayer :audio-list="audioList" />
+    <AudiPlayer :audio-list="audioList"
+                :is-loop="false" />
   </div>
 </template>
 
@@ -13,7 +14,10 @@ export default {
   },
   data() {
     return {
-      audioList: ['http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3', 'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3']
+      audioList: [
+        'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3',
+        'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
+      ]
     }
   }
 }

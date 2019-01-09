@@ -46,22 +46,22 @@
 export default {
   name: 'AudioPlayer',
   props: {
-    // 音频地址
+    // 音频播放列表
     audioList: {
       default: null,
       type: Array
     },
-    // 播放之前要做些什么
+    // 播放前的回调函数
     beforePlay: {
       default: null,
       type: Function
     },
-    // 上一首之前要做些什么
+    // 上一首前的回调函数
     beforePrev: {
       default: null,
       type: Function
     },
-    // 下一首之前要做些什么
+    // 下一首前的回调函数
     beforeNext: {
       default: null,
       type: Function
