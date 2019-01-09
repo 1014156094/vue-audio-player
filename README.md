@@ -1,33 +1,23 @@
 # Vue音频播放器组件
 
 ## 线上演示
-![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png)
+![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png?raw=true)
 
 
 ## 特性
 - 经过童星汇APP线上业务检验的组件
 - 完善的文档和示例
-- 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
+- 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，库链接：https://github.com/hammerjs/touchemulator）
 
-## 安装项目
+## 安装
 ```
-npm install
-```
-
-### 开始开发
-```
-npm run serve
-```
-
-### 生产打包
-```
-npm run build
+npm i -S @liripeng/vue-audio-player
 ```
 
 ## 注意事项
 组件CSS使用 `less` 预编译语言
 
-## 快速开始
+## 使用
 ```
 <template>
   <div>
@@ -68,17 +58,17 @@ export default {
 | - | - | - |
 | ended | 音频播放结束后触发 | - |
 
-## 组件data
-| 方法 | 说明 | 回调 |
+## Data
+| 变量 | 说明 | 默认值 |
 | - | - | - |
 | currentPlayIndex | 当前播放的音频索引 | `0` |
 | isPlaying | 音频是否正在播放 | `false` |
 | duration | 音频持续时间 | - |
 | currentTime | 音频当前播放时间 | - |
 
-`更多`请自行使用 `ref` 打印组件的 `data` 查看
+`更多`请自行查看组件的 `data`
 
-## 组件methods
+## Methods
 | 方法 | 说明 | 回调 |
 | - | - | - |
 | play | 开始播放 | - |
@@ -86,7 +76,7 @@ export default {
 | playPrev | 播放上一首 | - |
 | playNext | 播放下一首 | - |
 
-`更多`请自行使用 `ref` 打印组件的 `methods` 查看
+`更多`请自行查看组件的 `methods`
 
-## 作者
-`小七`
+## 最后
+使用过程中发现任何问题都可以提 `Issue`，也非常欢迎你给我发 `PR`。

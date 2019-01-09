@@ -86,7 +86,7 @@ export default {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata() {
       this.duration = this.$refs.audio.duration
-      this.initAudioProgressDrag()
+      this.initProgressDrag()
     },
     // 正在播放音频中
     onTimeUpdate(val) {
@@ -118,7 +118,7 @@ export default {
       this.$emit('ended')
     },
     // 初始化音频进度的拖拽逻辑
-    initAudioProgressDrag() {
+    initProgressDrag() {
       this.$refs.audioProgressPoint.addEventListener(
         'touchstart',
         event => {
@@ -163,10 +163,10 @@ export default {
         false
       )
 
-      this.initAudioProgressClick()
+      this.initProgressClick()
     },
     // 初始化音频进度的点击逻辑
-    initAudioProgressClick() {
+    initProgressClick() {
       this.$refs.audioProgressContainer.addEventListener('click', event => {
         let touch = event
 

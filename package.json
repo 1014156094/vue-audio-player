@@ -1,11 +1,26 @@
 {
-  "name": "vue-audio-player",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@liripeng/vue-audio-player",
+  "version": "0.1.3",
+  "description": "一个简单好用的Vue音频播放器组件",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "liripeng",
+    "vue-audio-player",
+    "vue-audio",
+    "audio-player",
+    "audio",
+    "vue",
+    "component"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1014156094/vue-audio-player.git"
   },
   "dependencies": {
     "vue": "^2.5.21",
