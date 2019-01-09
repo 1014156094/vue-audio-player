@@ -96,7 +96,7 @@ export default {
 
 `更多`请自行查看组件 `methods`
 
-##使用过程中发现任何问题都可以提 Issue or PR
+## 使用过程中发现任何问题都可以提 Issue or PR
 
 ## LICENSE
 `MIT`
