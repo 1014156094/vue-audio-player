@@ -1,16 +1,17 @@
 <template>
   <div>
-    <AudiPlayer :audio-list="audioList" />
+    <AudioPlayer :audio-list="audioList" />
   </div>
 </template>
 
 <script>
-import AudiPlayer from '@/components/audio-player'
+// import AudioPlayer from '../../../packages'
+// import AudioPlayer from '@/components/audio-player'
 
 export default {
-  components: {
-    AudiPlayer
-  },
+  // components: {
+  //   AudioPlayer
+  // },
   data() {
     return {
       audioList: [

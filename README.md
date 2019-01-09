@@ -21,16 +21,16 @@ npm i -S @liripeng/vue-audio-player
 ```
 <template>
   <div>
-    <AudiPlayer :audio-list="audioList" />
+    <AudioPlayer :audio-list="audioList" />
   </div>
 </template>
 
 <script>
-import AudiPlayer from '@/components/audio-player'
+import AudioPlayer from '@/components/audio-player'
 
 export default {
   components: {
-    AudiPlayer
+    AudioPlayer
   },
   data() {
     return {
@@ -78,5 +78,7 @@ export default {
 
 `更多`请自行查看组件的 `methods`
 
-## 最后
-使用过程中发现任何问题都可以提 `Issue`，也非常欢迎你给我发 `PR`。
+##使用过程中发现任何问题都可以提 Issue or PR
+
+## LICENSE
+`MIT`
