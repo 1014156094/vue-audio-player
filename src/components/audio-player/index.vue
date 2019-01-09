@@ -6,7 +6,7 @@
            @click="playPrev">
       <img class="play-start-btn"
            src="./icon-play-start.png"
-           v-if="!audioPlay"
+           v-if="!isPlaying"
            @click="play">
       <img class="play-start-btn"
            src="./icon-play-pause.png"
@@ -26,14 +26,14 @@
     </div>
     <div class="audio-time-container">
       <div class="audio-current-time">
-        {{ audioCurrentTimeFormatAfter }}
+        {{ currentTimeAfterFormat }}
       </div>
       <div class="audio-duration">
-        {{ formatTime(audioDuration) }}
+        {{ formatTime(duration) }}
       </div>
     </div>
     <audio ref="audio"
-           :src="audioList[currentAudioIndex]"
+           :src="audioList[currentPlayIndex]"
            @ended="onEnded"
            @timeupdate="onTimeUpdate"
            @loadedmetadata="onLoadedmetadata">
@@ -74,28 +74,27 @@ export default {
   },
   data() {
     return {
-      currentAudioIndex: 0, // 当前播放的音频位置索引
-      audioPlay: false, // 音频是否正在播放
-      audioDuration: '', // 音频持续时间
-      audioCurrentTime: '', // 音频播放当时时间
-      audioCurrentTimeFormatAfter: '', // 音频播放当时时间（格式化后）
-      audioDragging: false // 是否正在拖拽音频进度
+      currentPlayIndex: 0, // 当前播放的音频位置索引
+      isPlaying: false, // 音频是否正在播放
+      duration: '', // 音频持续时间
+      currentTime: '', // 音频当前播放时间
+      currentTimeAfterFormat: '', // 音频播放当时时间（格式化后）
+      isDragging: false // 是否正在拖拽音频进度
     }
   },
   methods: {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata() {
-      console.dir(this.$refs.audio.duration)
-      this.audioDuration = this.$refs.audio.duration
+      this.duration = this.$refs.audio.duration
       this.initAudioProgressDrag()
     },
     // 正在播放音频中
     onTimeUpdate(val) {
       this.progressValue = this.$refs.audio.currentTime / (this.$refs.audio.duration / 100)
-      this.audioCurrentTimeFormatAfter = this.formatTime(this.$refs.audio.currentTime)
+      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
 
       // 正在拖拽进度
-      if (this.audioDragging) {
+      if (this.isDragging) {
         return
       }
 
@@ -109,7 +108,7 @@ export default {
         (this.$refs.audioProgressContainer.offsetWidth - this.$refs.audioProgressPoint.offsetWidth / 2) +
         'px'
     },
-    // 格式化时间
+    // 格式化秒为分
     formatTime(second) {
       return [parseInt((second / 60) % 60), parseInt(second % 60)].join(':').replace(/\b(\d)\b/g, '0$1')
     },
@@ -124,7 +123,7 @@ export default {
         'touchstart',
         event => {
           // 设置拖拽中
-          this.audioDragging = true
+          this.isDragging = true
         },
         false
       )
@@ -146,10 +145,10 @@ export default {
           // 设置进度条
           this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置当前时间
-          this.audioCurrentTime =
-            this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.audioDuration
+          this.currentTime =
+            this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.duration
           // 设置当前时间（格式化后）
-          this.audioCurrentTimeFormatAfter = this.formatTime(this.audioCurrentTime)
+          this.currentTimeAfterFormat = this.formatTime(this.currentTime)
         },
         false
       )
@@ -157,9 +156,9 @@ export default {
         'touchend',
         event => {
           // 设置播放位置
-          this.$refs.audio.currentTime = this.audioCurrentTime
+          this.$refs.audio.currentTime = this.currentTime
           // 设置未拖拽
-          this.audioDragging = false
+          this.isDragging = false
         },
         false
       )
@@ -177,12 +176,12 @@ export default {
         // 设置进度条
         this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
         // 设置当前时间
-        this.audioCurrentTime =
-          this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.audioDuration
+        this.currentTime =
+          this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.duration
         // 设置当前时间（格式化后）
-        this.audioCurrentTimeFormatAfter = this.formatTime(this.audioCurrentTime)
+        this.currentTimeAfterFormat = this.formatTime(this.currentTime)
         // 设置播放位置
-        this.$refs.audio.currentTime = this.audioCurrentTime
+        this.$refs.audio.currentTime = this.currentTime
       })
     },
     // 开始播放
@@ -191,38 +190,38 @@ export default {
         this.beforePlay((state) => {
           if (state !== false) {
             this.$refs.audio.play()
-            this.audioPlay = true
+            this.isPlaying = true
           }
         })
         return
       }
       this.$refs.audio.play()
-      this.audioPlay = true
+      this.isPlaying = true
     },
     // 暂停播放
     pause() {
       this.$refs.audio.pause()
-      this.audioPlay = false
+      this.isPlaying = false
     },
-    // 切换上一首
+    // 播放上一首
     playPrev() {
-      if (this.currentAudioIndex <= 0 && !this.isLoop) {
+      if (this.currentPlayIndex <= 0 && !this.isLoop) {
         // 无上一首了
         alert('已是第一首！')
         return
       }
 
       let prev = () => {
-        if (this.currentAudioIndex <= 0 && this.isLoop) {
+        if (this.currentPlayIndex <= 0 && this.isLoop) {
           // 列表循环
-          this.currentAudioIndex = this.audioList.length - 1
+          this.currentPlayIndex = this.audioList.length - 1
         } else {
-          this.currentAudioIndex--
+          this.currentPlayIndex--
         }
 
         this.$nextTick(() => {
           this.$refs.audio.play()
-          this.audioPlay = true
+          this.isPlaying = true
         })
       }
 
@@ -236,24 +235,24 @@ export default {
       }
       prev()
     },
-    // 切换下一首
+    // 播放下一首
     playNext() {
-      if (this.currentAudioIndex + 1 >= this.audioList.length && !this.isLoop) {
+      if (this.currentPlayIndex + 1 >= this.audioList.length && !this.isLoop) {
         // 无下一首了
         alert('已是最后一首！')
         return
       }
 
       let next = () => {
-        if (this.currentAudioIndex + 1 >= this.audioList.length && this.isLoop) {
+        if (this.currentPlayIndex + 1 >= this.audioList.length && this.isLoop) {
           // 列表循环
-          this.currentAudioIndex = 0
+          this.currentPlayIndex = 0
         } else {
-          this.currentAudioIndex++
+          this.currentPlayIndex++
         }
         this.$nextTick(() => {
           this.$refs.audio.play()
-          this.audioPlay = true
+          this.isPlaying = true
         })
       }
 

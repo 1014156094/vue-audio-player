@@ -6,6 +6,7 @@
 
 ## 特性
 - 经过童星汇APP线上业务检验的组件
+- 完善的文档和示例
 - 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
 
 ## 安装项目
@@ -62,10 +63,30 @@ export default {
 | before-next | 下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 
-## 事件
-| 参数 | 说明 | 回调 |
+## Event
+| 事件 | 说明 | 回调 |
 | - | - | - |
 | ended | 音频播放结束后触发 | - |
+
+## 组件data
+| 方法 | 说明 | 回调 |
+| - | - | - |
+| currentPlayIndex | 当前播放的音频索引 | `0` |
+| isPlaying | 音频是否正在播放 | `false` |
+| duration | 音频持续时间 | - |
+| currentTime | 音频当前播放时间 | - |
+
+`更多`请自行使用 `ref` 打印组件的 `data` 查看
+
+## 组件methods
+| 方法 | 说明 | 回调 |
+| - | - | - |
+| play | 开始播放 | - |
+| pause | 暂停播放 | - |
+| playPrev | 播放上一首 | - |
+| playNext | 播放下一首 | - |
+
+`更多`请自行使用 `ref` 打印组件的 `methods` 查看
 
 ## 作者
 `小七`
