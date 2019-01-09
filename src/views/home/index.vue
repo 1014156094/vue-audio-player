@@ -1,7 +1,6 @@
 <template>
   <div>
-    <AudiPlayer :audio-list="audioList"
-                :is-loop="false" />
+    <AudiPlayer :audio-list="audioList" />
   </div>
 </template>
 
