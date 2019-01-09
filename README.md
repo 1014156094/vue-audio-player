@@ -17,6 +17,24 @@ npm i -S @liripeng/vue-audio-player
 ## 注意事项
 组件CSS使用 `less` 预编译语言
 
+## 按需引入
+```
+import { AudioPlayer } from '@liripeng/vue-audio-player'
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+
+components: {
+  AudioPlayer
+}
+```
+
+## 全部引入
+```
+import AudioPlayer from '@liripeng/vue-audio-player'
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+
+Vue.use(AudioPlayer)
+```
+
 ## 使用
 ```
 <template>
@@ -26,7 +44,7 @@ npm i -S @liripeng/vue-audio-player
 </template>
 
 <script>
-import AudioPlayer from '@/components/audio-player'
+import { AudioPlayer } from '@liripeng/vue-audio-player'
 
 export default {
   components: {
@@ -66,7 +84,7 @@ export default {
 | duration | 音频持续时间 | - |
 | currentTime | 音频当前播放时间 | - |
 
-`更多`请自行查看组件的 `data`
+`更多`请自行查看组件 `data`
 
 ## Methods
 | 方法 | 说明 | 回调 |
@@ -76,7 +94,7 @@ export default {
 | playPrev | 播放上一首 | - |
 | playNext | 播放下一首 | - |
 
-`更多`请自行查看组件的 `methods`
+`更多`请自行查看组件 `methods`
 
 ##使用过程中发现任何问题都可以提 Issue or PR
 

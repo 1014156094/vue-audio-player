@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import AudioPlayer from '../../../packages/audio-player'
-// import AudioPlayer from '@/components/audio-player'
+import { AudioPlayer } from '../../../packages'
 
 export default {
   components: {
