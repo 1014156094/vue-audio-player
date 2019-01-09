@@ -18,16 +18,41 @@ npm run serve
 npm run build
 ```
 
-## 注意
+## 注意事项
 组件CSS使用 `less` 预编译语言
 
-## 插槽
-暂无
+## 快速开始
+```
+<template>
+  <div>
+    <AudiPlayer :audio-list="audioList" />
+  </div>
+</template>
+
+<script>
+import AudiPlayer from '@/components/audio-player'
+
+export default {
+  components: {
+    AudiPlayer
+  },
+  data() {
+    return {
+      audioList: ['http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3', 'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3']
+    }
+  }
+}
+</script>
+```
 
 ## Props
 | 参数 | 说明 | 类型 | 默认值 |
 | - | - | - | - |
-| audio-url | 音频链接 | String | - |
-| audio-name | 音频名称 | String | - |
+| audio-list | 音频链接列表 | `Array` | - |
+| before-play | 播放前的回调函数<br>调用done()后开始播放 | `(done)=>void` | - |
+| before-prev | 上一首前的回调函数<br>调用done()后开始播放上一首 | `(done)=>void` | - |
+| before-next | 下一首前的回调函数<br>调用done()后开始播放下一首 | `(done)=>void` | - |
+| isLoop | 是否列表循环播放 | `Boolean` | `true` |
 
-## 后续有空会继续更新...
+## 作者
+`小七`

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <AudiPlayer :audio-list="audioList"
-                audio-name="我是音频名称" />
+    <AudiPlayer :audio-list="audioList" />
   </div>
 </template>
 

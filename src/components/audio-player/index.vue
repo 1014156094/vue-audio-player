@@ -1,23 +1,20 @@
 <template>
   <section class="audio-conatiner">
-    <div class="audio-name">
-      {{ audioName }}
-    </div>
     <div class="audio-btn-container">
       <img class="play-previous-btn"
            src="./icon-play-previous.png"
-           @click="audioPrevHandler">
+           @click="playPrev">
       <img class="play-start-btn"
            src="./icon-play-start.png"
            v-if="!audioPlay"
-           @click="audioPlayHandler">
+           @click="play">
       <img class="play-start-btn"
            src="./icon-play-pause.png"
            v-else
-           @click="audioPlayHandler">
+           @click="pause">
       <img class="play-next-btn"
            src="./icon-play-next.png"
-           @click="audioNextHandler">
+           @click="playNext">
     </div>
     <div class="audio-progress-container"
          ref="audioProgressContainer">
@@ -29,14 +26,14 @@
     </div>
     <div class="audio-time-container">
       <div class="audio-current-time">
-        {{ audioCurrentTimeFormatAfter || '00:00' }}
+        {{ audioCurrentTimeFormatAfter }}
       </div>
       <div class="audio-duration">
-        {{ audioDurationFormatAfter }}
+        {{ formatTime(audioDuration) }}
       </div>
     </div>
     <audio ref="audio"
-           :src="audioList && audioList[currentAudioIndex]"
+           :src="audioList[currentAudioIndex]"
            @ended="onEnded"
            @timeupdate="onTimeUpdate"
            @loadedmetadata="onLoadedmetadata">
@@ -54,18 +51,32 @@ export default {
       default: null,
       type: Array
     },
-    // 音频名称
-    audioName: {
-      default: '',
-      type: String
+    // 播放之前要做些什么
+    beforePlay: {
+      default: null,
+      type: Function
+    },
+    // 上一首之前要做些什么
+    beforePrev: {
+      default: null,
+      type: Function
+    },
+    // 下一首之前要做些什么
+    beforeNext: {
+      default: null,
+      type: Function
+    },
+    // 是否列表循环播放
+    isLoop: {
+      default: true,
+      type: Boolean
     }
   },
   data() {
     return {
-      currentAudioIndex: 0, // 当前音频索引
+      currentAudioIndex: 0, // 当前播放的音频位置索引
       audioPlay: false, // 音频是否正在播放
       audioDuration: '', // 音频持续时间
-      audioDurationFormatAfter: '', // 音频持续时间（格式化后）
       audioCurrentTime: '', // 音频播放当时时间
       audioCurrentTimeFormatAfter: '', // 音频播放当时时间（格式化后）
       audioDragging: false // 是否正在拖拽音频进度
@@ -102,9 +113,10 @@ export default {
     formatTime(second) {
       return [parseInt((second / 60) % 60), parseInt(second % 60)].join(':').replace(/\b(\d)\b/g, '0$1')
     },
-    // 播放音频完毕执行事件
+    // 音频播放完毕
     onEnded() {
       this.pause()
+      this.$emit('ended')
     },
     // 初始化音频进度的拖拽逻辑
     initAudioProgressDrag() {
@@ -175,6 +187,15 @@ export default {
     },
     // 开始播放
     play() {
+      if (this.beforePlay) {
+        this.beforePlay((state) => {
+          if (state !== false) {
+            this.$refs.audio.play()
+            this.audioPlay = true
+          }
+        })
+        return
+      }
       this.$refs.audio.play()
       this.audioPlay = true
     },
@@ -183,33 +204,68 @@ export default {
       this.$refs.audio.pause()
       this.audioPlay = false
     },
-    // 点击播放or暂停
-    audioPlayHandler() {
-      if (!this.audioPlay) {
-        this.play()
-      } else {
-        this.pause()
-      }
-    },
     // 切换上一首
-    audioPrevHandler() {
-      if (this.currentAudioIndex <= 0) {
+    playPrev() {
+      if (this.currentAudioIndex <= 0 && !this.isLoop) {
+        // 无上一首了
+        alert('已是第一首！')
         return
       }
-      this.currentAudioIndex--
-      this.$nextTick(() => {
-        this.play()
-      })
+
+      let prev = () => {
+        if (this.currentAudioIndex <= 0 && this.isLoop) {
+          // 列表循环
+          this.currentAudioIndex = this.audioList.length - 1
+        } else {
+          this.currentAudioIndex--
+        }
+
+        this.$nextTick(() => {
+          this.$refs.audio.play()
+          this.audioPlay = true
+        })
+      }
+
+      if (this.beforePrev) {
+        this.beforePrev((state) => {
+          if (state !== false) {
+            prev()
+          }
+        })
+        return
+      }
+      prev()
     },
     // 切换下一首
-    audioNextHandler() {
-      if (this.currentAudioIndex + 1 >= this.audioList.length) {
+    playNext() {
+      if (this.currentAudioIndex + 1 >= this.audioList.length && !this.isLoop) {
+        // 无下一首了
+        alert('已是最后一首！')
         return
       }
-      this.currentAudioIndex++
-      this.$nextTick(() => {
-        this.play()
-      })
+
+      let next = () => {
+        if (this.currentAudioIndex + 1 >= this.audioList.length && this.isLoop) {
+          // 列表循环
+          this.currentAudioIndex = 0
+        } else {
+          this.currentAudioIndex++
+        }
+        this.$nextTick(() => {
+          this.$refs.audio.play()
+          this.audioPlay = true
+        })
+      }
+
+      if (this.beforeNext) {
+        this.beforeNext((state) => {
+          if (state !== false) {
+            next()
+          }
+        })
+        return
+      }
+      next()
     }
   }
 }
@@ -218,14 +274,6 @@ export default {
 <style lang="less" scoped>
 section.audio-conatiner {
   margin: 0 15px;
-  .audio-name {
-    font-size: 18px;
-    padding: 15px 10px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
   .audio-btn-container {
     display: flex;
     align-items: center;
@@ -235,7 +283,7 @@ section.audio-conatiner {
     }
     .play-start-btn {
       width: 42px;
-      margin: 0 45px;
+      margin: 0 40px;
     }
     .play-next-btn {
       width: 21px;
