@@ -1,6 +1,6 @@
 {
   "name": "@liripeng/vue-audio-player",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "适用于PC移动端的 Vue 音频播放器组件",
   "license": "MIT",
   "author": "liripeng <1014156094@qq.com>",
