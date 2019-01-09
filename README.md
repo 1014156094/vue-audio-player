@@ -1,7 +1,12 @@
 # Vue音频播放器组件
 
-## 概述
-因为之前项目做过，为了方便以后使用，所以抽空弄成了组件。
+## 线上演示
+![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png)
+
+
+## 特性
+- 经过童星汇APP线上业务检验的组件
+- 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
 
 ## 安装项目
 ```
@@ -17,14 +22,6 @@ npm run serve
 ```
 npm run build
 ```
-
-## 特性
-- 经过童星汇APP线上业务检验的组件
-- 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
-
-## 线上演示
-![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png)
-
 
 ## 注意事项
 组件CSS使用 `less` 预编译语言
