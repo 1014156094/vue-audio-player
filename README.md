@@ -23,7 +23,8 @@ npm run build
 - 支持进度条拖拽（PC 端需引入这个库模拟 Touch 事件，链接：https://github.com/hammerjs/touchemulator）
 
 ## 线上演示
-![image](https://github.com/1014156094/vue-audio-player/blob/master/plublic/qrcode.png)
+![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png)
+
 
 ## 注意事项
 组件CSS使用 `less` 预编译语言
