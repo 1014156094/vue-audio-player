@@ -27,7 +27,7 @@ components: {
 }
 ```
 
-## 全部引入
+## 全局引入
 ```
 import AudioPlayer from '@liripeng/vue-audio-player'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
@@ -66,15 +66,21 @@ export default {
 | 参数 | 说明 | 类型 | 默认值 |
 | - | - | - | - |
 | audio-list | 音频播放列表 | `Array` | - |
+| show-play-button | 是否显示播放按钮 | `Boolean` | `true` |
+| show-prev-button | 是否显示上一首按钮 | `Boolean` | `true` |
+| show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
+| show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
+| isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | before-play | 播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
 | before-prev | 上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
 | before-next | 下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
-| isLoop | 是否列表循环播放 | `Boolean` | `true` |
 
 ## Event
 | 事件 | 说明 | 回调 |
 | - | - | - |
-| ended | 音频播放结束后触发 | - |
+| timeupdate | 正在播放音频中触发 | `event` |
+| loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
+| ended | 音频播放结束后触发 | `event` |
 
 ## Data
 | 变量 | 说明 | 默认值 |
@@ -96,7 +102,8 @@ export default {
 
 `更多`请自行查看组件 `methods`
 
-## 使用过程中发现任何问题都可以提 Issue or PR
-
 ## LICENSE
 `MIT`
+
+## 最后
+使用过程中发现任何问题都可以提 Issue，也非常欢迎提PR

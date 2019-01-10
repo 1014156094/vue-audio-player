@@ -1,22 +1,25 @@
 <template>
   <section class="audio-conatiner">
     <div class="audio-btn-container">
-      <img class="play-previous-btn"
-           src="./icon-play-previous.png"
-           @click="playPrev">
-      <img class="play-start-btn"
+      <div v-show="showPrevButton"
+           class="play-previous-btn"
+           :class="{ disable: currentPlayIndex === 0 }"
+           @click="playPrev" />
+      <img class="play-start-btn play"
+           v-if="!isPlaying && showPlayButton"
            src="./icon-play-start.png"
-           v-if="!isPlaying"
            @click="play">
-      <img class="play-start-btn"
+      <img class="play-pause-btn pause"
            src="./icon-play-pause.png"
-           v-else
+           v-else-if="showPlayButton"
            @click="pause">
-      <img class="play-next-btn"
-           src="./icon-play-next.png"
-           @click="playNext">
+      <div v-show="showNextButton"
+           class="play-next-btn"
+           :class="{ disable: currentPlayIndex === audioList.length - 1 }"
+           @click="playNext" />
     </div>
-    <div class="audio-progress-container"
+    <div v-show="showProgressBar"
+         class="audio-progress-container"
          ref="audioProgressContainer">
       <div class="audio-progress"
            ref="audioProgress" />
@@ -24,7 +27,8 @@
            src="./icon-play-progress-point.png"
            ref="audioProgressPoint">
     </div>
-    <div class="audio-time-container">
+    <div v-show="showProgressBar"
+         class="audio-time-container">
       <div class="audio-current-time">
         {{ currentTimeAfterFormat }}
       </div>
@@ -50,6 +54,26 @@ export default {
     audioList: {
       default: null,
       type: Array
+    },
+    // 显示播放按钮
+    showPlayButton: {
+      default: true,
+      type: Boolean
+    },
+    // 显示上一首按钮
+    showPrevButton: {
+      default: true,
+      type: Boolean
+    },
+    // 显示下一首按钮
+    showNextButton: {
+      default: true,
+      type: Boolean
+    },
+    // 显示进度条
+    showProgressBar: {
+      default: true,
+      type: Boolean
     },
     // 播放前的回调函数
     beforePlay: {
@@ -84,12 +108,13 @@ export default {
   },
   methods: {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
-    onLoadedmetadata() {
+    onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration
       this.initProgressDrag()
+      this.$emit('loadedmetadata', event)
     },
     // 正在播放音频中
-    onTimeUpdate(val) {
+    onTimeUpdate(event) {
       this.progressValue = this.$refs.audio.currentTime / (this.$refs.audio.duration / 100)
       this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
 
@@ -107,15 +132,16 @@ export default {
         this.$refs.audio.duration *
         (this.$refs.audioProgressContainer.offsetWidth - this.$refs.audioProgressPoint.offsetWidth / 2) +
         'px'
+      this.$emit('timeupdate', event)
     },
     // 格式化秒为分
     formatTime(second) {
       return [parseInt((second / 60) % 60), parseInt(second % 60)].join(':').replace(/\b(\d)\b/g, '0$1')
     },
     // 音频播放完毕
-    onEnded() {
+    onEnded(event) {
       this.pause()
-      this.$emit('ended')
+      this.$emit('ended', event)
     },
     // 初始化音频进度的拖拽逻辑
     initProgressDrag() {
@@ -207,7 +233,6 @@ export default {
     playPrev() {
       if (this.currentPlayIndex <= 0 && !this.isLoop) {
         // 无上一首了
-        alert('已是第一首！')
         return
       }
 
@@ -239,7 +264,6 @@ export default {
     playNext() {
       if (this.currentPlayIndex + 1 >= this.audioList.length && !this.isLoop) {
         // 无下一首了
-        alert('已是最后一首！')
         return
       }
 
@@ -279,13 +303,30 @@ section.audio-conatiner {
     justify-content: center;
     .play-previous-btn {
       width: 21px;
+      height: 33px;
+      background: url(./icon-play-previous.png) center center / contain
+        no-repeat;
+      &.disable {
+        opacity: 0.5;
+      }
     }
     .play-start-btn {
       width: 42px;
+      height: 42px;
+      margin: 0 40px;
+    }
+    .play-pause-btn {
+      width: 42px;
+      height: 42px;
       margin: 0 40px;
     }
     .play-next-btn {
       width: 21px;
+      height: 33px;
+      background: url(./icon-play-next.png) center center / contain no-repeat;
+      &.disable {
+        opacity: 0.5;
+      }
     }
   }
   .audio-progress-container {
