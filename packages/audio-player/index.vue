@@ -3,7 +3,7 @@
     <div class="audio-btn-container">
       <div v-show="showPrevButton"
            class="play-previous-btn"
-           :class="{ disable: currentPlayIndex === 0 }"
+           :class="{ disable: !isLoop && currentPlayIndex === 0 }"
            @click="playPrev" />
       <img class="play-start-btn play"
            v-if="!isPlaying && showPlayButton"
@@ -15,7 +15,7 @@
            @click="pause">
       <div v-show="showNextButton"
            class="play-next-btn"
-           :class="{ disable: currentPlayIndex === audioList.length - 1 }"
+           :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
            @click="playNext" />
     </div>
     <div v-show="showProgressBar"
