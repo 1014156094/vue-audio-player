@@ -270,7 +270,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 section.audio-conatiner {
   margin: 0 15px;
   .audio-btn-container {
