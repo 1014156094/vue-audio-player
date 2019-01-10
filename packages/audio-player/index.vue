@@ -110,7 +110,8 @@ export default {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration
-      this.initProgressDrag()
+      this.initProgressBarDrag()
+      this.initProgressBarPoint()
       this.$emit('loadedmetadata', event)
     },
     // 正在播放音频中
@@ -144,7 +145,7 @@ export default {
       this.$emit('ended', event)
     },
     // 初始化音频进度的拖拽逻辑
-    initProgressDrag() {
+    initProgressBarDrag() {
       this.$refs.audioProgressPoint.addEventListener(
         'touchstart',
         event => {
@@ -188,11 +189,9 @@ export default {
         },
         false
       )
-
-      this.initProgressClick()
     },
     // 初始化音频进度的点击逻辑
-    initProgressClick() {
+    initProgressBarPoint() {
       this.$refs.audioProgressContainer.addEventListener('click', event => {
         let touch = event
 
@@ -212,22 +211,27 @@ export default {
     },
     // 开始播放
     play() {
+      let play = () => {
+        this.$refs.audio.play()
+        this.isPlaying = true
+        this.$emit('play')
+      }
+
       if (this.beforePlay) {
         this.beforePlay((state) => {
           if (state !== false) {
-            this.$refs.audio.play()
-            this.isPlaying = true
+            play()
           }
         })
         return
       }
-      this.$refs.audio.play()
-      this.isPlaying = true
+      play()
     },
     // 暂停播放
     pause() {
       this.$refs.audio.pause()
       this.isPlaying = false
+      this.$emit('pause')
     },
     // 播放上一首
     playPrev() {
@@ -247,6 +251,7 @@ export default {
         this.$nextTick(() => {
           this.$refs.audio.play()
           this.isPlaying = true
+          this.$emit('play-prev')
         })
       }
 
@@ -277,6 +282,7 @@ export default {
         this.$nextTick(() => {
           this.$refs.audio.play()
           this.isPlaying = true
+          this.$emit('play-next')
         })
       }
 

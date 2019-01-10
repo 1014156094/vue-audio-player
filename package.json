@@ -26,7 +26,7 @@
     "url": "https://github.com/1014156094/vue-audio-player.git"
   },
   "dependencies": {
-    "@liripeng/vue-audio-player": "^0.1.5",
+    "@liripeng/vue-audio-player": "^0.1.8",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1"
   },

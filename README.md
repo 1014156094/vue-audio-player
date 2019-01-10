@@ -71,13 +71,17 @@ export default {
 | show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
-| before-play | 播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
-| before-prev | 上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
-| before-next | 下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
+| before-play | 点击播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
+| before-prev | 点击上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
+| before-next | 点击下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
 
 ## Event
 | 事件 | 说明 | 回调 |
 | - | - | - |
+| play | 点击播放后触发 | - |
+| pause | 点击暂停后触发 | - |
+| play-prev | 点击上一首后触发 | - |
+| play-next | 点击下一首后触发 | - |
 | timeupdate | 正在播放音频中触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
