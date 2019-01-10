@@ -6,9 +6,7 @@
 </template>
 
 <script>
-// import { AudioPlayer } from '../../../packages'
-import { AudioPlayer } from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import { AudioPlayer } from '../../../packages'
 
 export default {
   components: {
