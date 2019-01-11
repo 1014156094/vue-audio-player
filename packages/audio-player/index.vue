@@ -117,13 +117,13 @@ export default {
     // 正在播放音频中
     onTimeUpdate(event) {
       this.progressValue = this.$refs.audio.currentTime / (this.$refs.audio.duration / 100)
-      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
 
       // 正在拖拽进度
       if (this.isDragging) {
         return
       }
 
+      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
       // 设置播放进度条
       this.$refs.audioProgress.style.width =
         this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressContainer.offsetWidth + 'px'
