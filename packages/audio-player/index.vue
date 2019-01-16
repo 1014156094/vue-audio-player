@@ -1,11 +1,11 @@
 <template>
-  <section class="audio-conatiner">
-    <div class="audio-btn-container">
+  <section class="audio-section">
+    <div class="audio-section__btn-container">
       <div v-show="showPrevButton"
-           class="play-previous-btn"
+           class="audio-section__play__btn--previous"
            :class="{ disable: !isLoop && currentPlayIndex === 0 }"
            @click="playPrev">
-        <svg class="icon"
+        <svg class="audio-section__play__btn__icon"
              aria-hidden="true">
           <use xlink:href="#icon-play-prev" />
         </svg>
@@ -13,8 +13,8 @@
 
       <div v-if="!isPlaying && showPlayButton"
            @click="play"
-           class="play-start-btn">
-        <svg class="icon"
+           class="audio-section__play__btn--start">
+        <svg class="audio-section__play__btn__icon"
              aria-hidden="true">
           <use xlink:href="#icon-play" />
         </svg>
@@ -22,41 +22,42 @@
 
       <div v-else-if="showPlayButton"
            @click="pause"
-           class="play-pause-btn">
-        <svg class="icon"
+           class="audio-section__play__btn--pause">
+        <svg class="audio-section__play__btn__icon"
              aria-hidden="true">
           <use xlink:href="#icon-play-pause" />
         </svg>
       </div>
 
       <div v-show="showNextButton"
-           class="play-next-btn"
+           class="audio-section__play__btn--next"
            :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
            @click="playNext">
-        <svg class="icon"
+        <svg class="audio-section__play__btn__icon"
              aria-hidden="true">
           <use xlink:href="#icon-play-next" />
         </svg>
       </div>
     </div>
     <div v-show="showProgressBar"
-         class="audio-progress-container"
+         class="audio-section__progress-container"
          ref="audioProgressContainer">
-      <div class="audio-progress"
+      <div class="audio-section__progress"
            ref="audioProgress" />
-      <div class="audio-progress-point"
+      <div class="audio-section__progress__point"
            ref="audioProgressPoint" />
     </div>
     <div v-show="showProgressBar"
-         class="audio-time-container">
-      <div class="audio-current-time">
+         class="audio-section__time-container">
+      <div class="audio-section__time--current">
         {{ currentTimeAfterFormat }}
       </div>
-      <div class="audio-duration">
+      <div class="audio-section__duration">
         {{ formatTime(duration) }}
       </div>
     </div>
     <audio ref="audio"
+           class="audio-section__player"
            :src="audioList[currentPlayIndex]"
            @ended="onEnded"
            @timeupdate="onTimeUpdate"
@@ -321,37 +322,37 @@ export default {
 </script>
 
 <style lang="less">
-section.audio-conatiner {
+section.audio-section {
   margin: 0 15px;
-  .audio-btn-container {
+  .audio-section__btn-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    .icon {
+    .audio-section__play__btn__icon {
       width: 100%;
       height: 100%;
       fill: currentColor;
       overflow: hidden;
       color: #e35924;
     }
-    .play-previous-btn {
+    .audio-section__play__btn--previous {
       width: 21px;
       height: 33px;
       &.disable {
         opacity: 0.5;
       }
     }
-    .play-start-btn {
+    .audio-section__play__btn--start {
       width: 42px;
       height: 42px;
       margin: 0 40px;
     }
-    .play-pause-btn {
+    .audio-section__play__btn--pause {
       width: 42px;
       height: 42px;
       margin: 0 40px;
     }
-    .play-next-btn {
+    .audio-section__play__btn--next {
       width: 21px;
       height: 33px;
       &.disable {
@@ -359,12 +360,12 @@ section.audio-conatiner {
       }
     }
   }
-  .audio-progress-container {
+  .audio-section__progress-container {
     position: relative;
     background: #eee;
     height: 2px;
     margin-top: 22.5px;
-    .audio-progress {
+    .audio-section__progress {
       position: absolute;
       left: 0;
       top: 0;
@@ -372,7 +373,7 @@ section.audio-conatiner {
       width: 0;
       background: #e35924;
     }
-    .audio-progress-point {
+    .audio-section__progress__point {
       position: absolute;
       left: 0;
       top: 50%;
@@ -394,21 +395,21 @@ section.audio-conatiner {
       }
     }
   }
-  .audio-time-container {
+  .audio-section__time-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 7px;
-    .audio-current-time {
+    .audio-section__time--current {
       font-size: 10px;
       color: #888;
     }
-    .audio-duration {
+    .audio-section__duration {
       font-size: 10px;
       color: #888;
     }
   }
-  audio {
+  .audio-section__player {
     display: block;
     margin: 0 auto;
   }
