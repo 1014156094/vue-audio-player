@@ -1,5 +1,6 @@
 <template>
-  <section class="audio-section">
+  <section class="audio-section"
+           ref="audioSection">
     <div class="audio-section__btn-container">
       <div v-show="showPrevButton"
            class="audio-section__play__btn--previous"
@@ -137,13 +138,10 @@ export default {
     },
     // 正在播放音频中
     onTimeUpdate(event) {
-      this.progressValue = this.$refs.audio.currentTime / (this.$refs.audio.duration / 100)
-
       // 正在拖拽进度
       if (this.isDragging) {
         return
       }
-
       this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
       // 设置播放进度条
       this.$refs.audioProgress.style.width =
@@ -180,16 +178,38 @@ export default {
         event => {
           let touch = event.touches[0]
 
-          // 超出范围
-          if (
-            touch.pageX < this.$refs.audioProgressContainer.offsetLeft ||
-            touch.pageX > this.$refs.audioProgressContainer.offsetLeft + this.$refs.audioProgressContainer.offsetWidth
-          ) {
+          // 超出左边
+          if (touch.pageX < this.$refs.audioProgressContainer.offsetLeft) {
+            // 设置点点
+            this.$refs.audioProgressPoint.style.left = this.$refs.audioProgressPoint.offsetWidth / -2 + 'px'
+            // 设置进度条
+            this.$refs.audioProgress.style.width = 0
+            // 设置当前时间
+            this.currentTime = 0
+            // 设置当前时间（格式化后）
+            this.currentTimeAfterFormat = this.formatTime(this.currentTime)
             return
           }
+
+          // 超出右边
+          if (touch.pageX > this.$refs.audioProgressContainer.offsetLeft + this.$refs.audioProgressContainer.offsetWidth) {
+            // 设置点点
+            this.$refs.audioProgressPoint.style.left =
+              this.$refs.audioProgressContainer.offsetWidth -
+              this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
+            // 设置进度条
+            this.$refs.audioProgress.style.width = this.$refs.audioProgressContainer.offsetWidth + 'px'
+            // 设置当前时间，0.1解决有的浏览器进度还会再走
+            this.currentTime = this.duration - 0.1
+            // 设置当前时间（格式化后）
+            this.currentTimeAfterFormat = this.formatTime(this.currentTime)
+            return
+          }
+
           // 设置点点
           this.$refs.audioProgressPoint.style.left =
-            touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 - this.$refs.audioProgressContainer.offsetLeft + 'px'
+            touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 -
+            this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置进度条
           this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置当前时间
