@@ -78,6 +78,7 @@ export default {
 | show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
+| progressInterval | 进度更新间隔 | `Number` | `1000` |
 | before-play | 点击播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
 | before-prev | 点击上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
 | before-next | 点击下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
@@ -89,7 +90,8 @@ export default {
 | pause | 点击暂停后触发 | - |
 | play-prev | 点击上一首后触发 | - |
 | play-next | 点击下一首后触发 | - |
-| timeupdate | 正在播放音频中触发 | `event` |
+| playing | 播放中每 `progressInterval`秒 触发 | - |
+| timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
 

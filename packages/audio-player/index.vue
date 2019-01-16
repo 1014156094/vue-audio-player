@@ -42,7 +42,8 @@
     </div>
     <div v-show="showProgressBar"
          class="audio-section__progress-container"
-         ref="audioProgressContainer">
+         ref="audioProgressContainer"
+         @click="initProgressBarPoint">
       <div class="audio-section__progress"
            ref="audioProgress" />
       <div class="audio-section__progress__point"
@@ -116,10 +117,16 @@ export default {
     isLoop: {
       default: true,
       type: Boolean
+    },
+    // 进度更新间隔
+    progressInterval: {
+      default: 1000,
+      type: Number
     }
   },
   data() {
     return {
+      timer: null,
       currentPlayIndex: 0, // 当前播放的音频位置索引
       isPlaying: false, // 音频是否正在播放
       duration: '', // 音频持续时间
@@ -133,25 +140,10 @@ export default {
     onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration
       this.initProgressBarDrag()
-      this.initProgressBarPoint()
       this.$emit('loadedmetadata', event)
     },
-    // 正在播放音频中
+    // 当前的播放位置发送改变时触发
     onTimeUpdate(event) {
-      // 正在拖拽进度
-      if (this.isDragging) {
-        return
-      }
-      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
-      // 设置播放进度条
-      this.$refs.audioProgress.style.width =
-        this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressContainer.offsetWidth + 'px'
-      // 设置播放进度拖拽点
-      this.$refs.audioProgressPoint.style.left =
-        this.$refs.audio.currentTime /
-        this.$refs.audio.duration *
-        (this.$refs.audioProgressContainer.offsetWidth - this.$refs.audioProgressPoint.offsetWidth / 2) +
-        'px'
       this.$emit('timeupdate', event)
     },
     // 格式化秒为分
@@ -161,6 +153,7 @@ export default {
     // 音频播放完毕
     onEnded(event) {
       this.pause()
+      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
       this.$emit('ended', event)
     },
     // 初始化音频进度的拖拽逻辑
@@ -181,7 +174,7 @@ export default {
           // 超出左边
           if (touch.pageX < this.$refs.audioProgressContainer.offsetLeft) {
             // 设置点点
-            this.$refs.audioProgressPoint.style.left = this.$refs.audioProgressPoint.offsetWidth / -2 + 'px'
+            this.$refs.audioProgressPoint.style.left = 0
             // 设置进度条
             this.$refs.audioProgress.style.width = 0
             // 设置当前时间
@@ -196,20 +189,17 @@ export default {
             // 设置点点
             this.$refs.audioProgressPoint.style.left =
               this.$refs.audioProgressContainer.offsetWidth -
-              this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
+              this.$refs.audioProgressPoint.offsetWidth + 'px'
             // 设置进度条
             this.$refs.audioProgress.style.width = this.$refs.audioProgressContainer.offsetWidth + 'px'
-            // 设置当前时间，0.1解决有的浏览器进度还会再走
+            // 设置当前时间，0.1解决有的浏览器播放完了进度还会再走
             this.currentTime = this.duration - 0.1
             // 设置当前时间（格式化后）
             this.currentTimeAfterFormat = this.formatTime(this.currentTime)
             return
           }
 
-          // 设置点点
-          this.$refs.audioProgressPoint.style.left =
-            touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 -
-            this.$refs.audioProgressContainer.offsetLeft + 'px'
+          this.setPointPosition(touch.pageX)
           // 设置进度条
           this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
           // 设置当前时间
@@ -231,48 +221,73 @@ export default {
         false
       )
     },
+    // 设置点点位置
+    setPointPosition(pageX) {
+      // 设置点点
+      this.$refs.audioProgressPoint.style.left =
+        pageX - this.$refs.audioProgressPoint.offsetWidth / 2 - this.$refs.audioProgressContainer.offsetLeft + 'px'
+    },
     // 初始化音频进度的点击逻辑
-    initProgressBarPoint() {
-      this.$refs.audioProgressContainer.addEventListener('click', event => {
-        let touch = event
+    initProgressBarPoint(event) {
+      // 设置当前时间
+      this.currentTime = (event.pageX - this.$refs.audioProgressContainer.offsetLeft) /
+        this.$refs.audioProgressContainer.offsetWidth * this.duration
+      // 设置播放位置
+      this.$refs.audio.currentTime = this.currentTime
+      this.setPointPosition(event.pageX)
+      // 设置进度条
+      this.$refs.audioProgress.style.width = event.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
+      // 设置当前时间（格式化后）
+      this.currentTimeAfterFormat = this.formatTime(this.currentTime)
+    },
+    // 播放中
+    playing() {
+      // 正在拖拽进度
+      if (this.isDragging) {
+        return
+      }
 
-        // 设置点点
-        this.$refs.audioProgressPoint.style.left =
-          touch.pageX - this.$refs.audioProgressPoint.offsetWidth / 2 - this.$refs.audioProgressContainer.offsetLeft + 'px'
-        // 设置进度条
-        this.$refs.audioProgress.style.width = touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
-        // 设置当前时间
-        this.currentTime =
-          this.$refs.audioProgress.offsetWidth / this.$refs.audioProgressContainer.offsetWidth * this.duration
-        // 设置当前时间（格式化后）
-        this.currentTimeAfterFormat = this.formatTime(this.currentTime)
-        // 设置播放位置
-        this.$refs.audio.currentTime = this.currentTime
-      })
+      this.currentTimeAfterFormat = this.formatTime(this.$refs.audio.currentTime)
+      // 设置播放进度条
+      this.$refs.audioProgress.style.width =
+        this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressContainer.offsetWidth + 'px'
+      // 设置播放进度拖拽点
+      this.$refs.audioProgressPoint.style.left =
+        this.$refs.audio.currentTime /
+        this.$refs.audio.duration *
+        (this.$refs.audioProgressContainer.offsetWidth - this.$refs.audioProgressPoint.offsetWidth / 2) + 'px'
+      this.$emit('playing')
     },
     // 开始播放
     play() {
-      let play = () => {
+      let playHandle = () => {
         this.$refs.audio.play()
-        this.isPlaying = true
-        this.$emit('play')
+        this.$nextTick(() => {
+          this.playing()
+          this.timer = setInterval(this.playing, this.progressInterval)
+          this.isPlaying = true
+          this.$emit('play')
+        })
       }
 
       if (this.beforePlay) {
         this.beforePlay((state) => {
           if (state !== false) {
-            play()
+            playHandle()
           }
         })
         return
       }
-      play()
+      playHandle()
     },
     // 暂停播放
     pause() {
       this.$refs.audio.pause()
-      this.isPlaying = false
-      this.$emit('pause')
+      this.$nextTick(() => {
+        clearInterval(this.timer)
+        this.isPlaying = false
+        this.$emit('pause')
+      })
     },
     // 播放上一首
     playPrev() {
@@ -281,7 +296,7 @@ export default {
         return
       }
 
-      let prev = () => {
+      let prevHandle = () => {
         if (this.currentPlayIndex <= 0 && this.isLoop) {
           // 列表循环
           this.currentPlayIndex = this.audioList.length - 1
@@ -299,12 +314,12 @@ export default {
       if (this.beforePrev) {
         this.beforePrev((state) => {
           if (state !== false) {
-            prev()
+            prevHandle()
           }
         })
         return
       }
-      prev()
+      prevHandle()
     },
     // 播放下一首
     playNext() {
@@ -313,7 +328,7 @@ export default {
         return
       }
 
-      let next = () => {
+      let nextHandle = () => {
         if (this.currentPlayIndex + 1 >= this.audioList.length && this.isLoop) {
           // 列表循环
           this.currentPlayIndex = 0
@@ -330,13 +345,16 @@ export default {
       if (this.beforeNext) {
         this.beforeNext((state) => {
           if (state !== false) {
-            next()
+            nextHandle()
           }
         })
         return
       }
-      next()
+      nextHandle()
     }
+  },
+  beforeDestroy() {
+    this.pause()
   }
 }
 </script>
@@ -382,7 +400,7 @@ section.audio-section {
   }
   .audio-section__progress-container {
     position: relative;
-    background: #eee;
+    background: #ddd;
     height: 2px;
     margin-top: 20px;
     .audio-section__progress {
@@ -397,19 +415,20 @@ section.audio-section {
       position: absolute;
       left: 0;
       top: 50%;
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      margin-top: -6px;
+      margin-top: -8px;
       background: #e35924;
+      box-shadow: 0 0 10px 1px rgba(227, 89, 36, 0.5);
       &:after {
         content: "";
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 6px;
-        height: 6px;
-        margin: -3px 0 0 -3px;
+        width: 8px;
+        height: 8px;
+        margin: -4px 0 0 -4px;
         background: #fff;
         border-radius: 50%;
       }
