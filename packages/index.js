@@ -1,3 +1,4 @@
+import './fonts'
 import AudioPlayer from './audio-player/index.vue'
 
 const components = [

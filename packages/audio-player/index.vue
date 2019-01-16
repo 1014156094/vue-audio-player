@@ -4,28 +4,48 @@
       <div v-show="showPrevButton"
            class="play-previous-btn"
            :class="{ disable: !isLoop && currentPlayIndex === 0 }"
-           @click="playPrev" />
-      <img class="play-start-btn play"
-           v-if="!isPlaying && showPlayButton"
-           src="./icon-play-start.png"
-           @click="play">
-      <img class="play-pause-btn pause"
-           src="./icon-play-pause.png"
-           v-else-if="showPlayButton"
-           @click="pause">
+           @click="playPrev">
+        <svg class="icon"
+             aria-hidden="true">
+          <use xlink:href="#icon-play-prev" />
+        </svg>
+      </div>
+
+      <div v-if="!isPlaying && showPlayButton"
+           @click="play"
+           class="play-start-btn">
+        <svg class="icon"
+             aria-hidden="true">
+          <use xlink:href="#icon-play" />
+        </svg>
+      </div>
+
+      <div v-else-if="showPlayButton"
+           @click="pause"
+           class="play-pause-btn">
+        <svg class="icon"
+             aria-hidden="true">
+          <use xlink:href="#icon-play-pause" />
+        </svg>
+      </div>
+
       <div v-show="showNextButton"
            class="play-next-btn"
            :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
-           @click="playNext" />
+           @click="playNext">
+        <svg class="icon"
+             aria-hidden="true">
+          <use xlink:href="#icon-play-next" />
+        </svg>
+      </div>
     </div>
     <div v-show="showProgressBar"
          class="audio-progress-container"
          ref="audioProgressContainer">
       <div class="audio-progress"
            ref="audioProgress" />
-      <img class="audio-progress-point"
-           src="./icon-play-progress-point.png"
-           ref="audioProgressPoint">
+      <div class="audio-progress-point"
+           ref="audioProgressPoint" />
     </div>
     <div v-show="showProgressBar"
          class="audio-time-container">
@@ -307,11 +327,16 @@ section.audio-conatiner {
     display: flex;
     align-items: center;
     justify-content: center;
+    .icon {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+      overflow: hidden;
+      color: #e35924;
+    }
     .play-previous-btn {
       width: 21px;
       height: 33px;
-      background: url(./icon-play-previous.png) center center / contain
-        no-repeat;
       &.disable {
         opacity: 0.5;
       }
@@ -329,7 +354,6 @@ section.audio-conatiner {
     .play-next-btn {
       width: 21px;
       height: 33px;
-      background: url(./icon-play-next.png) center center / contain no-repeat;
       &.disable {
         opacity: 0.5;
       }
@@ -353,7 +377,21 @@ section.audio-conatiner {
       left: 0;
       top: 50%;
       width: 12px;
+      height: 12px;
+      border-radius: 50%;
       margin-top: -6px;
+      background: #e35924;
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 6px;
+        height: 6px;
+        margin: -3px 0 0 -3px;
+        background: #fff;
+        border-radius: 50%;
+      }
     }
   }
   .audio-time-container {
