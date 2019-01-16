@@ -1,4 +1,4 @@
-<h2 align="center" style="margin: 30px 0 35px;">Vue音频播放器组件</h2>
+<h3 align="center" style="margin: 30px 0 35px;">Vue音频播放器组件</h3>
 
 <p align="center">
     <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" alt="npm version" />
