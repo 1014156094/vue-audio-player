@@ -1,4 +1,11 @@
-# Vue音频播放器组件
+<h2 align="center" style="margin: 30px 0 35px;">Vue音频播放器组件</h2>
+
+<p align="center">
+    <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" alt="npm version" />
+    <img src="https://img.shields.io/bundlephobia/minzip/vue-audio-player.svg" alt="Build Status" />
+</p>
+
+---
 
 ## 线上演示
 ![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png?raw=true)
