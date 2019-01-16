@@ -345,12 +345,12 @@ section.audio-section {
     .audio-section__play__btn--start {
       width: 42px;
       height: 42px;
-      margin: 0 40px;
+      margin: 0 20px;
     }
     .audio-section__play__btn--pause {
       width: 42px;
       height: 42px;
-      margin: 0 40px;
+      margin: 0 20px;
     }
     .audio-section__play__btn--next {
       width: 21px;
@@ -364,7 +364,7 @@ section.audio-section {
     position: relative;
     background: #eee;
     height: 2px;
-    margin-top: 22.5px;
+    margin-top: 20px;
     .audio-section__progress {
       position: absolute;
       left: 0;
