@@ -79,9 +79,9 @@ export default {
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | progressInterval | 进度更新间隔 | `Number` | `1000` |
-| before-play | 点击播放前的回调函数<br>调用 done() 后开始播放 | `(done)=>void` | - |
-| before-prev | 点击上一首前的回调函数<br>调用 done() 后开始播放上一首 | `(done)=>void` | - |
-| before-next | 点击下一首前的回调函数<br>调用 done() 后开始播放下一首 | `(done)=>void` | - |
+| before-play | 点击播放前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
+| before-prev | 点击上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
+| before-next | 点击下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
 
 ## Event
 | 事件 | 说明 | 回调 |
