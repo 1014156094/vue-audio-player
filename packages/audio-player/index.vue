@@ -126,6 +126,7 @@ export default {
   },
   data() {
     return {
+      isIOS: /iPhone|iPad|iPod/i.test(window.navigator.userAgent), // 是否是IOS设备
       timer: null,
       currentPlayIndex: 0, // 当前播放的音频位置索引
       isPlaying: false, // 音频是否正在播放
@@ -268,6 +269,12 @@ export default {
           this.isPlaying = true
           this.$emit('play')
         })
+      }
+
+      // 解决IOS异步请求后无法播放
+      if (this.isIOS) {
+        this.$refs.audio.play()
+        this.$refs.audio.pause()
       }
 
       if (this.beforePlay) {
