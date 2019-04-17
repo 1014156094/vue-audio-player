@@ -1,13 +1,14 @@
 <template>
   <div>
-    <AudioPlayer :audio-list="audioList" />
+    <AudioPlayer
+      :audio-list="audioList"
+      :before-play="onBeforePlay" />
   </div>
 </template>
 
 <script>
-import { AudioPlayer } from '../../../packages'
-// import { AudioPlayer } from '@liripeng/vue-audio-player'
-// import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import { AudioPlayer } from '@liripeng/vue-audio-player'
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 export default {
   components: {
@@ -20,9 +21,16 @@ export default {
         'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
       ]
     }
+  },
+  methods: {
+    // 播放前做的事
+    onBeforePlay(next) {
+      console.log('这里可以做一些事情...')
+      next() // 开始播放
+    }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 </style>

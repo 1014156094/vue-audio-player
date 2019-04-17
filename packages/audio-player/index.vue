@@ -1,56 +1,69 @@
 <template>
-  <section class="audio-section"
-           ref="audioSection">
+  <section
+    class="audio-section"
+    ref="audioSection">
     <div class="audio-section__btn-container">
-      <div v-show="showPrevButton"
-           class="audio-section__play__btn--previous"
-           :class="{ disable: !isLoop && currentPlayIndex === 0 }"
-           @click="playPrev">
-        <svg class="audio-section__play__btn__icon"
-             aria-hidden="true">
+      <div
+        v-show="showPrevButton"
+        class="audio-section__play__btn--previous"
+        :class="{ disable: !isLoop && currentPlayIndex === 0 }"
+        @click="playPrev">
+        <svg
+          class="audio-section__play__btn__icon"
+          aria-hidden="true">
           <use xlink:href="#icon-play-prev" />
         </svg>
       </div>
 
-      <div v-if="!isPlaying && showPlayButton"
-           @click="play"
-           class="audio-section__play__btn--start">
-        <svg class="audio-section__play__btn__icon"
-             aria-hidden="true">
+      <div
+        v-if="!isPlaying && showPlayButton"
+        @click="play"
+        class="audio-section__play__btn--start">
+        <svg
+          class="audio-section__play__btn__icon"
+          aria-hidden="true">
           <use xlink:href="#icon-play" />
         </svg>
       </div>
 
-      <div v-else-if="showPlayButton"
-           @click="pause"
-           class="audio-section__play__btn--pause">
-        <svg class="audio-section__play__btn__icon"
-             aria-hidden="true">
+      <div
+        v-else-if="showPlayButton"
+        @click="pause"
+        class="audio-section__play__btn--pause">
+        <svg
+          class="audio-section__play__btn__icon"
+          aria-hidden="true">
           <use xlink:href="#icon-play-pause" />
         </svg>
       </div>
 
-      <div v-show="showNextButton"
-           class="audio-section__play__btn--next"
-           :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
-           @click="playNext">
-        <svg class="audio-section__play__btn__icon"
-             aria-hidden="true">
+      <div
+        v-show="showNextButton"
+        class="audio-section__play__btn--next"
+        :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
+        @click="playNext">
+        <svg
+          class="audio-section__play__btn__icon"
+          aria-hidden="true">
           <use xlink:href="#icon-play-next" />
         </svg>
       </div>
     </div>
-    <div v-show="showProgressBar"
-         class="audio-section__progress-container"
-         ref="audioProgressContainer"
-         @click="initProgressBarPoint">
-      <div class="audio-section__progress"
-           ref="audioProgress" />
-      <div class="audio-section__progress__point"
-           ref="audioProgressPoint" />
+    <div
+      v-show="showProgressBar"
+      class="audio-section__progress-container"
+      ref="audioProgressContainer"
+      @click="initProgressBarPoint">
+      <div
+        class="audio-section__progress"
+        ref="audioProgress" />
+      <div
+        class="audio-section__progress__point"
+        ref="audioProgressPoint" />
     </div>
-    <div v-show="showProgressBar"
-         class="audio-section__time-container">
+    <div
+      v-show="showProgressBar"
+      class="audio-section__time-container">
       <div class="audio-section__time--current">
         {{ currentTimeAfterFormat }}
       </div>
@@ -58,12 +71,13 @@
         {{ formatTime(duration) }}
       </div>
     </div>
-    <audio ref="audio"
-           class="audio-section__player"
-           :src="audioList[currentPlayIndex]"
-           @ended="onEnded"
-           @timeupdate="onTimeUpdate"
-           @loadedmetadata="onLoadedmetadata">
+    <audio
+      ref="audio"
+      class="audio-section__player"
+      :src="audioList[currentPlayIndex]"
+      @ended="onEnded"
+      @timeupdate="onTimeUpdate"
+      @loadedmetadata="onLoadedmetadata">
       浏览器太老咯，请升级浏览器吧~
     </audio>
   </section>

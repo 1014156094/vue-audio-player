@@ -46,12 +46,14 @@ Vue.use(AudioPlayer)
 ```
 <template>
   <div>
-    <AudioPlayer :audio-list="audioList" />
+    <AudioPlayer :audio-list="audioList"
+                 :before-play="onBeforePlay" />
   </div>
 </template>
 
 <script>
 import { AudioPlayer } from '@liripeng/vue-audio-player'
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 export default {
   components: {
@@ -64,12 +66,19 @@ export default {
         'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
       ]
     }
+  },
+  methods: {
+    // 播放前做的事
+    onBeforePlay(next) {
+        console.log('这里可以做一些事情...')
+        next() // 开始播放
+    }
   }
 }
 </script>
 ```
 
-## Props
+## Prop
 | 参数 | 说明 | 类型 | 默认值 |
 | - | - | - | - |
 | audio-list | 音频播放列表 | `Array` | - |
@@ -90,7 +99,7 @@ export default {
 | pause | 点击暂停后触发 | - |
 | play-prev | 点击上一首后触发 | - |
 | play-next | 点击下一首后触发 | - |
-| playing | 播放中每 `progressInterval`秒 触发 | - |
+| playing | 播放中每 `progressInterval` 秒触发 | - |
 | timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
@@ -103,9 +112,9 @@ export default {
 | duration | 音频持续时间 | - |
 | currentTime | 音频当前播放时间 | - |
 
-`更多`请自行查看组件 `data`
+使用 `ref` 调用， `更多`请自行查看组件 `data`
 
-## Methods
+## Method
 | 方法 | 说明 | 回调 |
 | - | - | - |
 | play | 开始播放 | - |
@@ -113,10 +122,10 @@ export default {
 | playPrev | 播放上一首 | - |
 | playNext | 播放下一首 | - |
 
-`更多`请自行查看组件 `methods`
+使用 `ref` 调用， `更多`请自行查看组件 `methods`
 
 ## LICENSE
 `MIT`
 
 ## 最后
-使用过程中发现任何问题都可以提 Issue，也非常欢迎提PR
+使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`

@@ -1,6 +1,6 @@
 {
   "name": "@liripeng/vue-audio-player",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "适用于PC移动端的 Vue 音频播放器组件",
   "license": "MIT",
   "author": "liripeng <1014156094@qq.com>",
@@ -54,17 +54,7 @@
     "rules": {
       "no-debugger": "off",
       "space-before-function-paren": "off",
-      "vue/html-closing-bracket-newline": "off",
-      "vue/max-attributes-per-line": [
-        2,
-        {
-          "singleline": 1,
-          "multiline": {
-            "max": 1,
-            "allowFirstLine": true
-          }
-        }
-      ]
+      "vue/html-closing-bracket-newline": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
