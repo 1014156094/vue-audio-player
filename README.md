@@ -12,7 +12,7 @@
 
 
 ## 特性
-- 经过童星汇APP线上业务检验的组件
+- 经过童星汇 APP 线上业务检验的组件
 - 完善的文档和示例
 - 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，库链接：https://github.com/hammerjs/touchemulator）
 - 原生 CSS，支持 Less、Scss 等预编译语言
@@ -110,7 +110,7 @@ export default {
 | duration | 音频持续时间 | - |
 | currentTime | 音频当前播放时间 | - |
 
-使用 `ref` 调用， 更多请自行查看组件 [data]((https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue))
+使用 `ref` 调用， 更多请自行查看组件 [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## Method
 | 方法 | 说明 | 回调 |
@@ -124,8 +124,8 @@ export default {
 
 ## 更新日志
 | 版本 | 说明 |
-| - | - | - |
-| v1.0.4 | 1. 修复 isLoop 无效<br>2. 简化类名
+| - | - |
+| v1.0.4 | 1. 修复 isLoop 无效<br>2. 简化类名<br>3. 支持原生 CSS
 
 ## LICENSE
 `MIT`
