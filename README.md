@@ -123,11 +123,11 @@ export default {
 使用 `ref` 调用， 更多请自行查看组件 [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## 更新日志
-| 版本 | 说明 |
-| - | - |
-| v1.0.4 | 1. 修复 isLoop 无效<br>2. 简化类名<br>3. 支持原生 CSS
+| 版本 | 说明 | 更新时间 |
+| - | - | - |
+| v1.0.4 | 1. 修复 isLoop 无效<br>2. 简化类名<br>3. 支持原生 CSS | 2019-10-16 |
 
-## LICENSE
+## 许可证
 `MIT`
 
 ## 最后
