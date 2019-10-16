@@ -2,13 +2,15 @@
   <div>
     <AudioPlayer
       :audio-list="audioList"
-      :before-play="onBeforePlay" />
+      :before-play="onBeforePlay"
+    />
   </div>
 </template>
 
 <script>
-import { AudioPlayer } from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+// import { AudioPlayer } from '@liripeng/vue-audio-player'
+// import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import { AudioPlayer } from '../../../packages'
 
 export default {
   components: {
@@ -25,7 +27,8 @@ export default {
   methods: {
     // 播放前做的事
     onBeforePlay(next) {
-      console.log('这里可以做一些事情...')
+      // 这里可以做一些事情...
+
       next() // 开始播放
     }
   }
