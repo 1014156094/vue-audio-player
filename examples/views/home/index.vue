@@ -8,9 +8,9 @@
 </template>
 
 <script>
-// import { AudioPlayer } from '@liripeng/vue-audio-player'
-// import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
-import { AudioPlayer } from '../../../packages'
+import { AudioPlayer } from '@liripeng/vue-audio-player'
+import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+// import { AudioPlayer } from '../../../packages'
 
 export default {
   components: {
@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       audioList: [
-        'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3',
-        'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
+        'http://up_mp4.t57.cn/2018/1/03m/13/396131229550.m4a',
+        'http://up_mp4.t57.cn/2017/1/11m/11/304112004168.m4a'
       ]
     }
   },

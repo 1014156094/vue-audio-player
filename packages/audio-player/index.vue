@@ -1,14 +1,14 @@
 <template>
-  <section class="audio-wrap">
-    <div class="audio__btn-container">
+  <div class="audio-player">
+    <div class="audio__btn-wrap">
       <div
         v-show="showPrevButton"
-        class="audio__play__btn--previous"
+        class="audio__play--previous"
         :class="{ disable: !isLoop && currentPlayIndex === 0 }"
         @click="playPrev"
       >
         <svg
-          class="audio__play__btn__icon"
+          class="audio__play__icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play-prev" />
@@ -18,10 +18,10 @@
       <div
         v-if="!isPlaying && showPlayButton"
         @click="play"
-        class="audio__play__btn--start"
+        class="audio__play--start"
       >
         <svg
-          class="audio__play__btn__icon"
+          class="audio__play__icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play" />
@@ -31,10 +31,10 @@
       <div
         v-else-if="showPlayButton"
         @click="pause"
-        class="audio__play__btn--pause"
+        class="audio__play--pause"
       >
         <svg
-          class="audio__play__btn__icon"
+          class="audio__play__icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play-pause" />
@@ -43,12 +43,12 @@
 
       <div
         v-show="showNextButton"
-        class="audio__play__btn--next"
+        class="audio__play--next"
         :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
         @click="playNext"
       >
         <svg
-          class="audio__play__btn__icon"
+          class="audio__play__icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play-next" />
@@ -58,8 +58,8 @@
 
     <div
       v-show="showProgressBar"
-      class="audio__progress-container"
-      ref="audioProgressContainer"
+      class="audio__progress-wrap"
+      ref="audioProgressWrap"
       @click="initProgressBarPoint"
     >
       <div
@@ -67,16 +67,16 @@
         ref="audioProgress"
       />
       <div
-        class="audio__progress__point"
+        class="audio__progress-point"
         ref="audioProgressPoint"
       />
     </div>
 
     <div
       v-show="showProgressBar"
-      class="audio__time-container"
+      class="audio__time-wrap"
     >
-      <div class="audio__time--current">
+      <div class="audio__current-time">
         {{ currentTimeAfterFormat }}
       </div>
       <div class="audio__duration">
@@ -86,7 +86,7 @@
 
     <audio
       ref="audio"
-      class="audio__player"
+      class="audio-player__audio"
       :src="audioList[currentPlayIndex]"
       @ended="onEnded"
       @timeupdate="onTimeUpdate"
@@ -94,7 +94,7 @@
     >
       浏览器太老咯，请升级浏览器吧~
     </audio>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -213,7 +213,7 @@ export default {
           let touch = event.touches[0]
 
           // 超出左边
-          if (touch.pageX < this.$refs.audioProgressContainer.offsetLeft) {
+          if (touch.pageX < this.$refs.audioProgressWrap.offsetLeft) {
             // 设置点点
             this.$refs.audioProgressPoint.style.left = 0
             // 设置进度条
@@ -228,17 +228,17 @@ export default {
           // 超出右边
           if (
             touch.pageX >
-            this.$refs.audioProgressContainer.offsetLeft +
-              this.$refs.audioProgressContainer.offsetWidth
+            this.$refs.audioProgressWrap.offsetLeft +
+              this.$refs.audioProgressWrap.offsetWidth
           ) {
             // 设置点点
             this.$refs.audioProgressPoint.style.left =
-              this.$refs.audioProgressContainer.offsetWidth -
+              this.$refs.audioProgressWrap.offsetWidth -
               this.$refs.audioProgressPoint.offsetWidth +
               'px'
             // 设置进度条
             this.$refs.audioProgress.style.width =
-              this.$refs.audioProgressContainer.offsetWidth + 'px'
+              this.$refs.audioProgressWrap.offsetWidth + 'px'
             // 设置当前时间，0.1解决有的浏览器播放完了进度还会再走
             this.currentTime = this.duration - 0.1
             // 设置当前时间（格式化后）
@@ -249,11 +249,11 @@ export default {
           this.setPointPosition(touch.pageX)
           // 设置进度条
           this.$refs.audioProgress.style.width =
-            touch.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
+            touch.pageX - this.$refs.audioProgressWrap.offsetLeft + 'px'
           // 设置当前时间
           this.currentTime =
             (this.$refs.audioProgress.offsetWidth /
-              this.$refs.audioProgressContainer.offsetWidth) *
+              this.$refs.audioProgressWrap.offsetWidth) *
             this.duration
           // 设置当前时间（格式化后）
           this.currentTimeAfterFormat = this.formatTime(this.currentTime)
@@ -277,22 +277,22 @@ export default {
       this.$refs.audioProgressPoint.style.left =
         pageX -
         this.$refs.audioProgressPoint.offsetWidth / 2 -
-        this.$refs.audioProgressContainer.offsetLeft +
+        this.$refs.audioProgressWrap.offsetLeft +
         'px'
     },
     // 初始化音频进度的点击逻辑
     initProgressBarPoint(event) {
       // 设置当前时间
       this.currentTime =
-        ((event.pageX - this.$refs.audioProgressContainer.offsetLeft) /
-          this.$refs.audioProgressContainer.offsetWidth) *
+        ((event.pageX - this.$refs.audioProgressWrap.offsetLeft) /
+          this.$refs.audioProgressWrap.offsetWidth) *
         this.duration
       // 设置播放位置
       this.$refs.audio.currentTime = this.currentTime
       this.setPointPosition(event.pageX)
       // 设置进度条
       this.$refs.audioProgress.style.width =
-        event.pageX - this.$refs.audioProgressContainer.offsetLeft + 'px'
+        event.pageX - this.$refs.audioProgressWrap.offsetLeft + 'px'
       // 设置当前时间（格式化后）
       this.currentTimeAfterFormat = this.formatTime(this.currentTime)
     },
@@ -309,19 +309,19 @@ export default {
       // 设置播放进度条
       this.$refs.audioProgress.style.width =
         (this.$refs.audio.currentTime / this.$refs.audio.duration) *
-          this.$refs.audioProgressContainer.offsetWidth +
+          this.$refs.audioProgressWrap.offsetWidth +
         'px'
       // 设置播放进度拖拽点
       this.$refs.audioProgressPoint.style.left =
         (this.$refs.audio.currentTime / this.$refs.audio.duration) *
-          (this.$refs.audioProgressContainer.offsetWidth -
+          (this.$refs.audioProgressWrap.offsetWidth -
             this.$refs.audioProgressPoint.offsetWidth / 2) +
         'px'
       this.$emit('playing')
     },
     // 开始播放
     play() {
-      let playHandle = () => {
+      let playHandler = () => {
         this.$refs.audio.play()
         this.$nextTick(() => {
           this.playing()
@@ -340,13 +340,13 @@ export default {
       if (this.beforePlay) {
         this.beforePlay(state => {
           if (state !== false) {
-            playHandle()
+            playHandler()
           }
         })
         return
       }
 
-      playHandle()
+      playHandler()
     },
     // 暂停播放
     pause() {
@@ -364,7 +364,7 @@ export default {
         return
       }
 
-      let prevHandle = () => {
+      let prevHandler = () => {
         if (this.currentPlayIndex <= 0 && this.isLoop) {
           // 列表循环
           this.currentPlayIndex = this.audioList.length - 1
@@ -374,7 +374,6 @@ export default {
 
         this.$nextTick(() => {
           this.play()
-          this.isPlaying = true
           this.$emit('play-prev')
         })
       }
@@ -382,12 +381,12 @@ export default {
       if (this.beforePrev) {
         this.beforePrev(state => {
           if (state !== false) {
-            prevHandle()
+            prevHandler()
           }
         })
         return
       }
-      prevHandle()
+      prevHandler()
     },
     // 播放下一首
     playNext() {
@@ -396,7 +395,7 @@ export default {
         return
       }
 
-      let nextHandle = () => {
+      let nextHandler = () => {
         // 已经到达列表最后一首
         if (this.currentPlayIndex + 1 >= this.audioList.length && this.isLoop) {
           this.currentPlayIndex = 0
@@ -406,7 +405,6 @@ export default {
 
         this.$nextTick(() => {
           this.play()
-          this.isPlaying = true
           this.$emit('play-next')
         })
       }
@@ -414,13 +412,13 @@ export default {
       if (this.beforeNext) {
         this.beforeNext(state => {
           if (state !== false) {
-            nextHandle()
+            nextHandler()
           }
         })
         return
       }
 
-      nextHandle()
+      nextHandler()
     }
   },
 
@@ -431,17 +429,17 @@ export default {
 </script>
 
 <style>
-.audio-wrap {
+.audio-player {
   margin: 0 15px;
 }
 
-.audio-wrap .audio__btn-container {
+.audio-player .audio__btn-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn__icon {
+.audio-player .audio__btn-wrap .audio__play__icon {
   width: 100%;
   height: 100%;
   fill: currentColor;
@@ -449,44 +447,44 @@ export default {
   color: #e35924;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--previous {
+.audio-player .audio__btn-wrap .audio__play--previous {
   width: 21px;
   height: 33px;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--previous.disable {
+.audio-player .audio__btn-wrap .audio__play--previous.disable {
   opacity: 0.5;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--start {
+.audio-player .audio__btn-wrap .audio__play--start {
   width: 42px;
   height: 42px;
   margin: 0 20px;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--pause {
+.audio-player .audio__btn-wrap .audio__play--pause {
   width: 42px;
   height: 42px;
   margin: 0 20px;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--next {
+.audio-player .audio__btn-wrap .audio__play--next {
   width: 21px;
   height: 33px;
 }
 
-.audio-wrap .audio__btn-container .audio__play__btn--next.disable {
+.audio-player .audio__btn-wrap .audio__play--next.disable {
   opacity: 0.5;
 }
 
-.audio-wrap .audio__progress-container {
+.audio-player .audio__progress-wrap {
   position: relative;
   background: #ddd;
   height: 2px;
   margin-top: 20px;
 }
 
-.audio-wrap .audio__progress-container .audio__progress {
+.audio-player .audio__progress-wrap .audio__progress {
   position: absolute;
   left: 0;
   top: 0;
@@ -495,7 +493,7 @@ export default {
   background: #e35924;
 }
 
-.audio-wrap .audio__progress-container .audio__progress__point {
+.audio-player .audio__progress-wrap .audio__progress-point {
   position: absolute;
   left: 0;
   top: 50%;
@@ -507,7 +505,7 @@ export default {
   box-shadow: 0 0 10px 1px rgba(227, 89, 36, 0.5);
 }
 
-.audio-wrap .audio__progress-container .audio__progress__point:after {
+.audio-player .audio__progress-wrap .audio__progress-point:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -519,24 +517,24 @@ export default {
   border-radius: 50%;
 }
 
-.audio-wrap .audio__time-container {
+.audio-player .audio__time-wrap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 7px;
 }
 
-.audio-wrap .audio__time-container .audio__time--current {
+.audio-player .audio__time-wrap .audio__current-time {
   font-size: 10px;
   color: #888;
 }
 
-.audio-wrap .audio__time-container .audio__duration {
+.audio-player .audio__time-wrap .audio__duration {
   font-size: 10px;
   color: #888;
 }
 
-.audio-wrap .audio__player {
+.audio-player .audio-player__audio {
   display: block;
   margin: 0 auto;
 }
