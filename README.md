@@ -125,7 +125,8 @@ export default {
 ## 更新日志
 | 版本 | 说明 | 更新时间 |
 | - | - | - |
-| v1.0.5 | 1. 修复 #5<br> | 2019-11-21 |
+| v1.0.6 | 1. 不自带 babel-polyfill<br> | 2020-04-28 |
+| v1.0.5 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a><br> | 2019-11-21 |
 | v1.0.4 | 1. 修复 isLoop 无效<br>2. 修改类名<br>3. 支持原生 CSS | 2019-10-16 |
 
 ## 许可证
