@@ -9,12 +9,12 @@
 
 ## 线上演示
 ![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png?raw=true)
-
+<a href="https://crm.tongxinghui.com/hot/audio-detail/603">点我链接访问</a>
 
 ## 特性
 - 经过童星汇 APP 线上业务检验的组件
 - 完善的文档和示例
-- 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，库链接：https://github.com/hammerjs/touchemulator）
+- 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，<a href="https://github.com/1014156094/vue-audio-player/issues/10">教程</a>）
 - 原生 CSS，支持 Less、Scss 等预编译语言
 
 ## 安装
@@ -125,6 +125,7 @@ export default {
 ## 更新日志
 | 版本 | 说明 | 更新时间 |
 | - | - | - |
+| v1.0.7 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a><br> | 2020-10-02 |
 | v1.0.6 | 1. 不自带 babel-polyfill<br> | 2020-04-28 |
 | v1.0.5 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a><br> | 2019-11-21 |
 | v1.0.4 | 1. 修复 isLoop 无效<br>2. 修改类名<br>3. 支持原生 CSS | 2019-10-16 |

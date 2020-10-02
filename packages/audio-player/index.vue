@@ -325,7 +325,7 @@ export default {
         this.$refs.audio.play()
         this.$nextTick(() => {
           this.playing()
-          this.timer = setInterval(this.playing, this.progressInterval)
+          this.timer = window.setInterval(this.playing, this.progressInterval)
           this.isPlaying = true
           this.$emit('play')
         })
@@ -353,6 +353,7 @@ export default {
       this.$refs.audio.pause()
       this.$nextTick(() => {
         clearInterval(this.timer)
+        this.timer = null
         this.isPlaying = false
         this.$emit('pause')
       })
