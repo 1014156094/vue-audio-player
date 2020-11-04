@@ -916,6 +916,15 @@
     vue "^2.6.11"
     vue-router "^3.1.6"
 
+"@liripeng/vue-audio-player@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@liripeng/vue-audio-player/-/vue-audio-player-1.0.7.tgz#3441ced45fdf6e216df4a0595f2b6f712720780d"
+  integrity sha512-WxKYQlKZHfFPNpGDXh6gkVRJonJP8pmIeOYHPr1wnELUKQT2+RRZJuOquOqKatcprdduTZ1dRpZqiFxUPHSzYw==
+  dependencies:
+    "@liripeng/vue-audio-player" "^1.0.6"
+    vue "^2.6.11"
+    vue-router "^3.1.6"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
