@@ -180,22 +180,34 @@ export default {
     },
     // 格式化秒为分
     formatTime(second) {
-      return [parseInt((second / 60) % 60), parseInt(second % 60)]
-        .join(':')
-        .replace(/\b(\d)\b/g, '0$1')
+      // 将秒数除以60，然后下舍入，既得到分钟数
+      let hour
+      hour = Math.floor(second / 60)
+      // 取得秒%60的余数，既得到秒数
+      second = Math.ceil(second % 60)
+      // 将变量转换为字符串
+      hour += ''
+      second += ''
+      // 如果只有一位数，前面增加一个0
+      hour = (hour.length === 1) ? '0' + hour : hour
+      second = (second.length === 1) ? '0' + second : second
+      return hour + ':' + second
     },
     // 音频播放完毕
     onEnded(event) {
-      this.pause()
       this.currentTimeAfterFormat = this.formatTime(
         this.$refs.audio.currentTime
       )
-      this.$emit('ended', event)
 
-      if (this.isLoop) {
-        this.playNext()
-        this.play()
-      }
+      window.setTimeout(() => {
+        this.pause()
+        this.$emit('ended', event)
+
+        if (this.isLoop) {
+          this.playNext()
+          this.play()
+        }
+      }, 1000)
     },
     // 初始化音频进度的拖拽逻辑
     initProgressBarDrag() {
