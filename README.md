@@ -125,6 +125,7 @@ export default {
 ## 更新日志
 | 版本 | 说明 | 更新时间 |
 | - | - | - |
+| v1.0.8 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a><br> | 2020-11-17 |
 | v1.0.7 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a><br> | 2020-10-02 |
 | v1.0.6 | 1. 不自带 babel-polyfill<br> | 2020-04-28 |
 | v1.0.5 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a><br> | 2019-11-21 |
