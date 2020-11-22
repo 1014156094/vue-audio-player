@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       audioList: [
-        'http://m10.music.126.net/20201117235352/d9042931a5e6fe6d14db56258e43b255/ymusic/b5ed/e931/2942/b7e5c41046192910e989967718df0c4c.mp3',
-        'http://m10.music.126.net/20201117235638/a13167f688f03a85a6658015f33518a5/ymusic/0b4f/eaf3/4aed/151e586840e80d03ac834e6639601c0b.mp3'
+        'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3',
+        'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
       ]
     }
   },
