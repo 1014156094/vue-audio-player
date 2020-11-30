@@ -44,8 +44,13 @@ Vue.use(AudioPlayer)
 ```
 <template>
   <div>
-    <AudioPlayer :audio-list="audioList"
-                 :before-play="onBeforePlay" />
+    {{ currentAudioName || audioList[0].name }}
+    <AudioPlayer
+      ref="audioPlayer"
+      :audio-list="audioList.map(elm => elm.url)"
+      :before-play="onBeforePlay"
+      @play="handlePlay"
+    />
   </div>
 </template>
 
@@ -57,19 +62,37 @@ export default {
   components: {
     AudioPlayer
   },
+
   data() {
     return {
+      currentAudioName: '',
       audioList: [
-        'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3',
-        'http://txh-cdn.96qbhy.com/20181106105737sOcozMqw.mp3'
+        {
+          name: '音频1',
+          url: 'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3'
+        },
+        {
+          name: '音频2',
+          url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
+        },
+        {
+          name: '音频3',
+          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+        }
       ]
     }
   },
+
   methods: {
+    handlePlay() {
+      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
+    },
+
     // 播放前做的事
     onBeforePlay(next) {
-        console.log('这里可以做一些事情...')
-        next() // 开始播放
+      // 这里可以做一些事情...
+
+      next() // 开始播放
     }
   }
 }
@@ -86,21 +109,22 @@ export default {
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | progressInterval | 进度更新间隔 | `Number` | `1000` |
-| before-play | 点击播放前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
-| before-prev | 点击上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
-| before-next | 点击下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
+| before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
+| before-prev | 播放上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
+| before-next | 播放下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
 
 ## Event
 | 事件 | 说明 | 回调 |
 | - | - | - |
-| play | 点击播放后触发 | - |
-| pause | 点击暂停后触发 | - |
-| play-prev | 点击上一首后触发 | - |
-| play-next | 点击下一首后触发 | - |
+| play | 播放开始后触发 | - |
+| pause | 播放暂停后触发 | - |
+| play-prev | 播放上一首后触发 | - |
+| play-next | 播放下一首后触发 | - |
 | playing | 播放中每 `progressInterval` 秒触发 | - |
 | timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
+| 其他事件与原生 `audio` 相同 | | |
 
 ## Data
 | 变量 | 说明 | 默认值 |
@@ -125,6 +149,7 @@ export default {
 ## 更新日志
 | 版本 | 说明 | 更新时间 |
 | - | - | - |
+| v1.1.0 | 1. 新增播放失败自动播放下一首<br> 2. 新增 `loading`，可用 `CSS` 替换颜色 3. 修改 `play` 事件调前 | 2020-11-30 |
 | v1.0.8 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a><br> | 2020-11-17 |
 | v1.0.7 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a><br> | 2020-10-02 |
 | v1.0.6 | 1. 不自带 babel-polyfill<br> | 2020-04-28 |

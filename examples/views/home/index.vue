@@ -1,8 +1,11 @@
 <template>
   <div>
+    {{ currentAudioName || audioList[0].name }}
     <AudioPlayer
-      :audio-list="audioList"
+      ref="audioPlayer"
+      :audio-list="audioList.map(elm => elm.url)"
       :before-play="onBeforePlay"
+      @play="handlePlay"
     />
   </div>
 </template>
@@ -16,15 +19,33 @@ export default {
   components: {
     AudioPlayer
   },
+
   data() {
     return {
+      currentAudioName: '',
       audioList: [
-        'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3',
-        'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+        {
+          name: '音频1',
+          url: 'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3'
+        },
+        {
+          name: '音频2',
+          url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
+        },
+        {
+          name: '音频3',
+          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+        }
       ]
     }
   },
+
   methods: {
+    handlePlay() {
+      console.log(22)
+      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
+    },
+
     // 播放前做的事
     onBeforePlay(next) {
       // 这里可以做一些事情...

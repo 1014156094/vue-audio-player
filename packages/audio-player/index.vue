@@ -16,30 +16,45 @@
       </div>
 
       <div
-        v-if="!isPlaying && showPlayButton"
-        @click="play"
-        class="audio__play--start"
-      >
-        <svg
-          class="audio__play__icon"
-          aria-hidden="true"
-        >
-          <use xlink:href="#icon-play" />
-        </svg>
+        v-if="isLoading"
+        class="audio__loading">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
 
-      <div
-        v-else-if="showPlayButton"
-        @click="pause"
-        class="audio__play--pause"
-      >
-        <svg
-          class="audio__play__icon"
-          aria-hidden="true"
+      <template v-else>
+        <div
+          v-if="!isPlaying && showPlayButton"
+          @click="play"
+          class="audio__play--start"
         >
-          <use xlink:href="#icon-play-pause" />
-        </svg>
-      </div>
+          <svg
+            class="audio__play__icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#icon-play" />
+          </svg>
+        </div>
+
+        <div
+          v-else-if="showPlayButton"
+          @click="pause"
+          class="audio__play--pause"
+        >
+          <svg
+            class="audio__play__icon"
+            aria-hidden="true"
+          >
+            <use xlink:href="#icon-play-pause" />
+          </svg>
+        </div>
+      </template>
 
       <div
         v-show="showNextButton"
@@ -53,6 +68,12 @@
         >
           <use xlink:href="#icon-play-next" />
         </svg>
+      </div>
+
+      <div
+        class="audio__notice"
+        v-show="isShowNotice">
+        {{ noticeMessage }}
       </div>
     </div>
 
@@ -100,6 +121,8 @@
 <script>
 export default {
   name: 'AudioPlayer',
+
+  inheritAttrs: false,
 
   props: {
     // 音频播放列表
@@ -157,27 +180,41 @@ export default {
   data() {
     return {
       isIOS: /iPhone|iPad|iPod/i.test(window.navigator.userAgent), // 是否是IOS设备
+      isPlaying: false, // 音频是否正在播放
+      isDragging: false, // 是否正在拖拽音频进度
+      isShowNotice: false,
+      isLoading: false,
       timer: null,
       currentPlayIndex: 0, // 当前播放的音频位置索引
-      isPlaying: false, // 音频是否正在播放
       duration: '', // 音频持续时间
       currentTime: '', // 音频当前播放时间
       currentTimeAfterFormat: '', // 音频播放当时时间（格式化后）
-      isDragging: false // 是否正在拖拽音频进度
+      noticeMessage: ''
     }
   },
 
   methods: {
+    // 显示通知
+    showNotice(opts = {}) {
+      this.noticeMessage = opts.message
+      this.isShowNotice = true
+      window.setTimeout(() => {
+        this.isShowNotice = false
+      }, opts.duration || 3000)
+    },
+
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration
       this.initProgressBarDrag()
       this.$emit('loadedmetadata', event)
     },
+
     // 当前的播放位置发送改变时触发
     onTimeUpdate(event) {
       this.$emit('timeupdate', event)
     },
+
     // 格式化秒为分
     formatTime(second) {
       // 将秒数除以60，然后下舍入，既得到分钟数
@@ -193,6 +230,7 @@ export default {
       second = (second.length === 1) ? '0' + second : second
       return hour + ':' + second
     },
+
     // 音频播放完毕
     onEnded(event) {
       this.currentTimeAfterFormat = this.formatTime(
@@ -205,10 +243,10 @@ export default {
 
         if (this.isLoop) {
           this.playNext()
-          this.play()
         }
       }, 1000)
     },
+
     // 初始化音频进度的拖拽逻辑
     initProgressBarDrag() {
       this.$refs.audioProgressPoint.addEventListener(
@@ -283,6 +321,7 @@ export default {
         false
       )
     },
+
     // 设置点点位置
     setPointPosition(pageX) {
       // 设置点点
@@ -292,6 +331,7 @@ export default {
         this.$refs.audioProgressWrap.offsetLeft +
         'px'
     },
+
     // 初始化音频进度的点击逻辑
     initProgressBarPoint(event) {
       // 设置当前时间
@@ -308,6 +348,7 @@ export default {
       // 设置当前时间（格式化后）
       this.currentTimeAfterFormat = this.formatTime(this.currentTime)
     },
+
     // 播放中
     playing() {
       // 正在拖拽进度
@@ -331,20 +372,35 @@ export default {
         'px'
       this.$emit('playing')
     },
+
     // 开始播放
     play() {
-      let playHandler = () => {
-        this.$refs.audio.play()
-        this.$nextTick(() => {
-          this.playing()
-          this.timer = window.setInterval(this.playing, this.progressInterval)
-          this.isPlaying = true
-          this.$emit('play')
+      this.isLoading = true
+
+      let handlePlay = () => {
+        this.$refs.audio.play().then((event) => {
+          this.$nextTick(() => {
+            this.playing()
+            this.timer = window.setInterval(this.playing, this.progressInterval)
+            this.isPlaying = true
+            this.isLoading = false
+            console.log(11)
+          })
+        }).catch((data) => {
+          if (data.code === 9) {
+            this.showNotice({
+              message: '加载失败，因为没有找到支持的源。'
+            })
+            this.playNext()
+            this.isLoading = false
+          }
         })
+        this.$emit('play')
       }
 
       // 解决 iOS 异步请求后无法播放
       if (this.isIOS) {
+        console.log('下面一行的错误是解决 iOS 异步请求后无法播放问题')
         this.$refs.audio.play()
         this.$refs.audio.pause()
       }
@@ -352,24 +408,25 @@ export default {
       if (this.beforePlay) {
         this.beforePlay(state => {
           if (state !== false) {
-            playHandler()
+            handlePlay()
           }
         })
         return
       }
 
-      playHandler()
+      handlePlay()
     },
+
     // 暂停播放
     pause() {
       this.$refs.audio.pause()
       this.$nextTick(() => {
-        clearInterval(this.timer)
-        this.timer = null
+        this.clearTimer()
         this.isPlaying = false
         this.$emit('pause')
       })
     },
+
     // 播放上一首
     playPrev() {
       if (this.currentPlayIndex <= 0 && !this.isLoop) {
@@ -377,7 +434,9 @@ export default {
         return
       }
 
-      let prevHandler = () => {
+      this.clearTimer()
+
+      let handlePrev = () => {
         if (this.currentPlayIndex <= 0 && this.isLoop) {
           // 列表循环
           this.currentPlayIndex = this.audioList.length - 1
@@ -394,13 +453,19 @@ export default {
       if (this.beforePrev) {
         this.beforePrev(state => {
           if (state !== false) {
-            prevHandler()
+            handlePrev()
           }
         })
         return
       }
-      prevHandler()
+      handlePrev()
     },
+
+    clearTimer() {
+      window.clearInterval(this.timer)
+      this.timer = null
+    },
+
     // 播放下一首
     playNext() {
       if (this.currentPlayIndex + 1 >= this.audioList.length && !this.isLoop) {
@@ -408,7 +473,9 @@ export default {
         return
       }
 
-      let nextHandler = () => {
+      this.clearTimer()
+
+      let handleNext = () => {
         // 已经到达列表最后一首
         if (this.currentPlayIndex + 1 >= this.audioList.length && this.isLoop) {
           this.currentPlayIndex = 0
@@ -425,13 +492,13 @@ export default {
       if (this.beforeNext) {
         this.beforeNext(state => {
           if (state !== false) {
-            nextHandler()
+            handleNext()
           }
         })
         return
       }
 
-      nextHandler()
+      handleNext()
     }
   },
 
@@ -447,12 +514,13 @@ export default {
 }
 
 .audio-player .audio__btn-wrap {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.audio-player .audio__btn-wrap .audio__play__icon {
+.audio-player .audio__play__icon {
   width: 100%;
   height: 100%;
   fill: currentColor;
@@ -460,34 +528,42 @@ export default {
   color: #e35924;
 }
 
-.audio-player .audio__btn-wrap .audio__play--previous {
+.audio-player .audio__play--previous {
   width: 21px;
   height: 33px;
 }
 
-.audio-player .audio__btn-wrap .audio__play--previous.disable {
+.audio-player .audio__play--previous.disable {
   opacity: 0.5;
 }
 
-.audio-player .audio__btn-wrap .audio__play--start {
+.audio-player .audio__play--start {
   width: 42px;
   height: 42px;
   margin: 0 20px;
 }
 
-.audio-player .audio__btn-wrap .audio__play--pause {
+.audio-player .audio__play--pause {
   width: 42px;
   height: 42px;
   margin: 0 20px;
 }
 
-.audio-player .audio__btn-wrap .audio__play--next {
+.audio-player .audio__play--next {
   width: 21px;
   height: 33px;
 }
 
-.audio-player .audio__btn-wrap .audio__play--next.disable {
+.audio-player .audio__play--next.disable {
   opacity: 0.5;
+}
+
+.audio__notice {
+  position: absolute;
+  bottom: -15px;
+  color: rgb(189, 178, 178);
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .audio-player .audio__progress-wrap {
@@ -497,7 +573,7 @@ export default {
   margin-top: 20px;
 }
 
-.audio-player .audio__progress-wrap .audio__progress {
+.audio-player .audio__progress {
   position: absolute;
   left: 0;
   top: 0;
@@ -506,7 +582,7 @@ export default {
   background: #e35924;
 }
 
-.audio-player .audio__progress-wrap .audio__progress-point {
+.audio-player .audio__progress-point {
   position: absolute;
   left: 0;
   top: 50%;
@@ -518,7 +594,7 @@ export default {
   box-shadow: 0 0 10px 1px rgba(227, 89, 36, 0.5);
 }
 
-.audio-player .audio__progress-wrap .audio__progress-point:after {
+.audio-player .audio__progress-point:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -537,12 +613,12 @@ export default {
   margin-top: 7px;
 }
 
-.audio-player .audio__time-wrap .audio__current-time {
+.audio-player .audio__current-time {
   font-size: 10px;
   color: #888;
 }
 
-.audio-player .audio__time-wrap .audio__duration {
+.audio-player .audio__duration {
   font-size: 10px;
   color: #888;
 }
@@ -550,5 +626,75 @@ export default {
 .audio-player .audio-player__audio {
   display: block;
   margin: 0 auto;
+}
+
+.audio__loading{
+    width: 42px;
+    height: 42px;
+    position: relative;
+    margin: 0 20px;
+}
+.audio__loading span{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e35924;
+    position: absolute;
+    animation: loading 1.04s ease infinite;
+}
+
+@keyframes loading{
+  0%{
+      opacity: 1;
+  }
+  100%{
+      opacity: 0.2;
+  }
+}
+
+.audio__loading span:nth-child(1){
+    left: 0;
+    top: 50%;
+    margin-top:-4px;
+    animation-delay:0.13s;
+}
+.audio__loading span:nth-child(2){
+    left: 7px;
+    top: 7px;
+    animation-delay:0.26s;
+}
+.audio__loading span:nth-child(3){
+    left: 50%;
+    top: 0;
+    margin-left: -4px;
+    animation-delay:0.39s;
+}
+.audio__loading span:nth-child(4){
+    top: 7px;
+    right:7px;
+    animation-delay:0.52s;
+}
+.audio__loading span:nth-child(5){
+    right: 0;
+    top: 50%;
+    margin-top:-4px;
+    animation-delay:0.65s;
+}
+.audio__loading span:nth-child(6){
+    right: 7px;
+    bottom:7px;
+    animation-delay:0.78s;
+}
+.audio__loading span:nth-child(7){
+    bottom: 0;
+    left: 50%;
+    margin-left: -4px;
+    animation-delay:0.91s;
+}
+.audio__loading span:nth-child(8){
+    bottom: 7px;
+    left: 7px;
+    animation-delay:1.04s;
 }
 </style>
