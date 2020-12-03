@@ -149,12 +149,12 @@ export default {
 ## 更新日志
 | 版本 | 说明 | 更新时间 |
 | - | - | - |
-| v1.1.0 | 1. 新增播放失败自动播放下一首<br> 2. 新增 `loading`，可用 `CSS` 替换颜色 3. 修改 `play` 事件调前 | 2020-11-30 |
+| v1.1.0 | 1. 新增 `isAutoPlayNext` 属性 <br> 2. 新增播放失败自动播放下一首，`isAutoPlayNext` 为 `false` 则不会自动播放下一首<br> 3. 新增 `loading`，可用 `CSS` 替换颜色<br> 4. 修改 `play` 事件调前<br> | 2020-11-30 |
 | v1.0.8 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a><br> | 2020-11-17 |
 | v1.0.7 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a><br> | 2020-10-02 |
-| v1.0.6 | 1. 不自带 babel-polyfill<br> | 2020-04-28 |
+| v1.0.6 | 1. 不自带 `babel-polyfill`<br> | 2020-04-28 |
 | v1.0.5 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a><br> | 2019-11-21 |
-| v1.0.4 | 1. 修复 isLoop 无效<br>2. 修改类名<br>3. 使用原生 CSS | 2019-10-16 |
+| v1.0.4 | 1. 修复 `isLoop` 无效<br>2. 修改类名<br>3. 使用原生 `CSS` | 2019-10-16 |
 
 ## 许可证
 `MIT`

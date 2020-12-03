@@ -70,6 +70,18 @@
         </svg>
       </div>
 
+      <div class="audio__play-volume">
+        <svg
+          class="audio__play__icon"
+          aria-hidden="true">
+          <use xlink:href="#icon-play-volume" />
+        </svg>
+
+        <div class="audio__play-volume-progress-wrap">
+          <div class="audio__play-volume-progress"></div>
+        </div>
+      </div>
+
       <div
         class="audio__notice"
         v-show="isShowNotice">
@@ -130,46 +142,61 @@ export default {
       default: null,
       type: Array
     },
+
     // 显示播放按钮
     showPlayButton: {
       default: true,
       type: Boolean
     },
+
     // 显示上一首按钮
     showPrevButton: {
       default: true,
       type: Boolean
     },
+
     // 显示下一首按钮
     showNextButton: {
       default: true,
       type: Boolean
     },
+
     // 显示进度条
     showProgressBar: {
       default: true,
       type: Boolean
     },
+
     // 播放前的回调函数
     beforePlay: {
       default: null,
       type: Function
     },
+
     // 上一首前的回调函数
     beforePrev: {
       default: null,
       type: Function
     },
+
     // 下一首前的回调函数
     beforeNext: {
       default: null,
       type: Function
     },
+
     // 是否列表循环播放
     isLoop: {
       type: Boolean,
       default: true
     },
+
+    // 是否自动播放下一首
+    isAutoPlayNext: {
+      type: Boolean,
+      default: true
+    },
+
     // 进度更新间隔
     progressInterval: {
       default: 1000,
@@ -198,6 +225,7 @@ export default {
     showNotice(opts = {}) {
       this.noticeMessage = opts.message
       this.isShowNotice = true
+
       window.setTimeout(() => {
         this.isShowNotice = false
       }, opts.duration || 3000)
@@ -241,7 +269,7 @@ export default {
         this.pause()
         this.$emit('ended', event)
 
-        if (this.isLoop) {
+        if (this.isLoop && this.isAutoPlayNext) {
           this.playNext()
         }
       }, 1000)
@@ -384,16 +412,20 @@ export default {
             this.timer = window.setInterval(this.playing, this.progressInterval)
             this.isPlaying = true
             this.isLoading = false
-            console.log(11)
           })
         }).catch((data) => {
           if (data.code === 9) {
             this.showNotice({
               message: '加载失败，因为没有找到支持的源。'
             })
-            this.playNext()
-            this.isLoading = false
+
+            if (this.isAutoPlayNext) {
+              window.setTimeout(() => {
+                this.playNext()
+              }, 1000)
+            }
           }
+          this.isLoading = false
         })
         this.$emit('play')
       }
@@ -526,6 +558,32 @@ export default {
   fill: currentColor;
   overflow: hidden;
   color: #e35924;
+}
+
+.audio-player .audio__play-volume {
+  position: relative;
+  width: 21px;
+  height: 21px;
+  cursor: pointer;
+  color: #e35924;
+}
+
+.audio-player .audio__play-volume .audio__play-volume-progress-wrap {
+  position: absolute;
+  width: 100px;
+  height: 10px;
+  top: 50%;
+  right: -102px;
+  margin-top: -5px;
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+.audio-player .audio__play-volume .audio__play-volume-progress-wrap .audio__play-volume-progress {
+  width: 10%;
+  height: 100%;
+  background-color: #e35924;
+  border-radius: 4px;
 }
 
 .audio-player .audio__play--previous {

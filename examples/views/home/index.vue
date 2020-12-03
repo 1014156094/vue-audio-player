@@ -1,11 +1,10 @@
 <template>
   <div>
     {{ currentAudioName || audioList[0].name }}
-    <AudioPlayer
+    <audio-player
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
       :before-play="onBeforePlay"
-      @play="handlePlay"
     />
   </div>
 </template>
@@ -41,14 +40,10 @@ export default {
   },
 
   methods: {
-    handlePlay() {
-      console.log(22)
-      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
-    },
-
     // 播放前做的事
     onBeforePlay(next) {
       // 这里可以做一些事情...
+      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
 
       next() // 开始播放
     }
