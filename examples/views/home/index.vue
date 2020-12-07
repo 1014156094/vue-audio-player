@@ -4,7 +4,7 @@
     <audio-player
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
-      :before-play="onBeforePlay"
+      :before-play="handleBeforePlay"
     />
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     // 播放前做的事
-    onBeforePlay(next) {
+    handleBeforePlay(next) {
       // 这里可以做一些事情...
       this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
 
