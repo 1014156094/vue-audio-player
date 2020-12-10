@@ -5,7 +5,7 @@
         v-show="showPrevButton"
         class="audio__play--previous"
         :class="{ disable: !isLoop && currentPlayIndex === 0 }"
-        @click="playPrev"
+        @click.stop="playPrev"
       >
         <svg
           class="audio__play__icon"
@@ -31,7 +31,7 @@
       <template v-else>
         <div
           v-if="!isPlaying && showPlayButton"
-          @click="play"
+          @click.stop="play"
           class="audio__play--start"
         >
           <svg
@@ -44,7 +44,7 @@
 
         <div
           v-else-if="showPlayButton"
-          @click="pause"
+          @click.stop="pause"
           class="audio__play--pause"
         >
           <svg
@@ -60,7 +60,7 @@
         v-show="showNextButton"
         class="audio__play--next"
         :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
-        @click="playNext"
+        @click.stop="playNext"
       >
         <svg
           class="audio__play__icon"
@@ -70,15 +70,35 @@
         </svg>
       </div>
 
-      <div class="audio__play-volume">
+      <div
+        class="audio__play-volume-icon-wrap"
+        @mouseenter="handleMouseenterPlayIcon"
+        @mouseleave="handleMouseleavePlayIcon"
+        @touchstart="()=>{
+          isShowVolume = true
+        }">
         <svg
           class="audio__play__icon"
           aria-hidden="true">
           <use xlink:href="#icon-play-volume" />
         </svg>
 
-        <div class="audio__play-volume-progress-wrap">
-          <div class="audio__play-volume-progress"></div>
+        <div
+          v-show="isShowVolume"
+          class="audio__play-volume-wrap"
+          @touchstart="handleVolumeTouch"
+          @touchmove="handleVolumeTouch"
+          @touchend="()=>{
+            isShowVolume = false
+          }"
+          @mousedown="handleVolumeMousedown"
+          ref="playVolumeWrap">
+          <div
+            class="audio__play-volume"
+            :style="{
+              width: currentVolume * 100 + '%'
+            }"
+            ref="playVolume" />
         </div>
       </div>
 
@@ -211,18 +231,76 @@ export default {
       isIOS: /iPhone|iPad|iPod/i.test(window.navigator.userAgent), // 是否是IOS设备
       isPlaying: false, // 音频是否正在播放
       isDragging: false, // 是否正在拖拽音频进度
+      isDraggingVolume: false, // 是否正在拖拽音量进度
       isShowNotice: false,
       isLoading: false,
+      isShowVolume: false,
       timer: null,
-      currentPlayIndex: 0, // 当前播放的音频位置索引
+      noticeMessage: '',
       duration: '', // 音频持续时间
+      currentPlayIndex: 0, // 当前播放的音频位置索引
       currentTime: '', // 音频当前播放时间
       currentTimeAfterFormat: '', // 音频播放当时时间（格式化后）
-      noticeMessage: ''
+      currentVolume: 1 // 当前音量
     }
   },
 
   methods: {
+    handleMouseenterPlayIcon() {
+      this.isShowVolume = true
+    },
+
+    handleMouseleavePlayIcon() {
+      this.isShowVolume = false
+    },
+
+    handleVolumeTouch(event) {
+      let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
+      let clientX = event.changedTouches[0].clientX
+      let offsetLeft
+      let volume
+
+      this.isShowVolume = true
+      offsetLeft = Math.round(clientX - playVolumeWrapRect.left)
+      volume = offsetLeft / this.$refs.playVolumeWrap.offsetWidth
+      volume = Math.min(volume, 1)
+      volume = Math.max(volume, 0)
+      this.$refs.audio.volume = volume
+      this.currentVolume = volume
+    },
+
+    handleVolumeMousemove(event) {
+      let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
+      let clientX = event.clientX
+      let offsetLeft
+      let volume
+
+      this.isShowVolume = true
+      offsetLeft = Math.round(clientX - playVolumeWrapRect.left)
+      volume = offsetLeft / this.$refs.playVolumeWrap.offsetWidth
+      volume = Math.min(volume, 1)
+      volume = Math.max(volume, 0)
+      this.$refs.audio.volume = volume
+      this.currentVolume = volume
+      this.isDraggingVolume = true
+    },
+
+    handleVolumeMousedown(event) {
+      this.handleVolumeMousemove(event)
+      document.addEventListener('mousemove', this.handleVolumeMousemove)
+      document.addEventListener('mouseup', this.handleVolumeMouseup)
+    },
+
+    handleVolumeMouseup() {
+      console.log(`this.isDraggingVolume = false`)
+      this.isDraggingVolume = false
+      if (this.isDraggingVolume) {
+        this.isShowVolume = false
+      }
+      document.removeEventListener('mousemove', this.handleVolumeMousemove)
+      document.removeEventListener('mouseup', this.handleVolumeMouseup)
+    },
+
     // 显示通知
     showNotice(opts = {}) {
       this.noticeMessage = opts.message
@@ -562,26 +640,28 @@ export default {
   color: #e35924;
 }
 
-.audio-player .audio__play-volume {
-  position: relative;
+.audio-player .audio__play-volume-icon-wrap {
+  position: absolute;
   width: 21px;
   height: 21px;
   cursor: pointer;
   color: #e35924;
+  left: 50%;
+  margin-left: 80px;
 }
 
-.audio-player .audio__play-volume .audio__play-volume-progress-wrap {
+.audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap {
   position: absolute;
-  width: 100px;
+  width: 60px;
   height: 10px;
   top: 50%;
-  right: -102px;
+  right: -60px;
   margin-top: -5px;
   background-color: #ddd;
   border-radius: 4px;
 }
 
-.audio-player .audio__play-volume .audio__play-volume-progress-wrap .audio__play-volume-progress {
+.audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap .audio__play-volume {
   width: 10%;
   height: 100%;
   background-color: #e35924;

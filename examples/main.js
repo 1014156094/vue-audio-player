@@ -4,7 +4,11 @@ import router from './router'
 import ht from 'hammer-touchemulator'
 // import AudioPlayer from '../packages'
 
-ht()
+const isMobile = /(iPhone|iPad|iPod|iOS|Android)/i.test(window.navigator.userAgent)
+
+if (!isMobile) {
+  ht()
+}
 Vue.config.productionTip = false
 // Vue.use(AudioPlayer)
 

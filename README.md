@@ -7,15 +7,13 @@
 
 ---
 
-## 线上演示
-![image](https://github.com/1014156094/vue-audio-player/blob/master/public/qrcode.png?raw=true)
-<a href="https://crm.tongxinghui.com/hot/audio-detail/603">点我链接访问</a>
+## 在线预览
+<a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue">在线预览</a>
 
 ## 特性
-- 经过童星汇 APP 线上业务检验的组件
 - 完善的文档和示例
 - 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，<a href="https://github.com/1014156094/vue-audio-player/issues/10">教程</a>）
-- 原生 CSS，支持 Less、Scss 等预编译语言
+- 原生 CSS，无须引入 Less、Scss 等预编译语言
 
 ## 安装
 ```

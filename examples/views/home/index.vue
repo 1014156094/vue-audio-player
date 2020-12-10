@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ currentAudioName || audioList[0].name }}
+    <div class="name">{{ currentAudioName || audioList[0].name }}</div>
     <audio-player
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
@@ -51,5 +51,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.name {
+  text-align: center;
+  line-height: 80px;
+}
 </style>
