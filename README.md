@@ -7,12 +7,12 @@
 
 ---
 
-## 在线预览
-<a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue">在线预览</a>
+## 在线预览 Demo
+<a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue">点我在线预览 Demo</a>
 
 ## 特性
 - 完善的文档和示例
-- 支持进度条拖拽（PC 端需引入一个库模拟 Touch 事件，<a href="https://github.com/1014156094/vue-audio-player/issues/10">教程</a>）
+- 支持进度条拖拽（PC 端需引入一个小小的包模拟 Touch 事件，<a href="https://github.com/1014156094/vue-audio-player/issues/10">教程</a>）
 - 原生 CSS，无须引入 Less、Scss 等预编译语言
 
 ## 安装
@@ -43,11 +43,10 @@ Vue.use(AudioPlayer)
 <template>
   <div>
     {{ currentAudioName || audioList[0].name }}
-    <AudioPlayer
+    <audio-player
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
-      :before-play="onBeforePlay"
-      @play="handlePlay"
+      :before-play="handleBeforePlay"
     />
   </div>
 </template>
@@ -67,28 +66,21 @@ export default {
       audioList: [
         {
           name: '音频1',
-          url: 'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3'
+          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
         },
         {
           name: '音频2',
           url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
-        },
-        {
-          name: '音频3',
-          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
         }
       ]
     }
   },
 
   methods: {
-    handlePlay() {
-      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
-    },
-
     // 播放前做的事
-    onBeforePlay(next) {
+    handleBeforePlay(next) {
       // 这里可以做一些事情...
+      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
 
       next() // 开始播放
     }
@@ -104,12 +96,14 @@ export default {
 | show-play-button | 是否显示播放按钮 | `Boolean` | `true` |
 | show-prev-button | 是否显示上一首按钮 | `Boolean` | `true` |
 | show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
+| show-volume-button | 是否显示音量按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | progressInterval | 进度更新间隔 | `Number` | `1000` |
 | before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
 | before-prev | 播放上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
 | before-next | 播放下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
+| 其他的与原生 `audio` 一致 |
 
 ## Event
 | 事件 | 说明 | 回调 |
@@ -122,7 +116,7 @@ export default {
 | timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
-| 其他事件与原生 `audio` 相同 | | |
+| 其他的与原生 `audio` 一致 |
 
 ## Data
 | 变量 | 说明 | 默认值 |
@@ -145,14 +139,35 @@ export default {
 使用 `ref` 调用， 更多请自行查看组件 [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## 更新日志
-| 版本 | 说明 | 更新时间 |
-| - | - | - |
-| v1.1.0 | 1. 新增 `isAutoPlayNext` 属性 <br> 2. 新增播放失败自动播放下一首，`isAutoPlayNext` 为 `false` 则不会自动播放下一首<br> 3. 新增 `loading`，可用 `CSS` 替换颜色<br> 4. 修改 `play` 事件调前<br> | 2020-11-30 |
-| v1.0.8 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a><br> | 2020-11-17 |
-| v1.0.7 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a><br> | 2020-10-02 |
-| v1.0.6 | 1. 不自带 `babel-polyfill`<br> | 2020-04-28 |
-| v1.0.5 | 1. 修复 <a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a><br> | 2019-11-21 |
-| v1.0.4 | 1. 修复 `isLoop` 无效<br>2. 修改类名<br>3. 使用原生 `CSS` | 2019-10-16 |
+
+### v1.1.1【2020/12/11】
+- 修复：引入包报错
+### v1.1.0【2020/12/11】
+- 新增：调节音量功能
+- 新增：`show-volume-button` 属性
+- 新增：`is-auto-playNext` 属性
+- 新增：播放失败自动播放下一首，`is-auto-playNext` 为 `false` 则不会自动播放下一首
+- 新增：音频加载中 `svg` 动画，可用 `CSS` 覆盖颜色 
+- 修改：`play` 事件触发调前
+- 修改：部分类名
+
+### v1.0.8【2020/11/17】
+
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a>
+
+### v1.0.7【2020/10/02】
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a>
+
+### v1.0.6【2020/04/28】
+- 优化：不自带 `babel-polyfill`
+
+### v1.0.5【2019/11/21】
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a>
+
+### v1.0.4【2019/10/16】
+- 修复：`isLoop` 无效
+- 修改：类名
+- 修改：使用原生 `CSS`
 
 ## 许可证
 `MIT`

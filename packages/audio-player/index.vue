@@ -3,12 +3,12 @@
     <div class="audio__btn-wrap">
       <div
         v-show="showPrevButton"
-        class="audio__play--previous"
+        class="audio__play-prev"
         :class="{ disable: !isLoop && currentPlayIndex === 0 }"
         @click.stop="playPrev"
       >
         <svg
-          class="audio__play__icon"
+          class="audio__play-icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play-prev" />
@@ -17,7 +17,7 @@
 
       <div
         v-if="isLoading"
-        class="audio__loading">
+        class="audio__play-loading">
         <span />
         <span />
         <span />
@@ -32,10 +32,10 @@
         <div
           v-if="!isPlaying && showPlayButton"
           @click.stop="play"
-          class="audio__play--start"
+          class="audio__play-start"
         >
           <svg
-            class="audio__play__icon"
+            class="audio__play-icon"
             aria-hidden="true"
           >
             <use xlink:href="#icon-play" />
@@ -45,10 +45,10 @@
         <div
           v-else-if="showPlayButton"
           @click.stop="pause"
-          class="audio__play--pause"
+          class="audio__play-pause"
         >
           <svg
-            class="audio__play__icon"
+            class="audio__play-icon"
             aria-hidden="true"
           >
             <use xlink:href="#icon-play-pause" />
@@ -58,12 +58,12 @@
 
       <div
         v-show="showNextButton"
-        class="audio__play--next"
+        class="audio__play-next"
         :class="{ disable: !isLoop && currentPlayIndex === audioList.length - 1 }"
         @click.stop="playNext"
       >
         <svg
-          class="audio__play__icon"
+          class="audio__play-icon"
           aria-hidden="true"
         >
           <use xlink:href="#icon-play-next" />
@@ -71,35 +71,32 @@
       </div>
 
       <div
+        v-if="showVolumeButton"
         class="audio__play-volume-icon-wrap"
-        @mouseenter="handleMouseenterPlayIcon"
-        @mouseleave="handleMouseleavePlayIcon"
-        @touchstart="()=>{
-          isShowVolume = true
-        }">
+      >
         <svg
-          class="audio__play__icon"
-          aria-hidden="true">
-          <use xlink:href="#icon-play-volume" />
+          class="audio__play-icon"
+          aria-hidden="true"
+          @touchstart="handleVolumeIconTouchstart">
+          <use :xlink:href="currentVolume ? `#icon-play-volume` : `#icon-play-volume-no`" />
         </svg>
 
-        <div
-          v-show="isShowVolume"
-          class="audio__play-volume-wrap"
-          @touchstart="handleVolumeTouch"
-          @touchmove="handleVolumeTouch"
-          @touchend="()=>{
-            isShowVolume = false
-          }"
-          @mousedown="handleVolumeMousedown"
-          ref="playVolumeWrap">
+        <transition name="fade-size">
           <div
-            class="audio__play-volume"
-            :style="{
-              width: currentVolume * 100 + '%'
-            }"
-            ref="playVolume" />
-        </div>
+            v-show="isShowVolume"
+            class="audio__play-volume-wrap"
+            @touchstart="handleVolumeTouchmove"
+            @touchmove="handleVolumeTouchmove"
+            @touchend="handleVolumeTouchend"
+            ref="playVolumeWrap">
+            <div
+              class="audio__play-volume"
+              :style="{
+                height: currentVolume * 100 + '%'
+              }"
+              ref="playVolume" />
+          </div>
+        </transition>
       </div>
 
       <div
@@ -165,20 +162,26 @@ export default {
       type: Array
     },
 
-    // 显示播放按钮
+    // 是否显示播放按钮
     showPlayButton: {
       default: true,
       type: Boolean
     },
 
-    // 显示上一首按钮
+    // 是否显示上一首按钮
     showPrevButton: {
       default: true,
       type: Boolean
     },
 
-    // 显示下一首按钮
+    // 是否显示下一首按钮
     showNextButton: {
+      default: true,
+      type: Boolean
+    },
+
+    // 是否显示音量按钮
+    showVolumeButton: {
       default: true,
       type: Boolean
     },
@@ -246,59 +249,29 @@ export default {
   },
 
   methods: {
-    handleMouseenterPlayIcon() {
-      this.isShowVolume = true
+    handleVolumeIconTouchstart() {
+      this.isShowVolume = !this.isShowVolume
     },
 
-    handleMouseleavePlayIcon() {
-      this.isShowVolume = false
-    },
-
-    handleVolumeTouch(event) {
+    handleVolumeTouchmove(event) {
       let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
-      let clientX = event.changedTouches[0].clientX
-      let offsetLeft
+      let clientY = event.changedTouches[0].clientY
+      let offsetTop
       let volume
 
-      this.isShowVolume = true
-      offsetLeft = Math.round(clientX - playVolumeWrapRect.left)
-      volume = offsetLeft / this.$refs.playVolumeWrap.offsetWidth
-      volume = Math.min(volume, 1)
-      volume = Math.max(volume, 0)
-      this.$refs.audio.volume = volume
-      this.currentVolume = volume
-    },
-
-    handleVolumeMousemove(event) {
-      let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
-      let clientX = event.clientX
-      let offsetLeft
-      let volume
-
-      this.isShowVolume = true
-      offsetLeft = Math.round(clientX - playVolumeWrapRect.left)
-      volume = offsetLeft / this.$refs.playVolumeWrap.offsetWidth
-      volume = Math.min(volume, 1)
-      volume = Math.max(volume, 0)
-      this.$refs.audio.volume = volume
-      this.currentVolume = volume
       this.isDraggingVolume = true
+      offsetTop = Math.round(playVolumeWrapRect.bottom - clientY)
+      volume = offsetTop / this.$refs.playVolumeWrap.offsetHeight
+      volume = Math.min(volume, 1)
+      volume = Math.max(volume, 0)
+      this.$refs.audio.volume = volume
+      this.currentVolume = volume
     },
 
-    handleVolumeMousedown(event) {
-      this.handleVolumeMousemove(event)
-      document.addEventListener('mousemove', this.handleVolumeMousemove)
-      document.addEventListener('mouseup', this.handleVolumeMouseup)
-    },
-
-    handleVolumeMouseup() {
-      console.log(`this.isDraggingVolume = false`)
-      this.isDraggingVolume = false
+    handleVolumeTouchend() {
       if (this.isDraggingVolume) {
         this.isShowVolume = false
       }
-      document.removeEventListener('mousemove', this.handleVolumeMousemove)
-      document.removeEventListener('mouseup', this.handleVolumeMouseup)
     },
 
     // 显示通知
@@ -621,6 +594,22 @@ export default {
 </script>
 
 <style>
+@keyframes fadeSize{
+  from {
+    height: 0;
+  }
+  to{
+    height: 50px;
+  }
+}
+
+.fade-size-enter-active{
+  animation: fadeSize .5s;
+}
+.fade-size-leave-active {
+  animation: fadeSize .5s reverse;
+}
+
 .audio-player {
   margin: 0 15px;
 }
@@ -632,7 +621,7 @@ export default {
   justify-content: center;
 }
 
-.audio-player .audio__play__icon {
+.audio-player .audio__play-icon {
   width: 100%;
   height: 100%;
   fill: currentColor;
@@ -648,53 +637,78 @@ export default {
   color: #e35924;
   left: 50%;
   margin-left: 80px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap {
   position: absolute;
-  width: 60px;
-  height: 10px;
-  top: 50%;
-  right: -60px;
-  margin-top: -5px;
+  width: 21px;
+  height: 50px;
+  bottom: 21px;
+  left: 0;
   background-color: #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap .audio__play-volume {
-  width: 10%;
-  height: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-color: #e35924;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
-.audio-player .audio__play--previous {
+.audio-player .audio__play-prev {
   width: 21px;
   height: 33px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.audio-player .audio__play--previous.disable {
+.audio-player .audio__play-prev.disable {
   opacity: 0.5;
 }
 
-.audio-player .audio__play--start {
+.audio-player .audio__play-start {
   width: 42px;
   height: 42px;
   margin: 0 20px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.audio-player .audio__play--pause {
+.audio-player .audio__play-pause {
   width: 42px;
   height: 42px;
   margin: 0 20px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.audio-player .audio__play--next {
+.audio-player .audio__play-next {
   width: 21px;
   height: 33px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.audio-player .audio__play--next.disable {
+.audio-player .audio__play-next.disable {
   opacity: 0.5;
 }
 
@@ -711,6 +725,11 @@ export default {
   background: #ddd;
   height: 2px;
   margin-top: 20px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .audio-player .audio__progress {
@@ -768,13 +787,13 @@ export default {
   margin: 0 auto;
 }
 
-.audio__loading{
+.audio__play-loading{
     width: 42px;
     height: 42px;
     position: relative;
     margin: 0 20px;
 }
-.audio__loading span{
+.audio__play-loading span{
     display: inline-block;
     width: 8px;
     height: 8px;
@@ -793,46 +812,46 @@ export default {
   }
 }
 
-.audio__loading span:nth-child(1){
+.audio__play-loading span:nth-child(1){
     left: 0;
     top: 50%;
     margin-top:-4px;
     animation-delay:0.13s;
 }
-.audio__loading span:nth-child(2){
+.audio__play-loading span:nth-child(2){
     left: 7px;
     top: 7px;
     animation-delay:0.26s;
 }
-.audio__loading span:nth-child(3){
+.audio__play-loading span:nth-child(3){
     left: 50%;
     top: 0;
     margin-left: -4px;
     animation-delay:0.39s;
 }
-.audio__loading span:nth-child(4){
+.audio__play-loading span:nth-child(4){
     top: 7px;
     right:7px;
     animation-delay:0.52s;
 }
-.audio__loading span:nth-child(5){
+.audio__play-loading span:nth-child(5){
     right: 0;
     top: 50%;
     margin-top:-4px;
     animation-delay:0.65s;
 }
-.audio__loading span:nth-child(6){
+.audio__play-loading span:nth-child(6){
     right: 7px;
     bottom:7px;
     animation-delay:0.78s;
 }
-.audio__loading span:nth-child(7){
+.audio__play-loading span:nth-child(7){
     bottom: 0;
     left: 50%;
     margin-left: -4px;
     animation-delay:0.91s;
 }
-.audio__loading span:nth-child(8){
+.audio__play-loading span:nth-child(8){
     bottom: 7px;
     left: 7px;
     animation-delay:1.04s;
