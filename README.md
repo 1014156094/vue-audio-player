@@ -8,7 +8,7 @@
 ---
 
 ## 在线预览 Demo
-<a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue">点我在线预览 Demo</a>
+<a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">点我在线预览 Demo</a>
 
 ## 特性
 - 完善的文档和示例
