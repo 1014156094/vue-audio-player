@@ -172,5 +172,9 @@ export default {
 ## 许可证
 `MIT`
 
+## FAQ
+
+- 不支持后台播放控制？<a href="https://github.com/1014156094/vue-audio-player/issues/21">#21</a>
+
 ## 最后
 使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`
