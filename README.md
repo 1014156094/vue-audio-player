@@ -22,7 +22,7 @@ npm i -S @liripeng/vue-audio-player
 
 ## 按需引入
 ```
-import { AudioPlayer } from '@liripeng/vue-audio-player'
+import AudioPlayer from '@liripeng/vue-audio-player'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 components: {
@@ -52,7 +52,7 @@ Vue.use(AudioPlayer)
 </template>
 
 <script>
-import { AudioPlayer } from '@liripeng/vue-audio-player'
+import AudioPlayer from '@liripeng/vue-audio-player'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 export default {
