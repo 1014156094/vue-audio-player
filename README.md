@@ -20,17 +20,16 @@
 npm i -S @liripeng/vue-audio-player
 ```
 
-## 按需引入
+## 引入
 ```
-import AudioPlayer from '@liripeng/vue-audio-player'
+import { AudioPlayer } from '@liripeng/vue-audio-player'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
 
 components: {
   AudioPlayer
 }
 ```
-
-## 全局引入
+或者
 ```
 import AudioPlayer from '@liripeng/vue-audio-player'
 import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
@@ -52,14 +51,7 @@ Vue.use(AudioPlayer)
 </template>
 
 <script>
-import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
-
 export default {
-  components: {
-    AudioPlayer
-  },
-
   data() {
     return {
       currentAudioName: '',
