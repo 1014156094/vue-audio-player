@@ -99,6 +99,23 @@
         </transition>
       </div>
 
+      <div class="audio__play-rate">
+        <span @click="isShowRates = !isShowRates">{{ playbackRate | rateFilter }}</span>
+        <transition name="fade-rate">
+          <ul
+            class="audio__play-rate__dropdown"
+            v-show="isShowRates">
+            <li
+              v-for="rate in playbackRates"
+              :key="'pr_' + rate"
+              @click="handleSetPlaybackRate(rate)"
+            >
+              {{ rate | rateFilter }}
+            </li>
+          </ul>
+        </transition>
+      </div>
+
       <div
         class="audio__notice"
         v-show="isShowNotice">
@@ -226,6 +243,17 @@ export default {
     progressInterval: {
       default: 1000,
       type: Number
+    },
+
+    // 是否显示倍速播放速率
+    showPlaybackRate: {
+      type: Boolean,
+      default: false
+    },
+
+    playbackRates: {
+      type: Array,
+      default: () => [0.5, 1, 1.5, 2]
     }
   },
 
@@ -238,13 +266,21 @@ export default {
       isShowNotice: false,
       isLoading: false,
       isShowVolume: false,
+      isShowRates: false,
       timer: null,
       noticeMessage: '',
       duration: '', // 音频持续时间
       currentPlayIndex: 0, // 当前播放的音频位置索引
       currentTime: '', // 音频当前播放时间
       currentTimeAfterFormat: '', // 音频播放当时时间（格式化后）
-      currentVolume: 1 // 当前音量
+      currentVolume: 1, // 当前音量
+      playbackRate: 1 // 当前播放速率
+    }
+  },
+
+  filters: {
+    rateFilter (rate) {
+      return rate.toFixed(1) + 'x'
     }
   },
 
@@ -272,6 +308,13 @@ export default {
       if (this.isDraggingVolume) {
         this.isShowVolume = false
       }
+    },
+
+    // 设定播放速率
+    handleSetPlaybackRate(rate) {
+      this.playbackRate = +rate
+      this.$refs.audio.playbackRate = +rate
+      this.isShowRates = false
     },
 
     // 显示通知
@@ -602,12 +645,26 @@ export default {
     height: 50px;
   }
 }
+@keyframes fadeRate{
+  from {
+    max-height: 0;
+  }
+  to{
+    max-height: 120px;
+  }
+}
 
 .fade-size-enter-active{
   animation: fadeSize .5s;
 }
 .fade-size-leave-active {
   animation: fadeSize .5s reverse;
+}
+.fade-rate-enter-active{
+  animation: fadeRate .5s;
+}
+.fade-rate-leave-active {
+  animation: fadeRate .5s reverse;
 }
 
 .audio-player {
@@ -660,6 +717,32 @@ export default {
   left: 0;
   background-color: #e35924;
   border-radius: 10px;
+}
+
+.audio-player .audio__play-rate {
+  position: absolute;
+  height: 21px;
+  line-height: 21px;
+  cursor: pointer;
+  color: #e35924;
+  left: 50%;
+  margin-left: 120px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.audio-player .audio__play-rate__dropdown {
+  list-style-type: none;
+  padding: 5px 10px;
+  transform: translateY(calc(-100% - 2.5em)) translateX(-10px);
+  background: #fff;
+  border: 1px solid #e35924;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.audio-player .audio__play-rate__dropdown li:hover {
+  font-weight: bold;
 }
 
 .audio-player .audio__play-prev {
