@@ -95,6 +95,8 @@ export default {
 | show-next-button | Whether to display the next button | `Boolean` | `true` |
 | show-volume-button | Whether to display the volume button | `Boolean` | `true` |
 | show-progress-bar | Whether to display a progress bar | `Boolean` | `true` |
+| show-playback-rate | Whether to display the play rate button | `Boolean` | `true` |
+| playback-rates | Playrate setting list | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | Whether the list plays in a loop | `Boolean` | `true` |
 | progressInterval | Progress update interval | `Number` | `1000` |
 | before-play | The callback function before the play starts<br>The play starts after `next()` is called | `(next)=>void` | - |
@@ -122,6 +124,7 @@ export default {
 | isPlaying | Whether the audio is playing | `false` |
 | duration | Audio duration | `''` |
 | currentTime | Current playback time of audio | `''` |
+| playbackRate | Current playback rate of audio | `1` |
 
 Call with `ref`，see the components for more [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 

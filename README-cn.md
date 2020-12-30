@@ -94,6 +94,8 @@ export default {
 | show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
 | show-volume-button | 是否显示音量按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
+| show-playback-rate | 是否显示播放速率按钮 | `Boolean` | `true` |
+| playback-rates | 播放速率设定列表 | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | progressInterval | 进度更新间隔 | `Number` | `1000` |
 | before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
@@ -121,6 +123,7 @@ export default {
 | isPlaying | 音频是否正在播放 | `false` |
 | duration | 音频持续时间 | `''` |
 | currentTime | 音频当前播放时间 | `''` |
+| playbackRate | 音频当前播放速率 | `1` |
 
 使用 `ref` 调用， 更多请自行查看组件 [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
