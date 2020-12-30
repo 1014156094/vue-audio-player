@@ -42,7 +42,7 @@ components: {
 }
 ```
 
-### Step Three：
+### Step three：
 ```
 <template>
   <div>
@@ -140,6 +140,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.2【2020/12/30】
+- Feature：Playback rate configuration
+- Feature：`show-playback-rate` prop
 ### v1.2.0【2020/12/28】
 - Modify：The way packages are introduced locally
 ### v1.1.1【2020/12/11】

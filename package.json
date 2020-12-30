@@ -1,6 +1,6 @@
 {
   "name": "@liripeng/vue-audio-player",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Simple and practical Vue audio player component for PC mobile terminal（简单实用的 PC 移动端的 Vue 音频播放器组件）",
   "license": "MIT",
   "author": "liripeng <1014156094@qq.com>",
@@ -26,7 +26,7 @@
     "url": "https://github.com/1014156094/vue-audio-player.git"
   },
   "dependencies": {
-    "@liripeng/vue-audio-player": "^1.2.1",
+    "@liripeng/vue-audio-player": "^1.2.2",
     "hammer-touchemulator": "^0.0.2",
     "vue": "^2.6.12",
     "vue-router": "^3.4.9"
