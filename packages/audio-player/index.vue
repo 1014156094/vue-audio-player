@@ -127,7 +127,7 @@
       v-show="showProgressBar"
       class="audio__progress-wrap"
       ref="audioProgressWrap"
-      @click="initProgressBarPoint"
+      @click="handleClickProgressWrap"
     >
       <div
         class="audio__progress"
@@ -136,6 +136,9 @@
       <div
         class="audio__progress-point"
         ref="audioProgressPoint"
+        @touchstart="handleProgressTouchstart"
+        @touchend="handleProgressTouchend"
+        @touchmove="handleProgressTouchmove"
       />
     </div>
 
@@ -144,10 +147,10 @@
       class="audio__time-wrap"
     >
       <div class="audio__current-time">
-        {{ currentTimeAfterFormat }}
+        {{ currentTimeFormatted }}
       </div>
       <div class="audio__duration">
-        {{ formatTime(duration) }}
+        {{ durationFormatted }}
       </div>
     </div>
 
@@ -272,9 +275,18 @@ export default {
       duration: '', // 音频持续时间
       currentPlayIndex: 0, // 当前播放的音频位置索引
       currentTime: '', // 音频当前播放时间
-      currentTimeAfterFormat: '', // 音频播放当时时间（格式化后）
       currentVolume: 1, // 当前音量
       playbackRate: 1 // 当前播放速率
+    }
+  },
+
+  computed: {
+    currentTimeFormatted() {
+      return this.currentTime ? this.formatTime(this.currentTime) : '00:00'
+    },
+
+    durationFormatted() {
+      return this.duration ? this.formatTime(this.duration) : '00:00'
     }
   },
 
@@ -330,7 +342,6 @@ export default {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration
-      this.initProgressBarDrag()
       this.$emit('loadedmetadata', event)
     },
 
@@ -357,10 +368,6 @@ export default {
 
     // 音频播放完毕
     onEnded(event) {
-      this.currentTimeAfterFormat = this.formatTime(
-        this.$refs.audio.currentTime
-      )
-
       window.setTimeout(() => {
         this.pause()
         this.$emit('ended', event)
@@ -371,106 +378,53 @@ export default {
       }, 1000)
     },
 
-    // 初始化音频进度的拖拽逻辑
-    initProgressBarDrag() {
-      this.$refs.audioProgressPoint.addEventListener(
-        'touchstart',
-        event => {
-          // 设置拖拽中
-          this.isDragging = true
-        },
-        false
-      )
-      this.$refs.audioProgressPoint.addEventListener(
-        'touchmove',
-        event => {
-          let touch = event.touches[0]
-
-          // 超出左边
-          if (touch.pageX < this.$refs.audioProgressWrap.offsetLeft) {
-            // 设置点点
-            this.$refs.audioProgressPoint.style.left = 0
-            // 设置进度条
-            this.$refs.audioProgress.style.width = 0
-            // 设置当前时间
-            this.currentTime = 0
-            // 设置当前时间（格式化后）
-            this.currentTimeAfterFormat = this.formatTime(this.currentTime)
-            return
-          }
-
-          // 超出右边
-          if (
-            touch.pageX >
-            this.$refs.audioProgressWrap.offsetLeft +
-              this.$refs.audioProgressWrap.offsetWidth
-          ) {
-            // 设置点点
-            this.$refs.audioProgressPoint.style.left =
-              this.$refs.audioProgressWrap.offsetWidth -
-              this.$refs.audioProgressPoint.offsetWidth +
-              'px'
-            // 设置进度条
-            this.$refs.audioProgress.style.width =
-              this.$refs.audioProgressWrap.offsetWidth + 'px'
-            // 设置当前时间，0.1解决有的浏览器播放完了进度还会再走
-            this.currentTime = this.duration - 0.1
-            // 设置当前时间（格式化后）
-            this.currentTimeAfterFormat = this.formatTime(this.currentTime)
-            return
-          }
-
-          this.setPointPosition(touch.pageX)
-          // 设置进度条
-          this.$refs.audioProgress.style.width =
-            touch.pageX - this.$refs.audioProgressWrap.offsetLeft + 'px'
-          // 设置当前时间
-          this.currentTime =
-            (this.$refs.audioProgress.offsetWidth /
-              this.$refs.audioProgressWrap.offsetWidth) *
-            this.duration
-          // 设置当前时间（格式化后）
-          this.currentTimeAfterFormat = this.formatTime(this.currentTime)
-        },
-        false
-      )
-      this.$refs.audioProgressPoint.addEventListener(
-        'touchend',
-        event => {
-          // 设置播放位置
-          this.$refs.audio.currentTime = this.currentTime
-          // 设置未拖拽
-          this.isDragging = false
-        },
-        false
-      )
+    handleProgressTouchstart(event) {
+      this.isDragging = true
     },
 
-    // 设置点点位置
-    setPointPosition(pageX) {
-      // 设置点点
-      this.$refs.audioProgressPoint.style.left =
-        pageX -
-        this.$refs.audioProgressPoint.offsetWidth / 2 -
-        this.$refs.audioProgressWrap.offsetLeft +
-        'px'
+    handleProgressTouchend(event) {
+      this.$refs.audio.currentTime = this.currentTime
+      this.isDragging = false
+    },
+
+    handleProgressTouchmove(event) {
+      let touch = event.changedTouches[0]
+      let pageX = touch.pageX
+      let bcr = event.target.getBoundingClientRect()
+      let targetLeft = parseInt(getComputedStyle(event.target).left)
+      let offsetLeft = targetLeft + (pageX - bcr.left)
+
+      offsetLeft = Math.min(offsetLeft, this.$refs.audioProgressWrap.offsetWidth)
+      offsetLeft = Math.max(offsetLeft, 0)
+      // 设置点点位置
+      this.setPointPosition(offsetLeft)
+      // 设置进度条
+      this.$refs.audioProgress.style.width = offsetLeft + 'px'
+      // 设置当前时间
+      this.currentTime = offsetLeft / this.$refs.audioProgressWrap.offsetWidth * this.duration
     },
 
     // 初始化音频进度的点击逻辑
-    initProgressBarPoint(event) {
-      // 设置当前时间
-      this.currentTime =
-        ((event.pageX - this.$refs.audioProgressWrap.offsetLeft) /
-          this.$refs.audioProgressWrap.offsetWidth) *
-        this.duration
-      // 设置播放位置
+    handleClickProgressWrap(event) {
+      let target = event.target
+      let offsetX = event.offsetX
+
+      if (target === this.$refs.audioProgressPoint) {
+        return
+      }
+
+      // 设置当前播放位置
+      this.currentTime = offsetX / this.$refs.audioProgressWrap.offsetWidth * this.duration
       this.$refs.audio.currentTime = this.currentTime
-      this.setPointPosition(event.pageX)
+      // 设置点点位置
+      this.setPointPosition(offsetX)
       // 设置进度条
-      this.$refs.audioProgress.style.width =
-        event.pageX - this.$refs.audioProgressWrap.offsetLeft + 'px'
-      // 设置当前时间（格式化后）
-      this.currentTimeAfterFormat = this.formatTime(this.currentTime)
+      this.$refs.audioProgress.style.width = offsetX + 'px'
+    },
+
+    // 设置点点位置
+    setPointPosition(offsetLeft) {
+      this.$refs.audioProgressPoint.style.left = offsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
     },
 
     // 播放中
@@ -480,20 +434,13 @@ export default {
         return
       }
 
-      this.currentTimeAfterFormat = this.formatTime(
-        this.$refs.audio.currentTime
-      )
+      let ofsetLeft = this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressWrap.offsetWidth
+
+      this.currentTime = this.$refs.audio.currentTime
       // 设置播放进度条
-      this.$refs.audioProgress.style.width =
-        (this.$refs.audio.currentTime / this.$refs.audio.duration) *
-          this.$refs.audioProgressWrap.offsetWidth +
-        'px'
-      // 设置播放进度拖拽点
-      this.$refs.audioProgressPoint.style.left =
-        (this.$refs.audio.currentTime / this.$refs.audio.duration) *
-          (this.$refs.audioProgressWrap.offsetWidth -
-            this.$refs.audioProgressPoint.offsetWidth / 2) +
-        'px'
+      this.$refs.audioProgress.style.width = ofsetLeft + 'px'
+      // 设置播放进度拖拽点位置
+      this.$refs.audioProgressPoint.style.left = ofsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
       this.$emit('playing')
     },
 
