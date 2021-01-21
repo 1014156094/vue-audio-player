@@ -114,7 +114,6 @@ export default {
 | timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
-| 其他的与原生 `audio` 一致 |
 
 ## 变量
 | 变量 | 说明 | 默认值 |
@@ -139,6 +138,8 @@ export default {
 
 ## 更新日志
 
+### v1.2.4【2021/01/21】
+- 修复：播放事触发两次
 ### v1.2.3【2020/12/31】
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/25">#25</a>
 ### v1.2.2【2020/12/30】

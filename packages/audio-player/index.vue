@@ -161,7 +161,6 @@
       @ended="onEnded"
       @timeupdate="onTimeUpdate"
       @loadedmetadata="onLoadedmetadata"
-      v-on="$listeners"
       v-bind="$attrs"
     >
       浏览器太老咯，请升级浏览器吧~

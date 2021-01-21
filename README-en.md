@@ -115,7 +115,6 @@ export default {
 | timeupdate | Triggered when the current play position is sent to change | `event` |
 | loadedmetadata | The run script is triggered when the duration of the media element and other media have loaded data | `event` |
 | ended | Trigger after audio playback | `event` |
-| The rest is consistent with native `audio` |
 
 ## Data
 | Variable | Explain | Default |
@@ -140,6 +139,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.4【2021/01/21】
+- Fix：Play event fires twice
 ### v1.2.3【2020/12/31】
 - Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/25">#25</a>
 ### v1.2.2【2020/12/30】
