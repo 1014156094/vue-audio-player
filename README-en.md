@@ -139,7 +139,7 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 ## Update log
 
 ### v1.2.5【2021/01/26】
-- Modify：The `PC` can be dragged without introducing a `touchemulator`
+- Modify：The `PC` can be dragged without introducing a `hammer-touchemulator`
 ### v1.2.4【2021/01/21】
 - Fix：Play event fires twice
 ### v1.2.3【2020/12/31】
