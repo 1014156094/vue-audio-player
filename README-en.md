@@ -7,14 +7,13 @@
 
 ---
 
-## <a href="https://github.com/1014156094/vue-audio-player/blob/master/README.md">中文文档</a>
-
+## [中文](./README.md) | **English**
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">Demo</a>
 
 ## Features
 - Complete documentation and examples
-- Support for progress bar dragging (a small package is introduced on the PC to simulate Touch events，<a href="https://github.com/1014156094/vue-audio-player/issues/10">tutorial</a>）
+- Support for progress bar dragging
 - Native CSS, no need to introduce Less, Scss and other precompiled languages
 
 ## Use
@@ -139,6 +138,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.5【2021/01/26】
+- Modify：The `PC` can be dragged without introducing a `touchemulator`
 ### v1.2.4【2021/01/21】
 - Fix：Play event fires twice
 ### v1.2.3【2020/12/31】

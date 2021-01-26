@@ -7,13 +7,13 @@
 
 ---
 
-## <a href="https://github.com/1014156094/vue-audio-player/blob/master/README-en.md">English document</a>
+## **中文** | [English](./README-en.md)
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">点我在线预览</a>
 
 ## 特性
 - 完善的文档和示例
-- 支持进度条拖拽（PC 端需引入一个小小的包模拟 Touch 事件，<a href="https://github.com/1014156094/vue-audio-player/issues/10">教程</a>）
+- 支持进度条拖拽
 - 原生 CSS，无须引入 Less、Scss 等预编译语言
 
 ## 使用
@@ -138,6 +138,8 @@ export default {
 
 ## 更新日志
 
+### v1.2.5【2021/01/26】
+- 修改：`PC` 端无须引入 `touchemulator` 即可拖拽
 ### v1.2.4【2021/01/21】
 - 修复：播放事触发两次
 ### v1.2.3【2020/12/31】

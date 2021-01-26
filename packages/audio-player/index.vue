@@ -77,7 +77,7 @@
         <svg
           class="audio__play-icon"
           aria-hidden="true"
-          @touchstart="handleVolumeIconTouchstart">
+          @click.stop="handleVolumeIconTouchstart">
           <use :xlink:href="currentVolume ? `#icon-play-volume` : `#icon-play-volume-no`" />
         </svg>
 
@@ -85,9 +85,9 @@
           <div
             v-show="isShowVolume"
             class="audio__play-volume-wrap"
-            @touchstart="handleVolumeTouchmove"
-            @touchmove="handleVolumeTouchmove"
-            @touchend="handleVolumeTouchend"
+            @click.stop="handleVolumePanmove"
+            @panmove="handleVolumePanmove"
+            @panend="handleVolumePanend"
             ref="playVolumeWrap">
             <div
               class="audio__play-volume"
@@ -100,7 +100,7 @@
       </div>
 
       <div class="audio__play-rate">
-        <span @click="isShowRates = !isShowRates">{{ playbackRate | rateFilter }}</span>
+        <span @click.stop="isShowRates = !isShowRates">{{ playbackRate | rateFilter }}</span>
         <transition name="fade-rate">
           <ul
             class="audio__play-rate__dropdown"
@@ -108,7 +108,7 @@
             <li
               v-for="rate in playbackRates"
               :key="'pr_' + rate"
-              @click="handleSetPlaybackRate(rate)"
+              @click.stop="handleSetPlaybackRate(rate)"
             >
               {{ rate | rateFilter }}
             </li>
@@ -127,7 +127,7 @@
       v-show="showProgressBar"
       class="audio__progress-wrap"
       ref="audioProgressWrap"
-      @click="handleClickProgressWrap"
+      @click.stop="handleClickProgressWrap"
     >
       <div
         class="audio__progress"
@@ -136,9 +136,9 @@
       <div
         class="audio__progress-point"
         ref="audioProgressPoint"
-        @touchstart="handleProgressTouchstart"
-        @touchend="handleProgressTouchend"
-        @touchmove="handleProgressTouchmove"
+        @panstart="handleProgressPanstart"
+        @panend="handleProgressPanend"
+        @panmove="handleProgressPanmove"
       />
     </div>
 
@@ -169,6 +169,9 @@
 </template>
 
 <script>
+import Core from '@any-touch/core'
+import Pan from '@any-touch/pan'
+
 export default {
   name: 'AudioPlayer',
 
@@ -279,6 +282,12 @@ export default {
     }
   },
 
+  mounted() {
+    const at = new Core(this.$el, { preventDefault: false })
+    at.use(Pan)
+    this.$once('hook:destroyed', () => { at.destroy() })
+  },
+
   computed: {
     currentTimeFormatted() {
       return this.currentTime ? this.formatTime(this.currentTime) : '00:00'
@@ -300,14 +309,13 @@ export default {
       this.isShowVolume = !this.isShowVolume
     },
 
-    handleVolumeTouchmove(event) {
+    handleVolumePanmove(event) {
       let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
-      let clientY = event.changedTouches[0].clientY
+      let pageY = event.y
       let offsetTop
       let volume
 
-      this.isDraggingVolume = true
-      offsetTop = Math.round(playVolumeWrapRect.bottom - clientY)
+      offsetTop = Math.round(playVolumeWrapRect.bottom - pageY)
       volume = offsetTop / this.$refs.playVolumeWrap.offsetHeight
       volume = Math.min(volume, 1)
       volume = Math.max(volume, 0)
@@ -315,10 +323,8 @@ export default {
       this.currentVolume = volume
     },
 
-    handleVolumeTouchend() {
-      if (this.isDraggingVolume) {
-        this.isShowVolume = false
-      }
+    handleVolumePanend() {
+      this.isShowVolume = false
     },
 
     // 设定播放速率
@@ -377,18 +383,17 @@ export default {
       }, 1000)
     },
 
-    handleProgressTouchstart(event) {
+    handleProgressPanstart(event) {
       this.isDragging = true
     },
 
-    handleProgressTouchend(event) {
+    handleProgressPanend(event) {
       this.$refs.audio.currentTime = this.currentTime
       this.isDragging = false
     },
 
-    handleProgressTouchmove(event) {
-      let touch = event.changedTouches[0]
-      let pageX = touch.pageX
+    handleProgressPanmove(event) {
+      let pageX = event.x
       let bcr = event.target.getBoundingClientRect()
       let targetLeft = parseInt(getComputedStyle(event.target).left)
       let offsetLeft = targetLeft + (pageX - bcr.left)
