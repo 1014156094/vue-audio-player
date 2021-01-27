@@ -50,6 +50,7 @@ components: {
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
       :before-play="handleBeforePlay"
+      theme-color="#ff2929"
     />
   </div>
 </template>
@@ -97,7 +98,8 @@ export default {
 | show-playback-rate | 是否显示播放速率按钮 | `Boolean` | `true` |
 | playback-rates | 播放速率设定列表 | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
-| progressInterval | 进度更新间隔 | `Number` | `1000` |
+| progress-interval | 进度更新间隔 | `Number` | `1000` |
+| theme-color | 主题色 | `String` | `#e35924` |
 | before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
 | before-prev | 播放上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
 | before-next | 播放下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
@@ -138,6 +140,9 @@ export default {
 
 ## 更新日志
 
+### v1.2.6【2021/01/27】
+- 新增：主题色属性 `theme-color`
+- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>
 ### v1.2.5【2021/01/26】
 - 修改：`PC` 端无须引入 `hammer-touchemulator` 即可拖拽
 ### v1.2.4【2021/01/21】

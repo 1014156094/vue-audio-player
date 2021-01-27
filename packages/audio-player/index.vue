@@ -2,6 +2,31 @@
   <div class="audio-player">
     <div class="audio__btn-wrap">
       <div
+        class="audio__play-rate"
+        :style="{
+          'color': themeColor
+        }"
+      >
+        <span @click.stop="isShowRates = !isShowRates">{{ playbackRate | rateFilter }}</span>
+        <transition name="fade-rate">
+          <ul
+            class="audio__play-rate__dropdown"
+            v-show="isShowRates"
+            :style="{
+              border: `1px solid ${themeColor}`
+            }">
+            <li
+              v-for="rate in playbackRates"
+              :key="'pr_' + rate"
+              @click.stop="handleSetPlaybackRate(rate)"
+            >
+              {{ rate | rateFilter }}
+            </li>
+          </ul>
+        </transition>
+      </div>
+
+      <div
         v-show="showPrevButton"
         class="audio__play-prev"
         :class="{ disable: !isLoop && currentPlayIndex === 0 }"
@@ -10,6 +35,9 @@
         <svg
           class="audio__play-icon"
           aria-hidden="true"
+          :style="{
+            'color': themeColor
+          }"
         >
           <use xlink:href="#icon-play-prev" />
         </svg>
@@ -18,14 +46,12 @@
       <div
         v-if="isLoading"
         class="audio__play-loading">
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
+        <span
+          v-for="item in 8"
+          :key="item"
+          :style="{
+            backgroundColor: themeColor
+          }" />
       </div>
 
       <template v-else>
@@ -37,6 +63,9 @@
           <svg
             class="audio__play-icon"
             aria-hidden="true"
+            :style="{
+              'color': themeColor
+            }"
           >
             <use xlink:href="#icon-play" />
           </svg>
@@ -50,6 +79,9 @@
           <svg
             class="audio__play-icon"
             aria-hidden="true"
+            :style="{
+              'color': themeColor
+            }"
           >
             <use xlink:href="#icon-play-pause" />
           </svg>
@@ -65,6 +97,9 @@
         <svg
           class="audio__play-icon"
           aria-hidden="true"
+          :style="{
+            'color': themeColor
+          }"
         >
           <use xlink:href="#icon-play-next" />
         </svg>
@@ -77,7 +112,10 @@
         <svg
           class="audio__play-icon"
           aria-hidden="true"
-          @click.stop="handleVolumeIconTouchstart">
+          @click.stop="handleVolumeIconTouchstart"
+          :style="{
+            'color': themeColor
+          }">
           <use :xlink:href="currentVolume ? `#icon-play-volume` : `#icon-play-volume-no`" />
         </svg>
 
@@ -92,27 +130,11 @@
             <div
               class="audio__play-volume"
               :style="{
-                height: currentVolume * 100 + '%'
+                height: currentVolume * 100 + '%',
+                backgroundColor: themeColor
               }"
               ref="playVolume" />
           </div>
-        </transition>
-      </div>
-
-      <div class="audio__play-rate">
-        <span @click.stop="isShowRates = !isShowRates">{{ playbackRate | rateFilter }}</span>
-        <transition name="fade-rate">
-          <ul
-            class="audio__play-rate__dropdown"
-            v-show="isShowRates">
-            <li
-              v-for="rate in playbackRates"
-              :key="'pr_' + rate"
-              @click.stop="handleSetPlaybackRate(rate)"
-            >
-              {{ rate | rateFilter }}
-            </li>
-          </ul>
         </transition>
       </div>
 
@@ -132,6 +154,9 @@
       <div
         class="audio__progress"
         ref="audioProgress"
+        :style="{
+          backgroundColor: themeColor
+        }"
       />
       <div
         class="audio__progress-point"
@@ -139,6 +164,10 @@
         @panstart="handleProgressPanstart"
         @panend="handleProgressPanend"
         @panmove="handleProgressPanmove"
+        :style="{
+          backgroundColor: themeColor,
+          boxShadow: `0 0 10px 0 ${themeColor}`
+        }"
       />
     </div>
 
@@ -259,6 +288,11 @@ export default {
     playbackRates: {
       type: Array,
       default: () => [0.5, 1, 1.5, 2]
+    },
+
+    themeColor: {
+      type: String,
+      default: '#e35924'
     }
   },
 
@@ -428,6 +462,7 @@ export default {
 
     // 设置点点位置
     setPointPosition(offsetLeft) {
+      debugger
       this.$refs.audioProgressPoint.style.left = offsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
     },
 
@@ -438,13 +473,13 @@ export default {
         return
       }
 
-      let ofsetLeft = this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressWrap.offsetWidth
+      let offsetLeft = this.$refs.audio.currentTime / this.$refs.audio.duration * this.$refs.audioProgressWrap.offsetWidth
 
       this.currentTime = this.$refs.audio.currentTime
       // 设置播放进度条
-      this.$refs.audioProgress.style.width = ofsetLeft + 'px'
+      this.$refs.audioProgress.style.width = offsetLeft + 'px'
       // 设置播放进度拖拽点位置
-      this.$refs.audioProgressPoint.style.left = ofsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
+      this.setPointPosition(offsetLeft)
       this.$emit('playing')
     },
 
@@ -622,10 +657,6 @@ export default {
   animation: fadeRate .5s reverse;
 }
 
-.audio-player {
-  margin: 0 15px;
-}
-
 .audio-player .audio__btn-wrap {
   position: relative;
   display: flex;
@@ -638,7 +669,6 @@ export default {
   height: 100%;
   fill: currentColor;
   overflow: hidden;
-  color: #e35924;
 }
 
 .audio-player .audio__play-volume-icon-wrap {
@@ -646,7 +676,6 @@ export default {
   width: 21px;
   height: 21px;
   cursor: pointer;
-  color: #e35924;
   left: 50%;
   margin-left: 80px;
   touch-action: none;
@@ -670,7 +699,6 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #e35924;
   border-radius: 10px;
 }
 
@@ -679,14 +707,13 @@ export default {
   height: 21px;
   line-height: 21px;
   cursor: pointer;
-  color: #e35924;
   left: 50%;
-  margin-left: 120px;
+  margin-left: -110px;
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .audio-player .audio__play-rate__dropdown {
@@ -694,7 +721,6 @@ export default {
   padding: 5px 10px;
   transform: translateY(calc(-100% - 2.5em)) translateX(-10px);
   background: #fff;
-  border: 1px solid #e35924;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -779,19 +805,16 @@ export default {
   top: 0;
   bottom: 0;
   width: 0;
-  background: #e35924;
 }
 
 .audio-player .audio__progress-point {
   position: absolute;
-  left: 0;
+  left: -8px;
   top: 50%;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-top: -8px;
-  background: #e35924;
-  box-shadow: 0 0 10px 1px rgba(227, 89, 36, 0.5);
 }
 
 .audio-player .audio__progress-point:after {
@@ -839,7 +862,6 @@ export default {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #e35924;
     position: absolute;
     animation: loading 1.04s ease infinite;
 }

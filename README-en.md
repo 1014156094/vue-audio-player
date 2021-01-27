@@ -50,6 +50,7 @@ components: {
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
       :before-play="handleBeforePlay"
+      theme-color="#ff2929"
     />
   </div>
 </template>
@@ -97,7 +98,8 @@ export default {
 | show-playback-rate | Whether to display the play rate button | `Boolean` | `true` |
 | playback-rates | Playrate setting list | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | Whether the list plays in a loop | `Boolean` | `true` |
-| progressInterval | Progress update interval | `Number` | `1000` |
+| progress-interval | Progress update interval | `Number` | `1000` |
+| theme-color | Theme color | `String` | `#e35924` |
 | before-play | The callback function before the play starts<br>The play starts after `next()` is called | `(next)=>void` | - |
 | before-prev | Play the previous callback function<br>After calling `next()`, the previous song starts playing | `(next)=>void` | - |
 | before-next | Play the callback function before the next song<br>After calling `next()`, the next song starts playing | `(next)=>void` | - |
@@ -138,6 +140,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.6【2021/01/27】
+- Feature：Theme color attribute `theme-color`
+- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>
 ### v1.2.5【2021/01/26】
 - Modify：The `PC` can be dragged without introducing a `hammer-touchemulator`
 ### v1.2.4【2021/01/21】
