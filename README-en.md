@@ -13,8 +13,8 @@
 
 ## Features
 - Complete documentation and examples
-- Support for progress bar dragging
-- Native CSS, no need to introduce Less, Scss and other precompiled languages
+- Support for progress bar dragging，Compatible with `PC` mobile terminal
+- Native `CSS`, no need to introduce `Less`, `Scss` and other precompiled languages
 
 ## Use
 ### Step one：
