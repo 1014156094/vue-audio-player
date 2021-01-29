@@ -140,6 +140,8 @@ export default {
 
 ## 更新日志
 
+### v1.2.7【2021/01/29】
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
 ### v1.2.6【2021/01/27】
 - 新增：主题色属性 `theme-color`
 - 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>

@@ -140,6 +140,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.7【2021/01/29】
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
 ### v1.2.6【2021/01/27】
 - Feature：Theme color attribute `theme-color`
 - Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>

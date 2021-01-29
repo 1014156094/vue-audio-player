@@ -2,6 +2,7 @@
   <div class="audio-player">
     <div class="audio__btn-wrap">
       <div
+        v-if="showPlaybackRate"
         class="audio__play-rate"
         :style="{
           'color': themeColor
@@ -282,7 +283,7 @@ export default {
     // 是否显示倍速播放速率
     showPlaybackRate: {
       type: Boolean,
-      default: false
+      default: true
     },
 
     playbackRates: {
