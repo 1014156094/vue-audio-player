@@ -140,6 +140,8 @@ export default {
 
 ## 更新日志
 
+### v1.2.8【2021/02/26】
+- 新增：按钮 `hover` 效果
 ### v1.2.7【2021/01/29】
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
 ### v1.2.6【2021/01/27】
@@ -176,14 +178,6 @@ export default {
 
 ### v1.0.6【2020/04/28】
 - 优化：不自带 `babel-polyfill`
-
-### v1.0.5【2019/11/21】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a>
-
-### v1.0.4【2019/10/16】
-- 修复：`isLoop` 无效
-- 修改：类名
-- 修改：去除 `Less`
 
 ## 许可证
 `MIT`

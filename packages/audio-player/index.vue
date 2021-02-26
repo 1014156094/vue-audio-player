@@ -293,7 +293,7 @@ export default {
 
     themeColor: {
       type: String,
-      default: '#e35924'
+      default: '#ff2929'
     }
   },
 
@@ -463,7 +463,6 @@ export default {
 
     // 设置点点位置
     setPointPosition(offsetLeft) {
-      debugger
       this.$refs.audioProgressPoint.style.left = offsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px'
     },
 
@@ -497,19 +496,22 @@ export default {
             this.isLoading = false
           })
         }).catch((data) => {
-          if (data.code === 9) {
-            this.showNotice({
-              message: '加载失败，因为没有找到支持的源。'
-            })
+          this.showNotice({
+            message: data.message
+          })
 
+          // Failed to load because no supported source was found.
+          if (data.code === 9) {
             if (this.isAutoPlayNext) {
               window.setTimeout(() => {
                 this.playNext()
               }, 1000)
             }
           }
+
           this.isLoading = false
         })
+
         this.$emit('play')
       }
 
@@ -726,10 +728,6 @@ export default {
   overflow: hidden;
 }
 
-.audio-player .audio__play-rate__dropdown li:hover {
-  opacity: .5;
-}
-
 .audio-player .audio__play-prev {
   width: 21px;
   height: 33px;
@@ -753,6 +751,19 @@ export default {
   user-select: none;
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.audio-player .audio__play-rate:hover > span {
+  opacity: .7;
+}
+
+.audio-player .audio__play-rate__dropdown li:hover,
+.audio-player .audio__play-prev:hover,
+.audio-player .audio__play-start:hover,
+.audio-player .audio__play-pause:hover,
+.audio-player .audio__play-next:hover,
+.audio-player .audio__play-volume-icon-wrap:hover {
+  opacity: .7;
 }
 
 .audio-player .audio__play-pause {

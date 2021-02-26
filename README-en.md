@@ -140,6 +140,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.8【2021/02/26】
+- Feature：Button `hover` effect
 ### v1.2.7【2021/01/29】
 - Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
 ### v1.2.6【2021/01/27】
@@ -176,14 +178,6 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ### v1.0.6【2020/04/28】
 - Improvement：remove `babel-polyfill`
-
-### v1.0.5【2019/11/21】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/5">#5</a>
-
-### v1.0.4【2019/10/16】
-- Fix：`isLoop`
-- Modify：Class name
-- Modify：Remove `Less`
 
 ## License
 `MIT`

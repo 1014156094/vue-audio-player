@@ -7,7 +7,7 @@
       ref="audioPlayer"
       :audio-list="audioList.map(elm => elm.url)"
       :before-play="handleBeforePlay"
-      theme-color="#ff2929"
+      theme-color="#272788"
     />
   </div>
 </template>
