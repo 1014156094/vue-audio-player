@@ -140,19 +140,21 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.9【2021/04/26】
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS progress bar compatibility</a>
 ### v1.2.8【2021/02/26】
 - Feature：Button `hover` effect
 ### v1.2.7【2021/01/29】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/28">show-playback-rate="false" inoperative</a>
 ### v1.2.6【2021/01/27】
 - Feature：Theme color attribute `theme-color`
-- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>
+- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">The question of whether initialization of drag-and-drop point positions is necessary</a>
 ### v1.2.5【2021/01/26】
 - Modify：The `PC` can be dragged without introducing a `hammer-touchemulator`
 ### v1.2.4【2021/01/21】
-- Fix：Play event fires twice
+- Fix：The play event fires twice
 ### v1.2.3【2020/12/31】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/25">#25</a>
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/25">When you use Modal in iView, you click on the play bar, and you're out of range</a>
 ### v1.2.2【2020/12/30】
 - Feature：Playback rate configuration
 - Feature：`show-playback-rate` prop
@@ -168,16 +170,6 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Feature：Loading `svg` animation，You can override the color with `CSS`
 - Modify：`play` event
 - Modify：Class Name
-
-### v1.0.8【2020/11/17】
-
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a>
-
-### v1.0.7【2020/10/02】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a>
-
-### v1.0.6【2020/04/28】
-- Improvement：remove `babel-polyfill`
 
 ## License
 `MIT`

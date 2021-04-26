@@ -459,6 +459,7 @@ export default {
       this.setPointPosition(offsetX)
       // 设置进度条
       this.$refs.audioProgress.style.width = offsetX + 'px'
+      this.play()
     },
 
     // 设置点点位置
@@ -490,7 +491,6 @@ export default {
       let handlePlay = () => {
         this.$refs.audio.play().then((event) => {
           this.$nextTick(() => {
-            this.playing()
             this.timer = window.setInterval(this.playing, this.progressInterval)
             this.isPlaying = true
             this.isLoading = false
@@ -517,7 +517,7 @@ export default {
 
       // 解决 iOS 异步请求后无法播放
       if (this.isIOS) {
-        console.log('下面一行的错误是解决 iOS 异步请求后无法播放问题')
+        console.log('下面一行的错误是为了解决 iOS 设备接口异步请求后出现无法播放问题')
         this.$refs.audio.play()
         this.$refs.audio.pause()
       }

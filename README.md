@@ -140,19 +140,21 @@ export default {
 
 ## 更新日志
 
+### v1.2.9【2021/04/26】
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS 进度条兼容性</a>
 ### v1.2.8【2021/02/26】
 - 新增：按钮 `hover` 效果
 ### v1.2.7【2021/01/29】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/28">#28</a>
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/28">show-playback-rate="false" 不生效</a>
 ### v1.2.6【2021/01/27】
 - 新增：主题色属性 `theme-color`
-- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">#27</a>
+- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">关于可拖拽点位置初始化是否有必要的问题</a>
 ### v1.2.5【2021/01/26】
 - 修改：`PC` 端无须引入 `hammer-touchemulator` 即可拖拽
 ### v1.2.4【2021/01/21】
-- 修复：播放事触发两次
+- 修复：播放事件触发两次
 ### v1.2.3【2020/12/31】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/25">#25</a>
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/25">在 iview 的 Modal 中使用，点播放进度条，超出范围了</a>
 ### v1.2.2【2020/12/30】
 - 新增：播放速率配置
 - 新增：`show-playback-rate` 属性
@@ -168,16 +170,6 @@ export default {
 - 新增：音频加载中 `svg` 动画，可用 `CSS` 覆盖颜色 
 - 修改：`play` 事件触发调前
 - 修改：部分类名
-
-### v1.0.8【2020/11/17】
-
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/17">#17</a>
-
-### v1.0.7【2020/10/02】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/12">#12</a>
-
-### v1.0.6【2020/04/28】
-- 优化：不自带 `babel-polyfill`
 
 ## 许可证
 `MIT`
