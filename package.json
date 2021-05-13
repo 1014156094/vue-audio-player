@@ -1,6 +1,6 @@
 {
   "name": "@liripeng/vue-audio-player",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "Simple and practical Vue audio player component for PC mobile terminal（简单实用的 PC 移动端的 Vue 音频播放器组件）",
   "license": "MIT",
   "author": "liripeng <1014156094@qq.com>",
@@ -28,15 +28,15 @@
     "url": "https://github.com/1014156094/vue-audio-player.git"
   },
   "dependencies": {
-    "@liripeng/vue-audio-player": "^1.2.9",
-    "any-touch": "^1.0.6",
+    "@liripeng/vue-audio-player": "^1.2.10",
+    "any-touch": "^1.0.12",
     "vue": "^2.6.12",
-    "vue-router": "^3.4.9"
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.9",
-    "@vue/cli-plugin-eslint": "^4.5.9",
-    "@vue/cli-service": "^4.5.9",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",

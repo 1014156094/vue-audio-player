@@ -1,8 +1,11 @@
 <h3 align="center" style="margin: 30px 0 35px;">Vue 音频播放器组件</h3>
 
 <p align="center">
-    <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" alt="npm version" />
-    <img src="https://img.shields.io/bundlephobia/minzip/vue-audio-player.svg" alt="Build Status" />
+    <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" />
+    <img src="https://img.shields.io/bundlephobia/min/@liripeng/vue-audio-player" />
+    <img src="https://img.shields.io/github/stars/1014156094/vue-audio-player" />
+    <img src="https://img.shields.io/github/forks/1014156094/vue-audio-player" />
+    <img src="https://img.shields.io/github/license/1014156094/vue-audio-player" />
 </p>
 
 ---
@@ -12,8 +15,10 @@
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">点我在线预览</a>
 
 ## 特性
+- 简单实用
+- 支持进度条拖拽
+- 支持 `PC` 端和移动端
 - 完善的文档和示例
-- 支持进度条拖拽，兼容 `PC` 移动端
 - 原生 `CSS`，无须引入 `Less`、`Scss` 等预编译语言
 
 ## 使用
@@ -140,6 +145,8 @@ export default {
 
 ## 更新日志
 
+### v1.2.10【2021/05/13】
+- 修改：暂停状态下拖拽进度条则直接播放
 ### v1.2.9【2021/04/26】
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS 进度条兼容性</a>
 ### v1.2.8【2021/02/26】
@@ -155,28 +162,13 @@ export default {
 - 修复：播放事件触发两次
 ### v1.2.3【2020/12/31】
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/25">在 iview 的 Modal 中使用，点播放进度条，超出范围了</a>
-### v1.2.2【2020/12/30】
-- 新增：播放速率配置
-- 新增：`show-playback-rate` 属性
-### v1.2.0【2020/12/28】
-- 修改：局部引入包的方式
-### v1.1.1【2020/12/11】
-- 修复：引入包报错
-### v1.1.0【2020/12/11】
-- 新增：调节音量功能
-- 新增：`show-volume-button` 属性
-- 新增：`is-auto-playNext` 属性
-- 新增：播放失败自动播放下一首，`is-auto-playNext` 为 `false` 则不会自动播放下一首
-- 新增：音频加载中 `svg` 动画，可用 `CSS` 覆盖颜色 
-- 修改：`play` 事件触发调前
-- 修改：部分类名
 
 ## 许可证
 `MIT`
 
 ## FAQ
 
-- 不支持后台播放控制？<a href="https://github.com/1014156094/vue-audio-player/issues/21">#21</a>
+- <a href="https://github.com/1014156094/vue-audio-player/issues/21">不支持后台播放控制？</a>
 
 ## 最后
 使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`

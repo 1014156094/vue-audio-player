@@ -424,6 +424,7 @@ export default {
 
     handleProgressPanend(event) {
       this.$refs.audio.currentTime = this.currentTime
+      this.play()
       this.isDragging = false
     },
 
@@ -491,6 +492,7 @@ export default {
       let handlePlay = () => {
         this.$refs.audio.play().then((event) => {
           this.$nextTick(() => {
+            this.clearTimer()
             this.timer = window.setInterval(this.playing, this.progressInterval)
             this.isPlaying = true
             this.isLoading = false

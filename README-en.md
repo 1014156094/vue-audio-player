@@ -1,8 +1,11 @@
 <h3 align="center" style="margin: 30px 0 35px;">Vue Audio Player Component</h3>
 
 <p align="center">
-    <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" alt="npm version" />
-    <img src="https://img.shields.io/bundlephobia/minzip/vue-audio-player.svg" alt="Build Status" />
+    <img src="https://img.shields.io/npm/v/@liripeng/vue-audio-player.svg" />
+    <img src="https://img.shields.io/bundlephobia/min/@liripeng/vue-audio-player" />
+    <img src="https://img.shields.io/github/stars/1014156094/vue-audio-player" />
+    <img src="https://img.shields.io/github/forks/1014156094/vue-audio-player" />
+    <img src="https://img.shields.io/github/license/1014156094/vue-audio-player" />
 </p>
 
 ---
@@ -12,8 +15,10 @@
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">Demo</a>
 
 ## Features
+- Simple and practical
+- Support for progress bar dragging
+- Supports PC and mobile terminals
 - Complete documentation and examples
-- Support for progress bar dragging，Compatible with `PC` mobile terminal
 - Native `CSS`, no need to introduce `Less`, `Scss` and other precompiled languages
 
 ## Use
@@ -140,6 +145,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.10【2021/05/13】
+- Modify：Pause and drag the progress bar to play directly
 ### v1.2.9【2021/04/26】
 - Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS progress bar compatibility</a>
 ### v1.2.8【2021/02/26】
@@ -155,28 +162,13 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Fix：The play event fires twice
 ### v1.2.3【2020/12/31】
 - Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/25">When you use Modal in iView, you click on the play bar, and you're out of range</a>
-### v1.2.2【2020/12/30】
-- Feature：Playback rate configuration
-- Feature：`show-playback-rate` prop
-### v1.2.0【2020/12/28】
-- Modify：The way packages are introduced locally
-### v1.1.1【2020/12/11】
-- Fix：Incoming packet error
-### v1.1.0【2020/12/11】
-- Feature：Volume adjustment function
-- Feature：`show-volume-button` prop
-- Feature：`is-auto-playNext` prop
-- Feature：Failure to play automatically plays the next song，`is-auto-playNext` is `false` The next song will not automatically play
-- Feature：Loading `svg` animation，You can override the color with `CSS`
-- Modify：`play` event
-- Modify：Class Name
 
 ## License
 `MIT`
 
 ## FAQ
 
-- Background playback control is not supported?<a href="https://github.com/1014156094/vue-audio-player/issues/21">#21</a>
+- <a href="https://github.com/1014156094/vue-audio-player/issues/21">Background playback control is not supported?</a>
 
 ## Last
 Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.
