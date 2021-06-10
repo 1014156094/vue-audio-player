@@ -170,5 +170,11 @@ export default {
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">不支持后台播放控制？</a>
 
+## 浏览器兼容性
+
+- Internet Explorer：不支持
+- Firefox：`53` 及以上
+- Chrome：`51` 及以上
+
 ## 最后
 使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`

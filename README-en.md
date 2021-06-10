@@ -170,5 +170,11 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">Background playback control is not supported?</a>
 
+## Browser compatibility
+
+- Internet Explorer：not support
+- Firefox：`53` and above
+- Chrome：`51` and above
+
 ## Last
 Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.
