@@ -294,6 +294,18 @@ export default {
     themeColor: {
       type: String,
       default: '#ff2929'
+    },
+
+    // 是否禁用进度条可拖拽功能
+    disabledProgressDrag: {
+      type: Boolean,
+      default: false
+    },
+
+    // 是否禁用进度条可点击功能
+    disabledProgressClick: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -419,16 +431,24 @@ export default {
     },
 
     handleProgressPanstart(event) {
+      if (this.disabledProgressDrag) return
+
       this.isDragging = true
+      this.$emit('progress-start', event)
     },
 
     handleProgressPanend(event) {
+      if (this.disabledProgressDrag) return
+
       this.$refs.audio.currentTime = this.currentTime
       this.play()
       this.isDragging = false
+      this.$emit('progress-end', event)
     },
 
     handleProgressPanmove(event) {
+      if (this.disabledProgressDrag) return
+
       let pageX = event.x
       let bcr = event.target.getBoundingClientRect()
       let targetLeft = parseInt(getComputedStyle(event.target).left)
@@ -442,10 +462,13 @@ export default {
       this.$refs.audioProgress.style.width = offsetLeft + 'px'
       // 设置当前时间
       this.currentTime = offsetLeft / this.$refs.audioProgressWrap.offsetWidth * this.duration
+      this.$emit('progress-move', event)
     },
 
     // 初始化音频进度的点击逻辑
     handleClickProgressWrap(event) {
+      if (this.disabledProgressClick) return
+
       let target = event.target
       let offsetX = event.offsetX
 
@@ -461,6 +484,7 @@ export default {
       // 设置进度条
       this.$refs.audioProgress.style.width = offsetX + 'px'
       this.play()
+      this.$emit('progress-click', event)
     },
 
     // 设置点点位置

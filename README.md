@@ -12,7 +12,7 @@
 
 ## **中文** | [English](./README-en.md)
 
-## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">点我在线预览</a>
+## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">点我在线预览 Demo</a>
 
 ## 特性
 - 简单实用
@@ -95,14 +95,16 @@ export default {
 | 参数 | 说明 | 类型 | 默认值 |
 | - | - | - | - |
 | audio-list | 音频播放列表 | `Array` | - |
+| playback-rates | 播放速率设定列表 | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | show-play-button | 是否显示播放按钮 | `Boolean` | `true` |
 | show-prev-button | 是否显示上一首按钮 | `Boolean` | `true` |
 | show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
 | show-volume-button | 是否显示音量按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | show-playback-rate | 是否显示播放速率按钮 | `Boolean` | `true` |
-| playback-rates | 播放速率设定列表 | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
+| disabled-progress-drag | 是否禁用进度条可拖拽功能 | `Boolean` | `false` |
+| disabled-progress-click | 是否禁用进度条可点击功能 | `Boolean` | `false` |
 | progress-interval | 进度更新间隔 | `Number` | `1000` |
 | theme-color | 主题色 | `String` | `#e35924` |
 | before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
@@ -121,6 +123,10 @@ export default {
 | timeupdate | 当前的播放位置发送改变时触发 | `event` |
 | loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
 | ended | 音频播放结束后触发 | `event` |
+| progress-start | 移动进度条前触发 | `event` |
+| progress-move | 移动进度条时触发 | `event` |
+| progress-end | 移动进度条后触发 | `event` |
+| progress-click | 点击进度条后触发 | `event` |
 
 ## 变量
 | 变量 | 说明 | 默认值 |
@@ -145,6 +151,13 @@ export default {
 
 ## 更新日志
 
+### v1.2.11【2021/06/17】
+- 新增：disabled-progress-drag 属性
+- 新增：disabled-progress-click 属性
+- 新增：progress-start 事件
+- 新增：progress-move 事件
+- 新增：progress-end 事件
+- 新增：progress-click 事件
 ### v1.2.10【2021/05/13】
 - 修改：暂停状态下拖拽进度条则直接播放
 ### v1.2.9【2021/04/26】
@@ -156,12 +169,6 @@ export default {
 ### v1.2.6【2021/01/27】
 - 新增：主题色属性 `theme-color`
 - 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">关于可拖拽点位置初始化是否有必要的问题</a>
-### v1.2.5【2021/01/26】
-- 修改：`PC` 端无须引入 `hammer-touchemulator` 即可拖拽
-### v1.2.4【2021/01/21】
-- 修复：播放事件触发两次
-### v1.2.3【2020/12/31】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/25">在 iview 的 Modal 中使用，点播放进度条，超出范围了</a>
 
 ## 许可证
 `MIT`

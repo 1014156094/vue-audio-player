@@ -95,14 +95,16 @@ export default {
 | Prop | Explain | Type | Default |
 | - | - | - | - |
 | audio-list | Audio playlist | `Array` | - |
+| playback-rates | Playrate setting list | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | show-play-button | Whether to display the play button | `Boolean` | `true` |
 | show-prev-button | Whether to display the previous button | `Boolean` | `true` |
 | show-next-button | Whether to display the next button | `Boolean` | `true` |
 | show-volume-button | Whether to display the volume button | `Boolean` | `true` |
 | show-progress-bar | Whether to display a progress bar | `Boolean` | `true` |
 | show-playback-rate | Whether to display the play rate button | `Boolean` | `true` |
-| playback-rates | Playrate setting list | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
 | isLoop | Whether the list plays in a loop | `Boolean` | `true` |
+| disabled-progress-drag | Disable progress bar drag functionality | `Boolean` | `false` |
+| disabled-progress-click | Disable progress bar clickable functionality | `Boolean` | `false` |
 | progress-interval | Progress update interval | `Number` | `1000` |
 | theme-color | Theme color | `String` | `#e35924` |
 | before-play | The callback function before the play starts<br>The play starts after `next()` is called | `(next)=>void` | - |
@@ -121,6 +123,10 @@ export default {
 | timeupdate | Triggered when the current play position is sent to change | `event` |
 | loadedmetadata | The run script is triggered when the duration of the media element and other media have loaded data | `event` |
 | ended | Trigger after audio playback | `event` |
+| progress-start | Trigger before moving the progress bar | `event` |
+| progress-move | Triggered when moving the progress bar | `event` |
+| progress-end | Triggered after moving the progress bar | `event` |
+| progress-click | Click the progress bar to trigger | `event` |
 
 ## Data
 | Variable | Explain | Default |
@@ -145,6 +151,13 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.2.11【2021/06/17】
+- Feature：disabled-progress-drag prop
+- Feature：disabled-progress-click prop
+- Feature：progress-start event
+- Feature：progress-move event
+- Feature：progress-end event
+- Feature：progress-click event
 ### v1.2.10【2021/05/13】
 - Modify：Pause and drag the progress bar to play directly
 ### v1.2.9【2021/04/26】
@@ -156,12 +169,6 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 ### v1.2.6【2021/01/27】
 - Feature：Theme color attribute `theme-color`
 - Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">The question of whether initialization of drag-and-drop point positions is necessary</a>
-### v1.2.5【2021/01/26】
-- Modify：The `PC` can be dragged without introducing a `hammer-touchemulator`
-### v1.2.4【2021/01/21】
-- Fix：The play event fires twice
-### v1.2.3【2020/12/31】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/25">When you use Modal in iView, you click on the play bar, and you're out of range</a>
 
 ## License
 `MIT`
