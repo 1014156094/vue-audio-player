@@ -5,7 +5,7 @@
     </div>
     <audio-player
       ref="audioPlayer"
-      :audio-list="audioList.map(elm => elm.url)"
+      :audio-list="audioList.map((elm) => elm.url)"
       :before-play="handleBeforePlay"
       theme-color="#272788"
     />
@@ -15,43 +15,41 @@
 <script>
 // import AudioPlayer from '@liripeng/vue-audio-player'
 // import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
-import AudioPlayer from '../../packages'
+// import AudioPlayer from "../../packages/index.js";
+import AudioPlayer from "../../lib/vue-audio-player.es";
+import "../../lib/style.css";
 
 export default {
   components: {
-    AudioPlayer
+    AudioPlayer,
   },
 
   data() {
     return {
-      currentAudioName: '',
+      currentAudioName: "",
       audioList: [
         {
-          name: '音频1',
-          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+          name: "audio 1",
+          url: "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly8xZHJpdi1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9zdG9yXzFkcml2X29ubWljcm9zb2Z0X2NvbS9FYWF6RUxSb2U0Uk5pdjJyc21JaG01SUJseF9fdXc5M1VDdHN2bExDRVI0YkRn.mp3",
         },
         {
-          name: '音频2',
-          url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
-        }
-        // {
-        //   name: '音频3',
-        //   url: 'http://txh-cdn.96qbhy.com/20180817175211dtC1vE3z.mp3'
-        // }
-      ]
-    }
+          name: "audio 2",
+          url: "https://link.jscdn.cn/sharepoint/aHR0cHM6Ly8xZHJpdi1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9zdG9yXzFkcml2X29ubWljcm9zb2Z0X2NvbS9FYzM3dlRwM1JDTkV0Ry05c3FPRS1UVUJqZzBNZ0w0MDk5Z0VFREdsX0NtS0RB.mp3",
+        },
+      ],
+    };
   },
 
   methods: {
-    // 播放前做的事
+    // Use this function if you want to do something before you start playing
     handleBeforePlay(next) {
-      // 这里可以做一些事情...
-      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
+      this.currentAudioName =
+        this.audioList[this.$refs.audioPlayer.currentPlayIndex].name;
 
-      next() // 开始播放
-    }
-  }
-}
+      next(); // Start play
+    },
+  },
+};
 </script>
 
 <style scoped>
