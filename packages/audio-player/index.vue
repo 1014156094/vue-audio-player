@@ -9,7 +9,7 @@
         }"
       >
         <span @click.stop="isShowRates = !isShowRates">{{
-          playbackRate.toFixed(1) + "x"
+          playbackRate.toFixed(1) + 'x'
         }}</span>
         <transition name="fade-rate">
           <ul
@@ -24,7 +24,7 @@
               :key="'pr_' + rate"
               @click.stop="handleSetPlaybackRate(rate)"
             >
-              {{ rate.toFixed(1) + "x" }}
+              {{ rate.toFixed(1) + 'x' }}
             </li>
           </ul>
         </transition>
@@ -202,11 +202,11 @@
 </template>
 
 <script>
-import Core from "@any-touch/core";
-import Pan from "@any-touch/pan";
+import Core from '@any-touch/core';
+import Pan from '@any-touch/pan';
 
 export default {
-  name: "AudioPlayer",
+  name: 'AudioPlayer',
 
   inheritAttrs: false,
 
@@ -296,7 +296,7 @@ export default {
 
     themeColor: {
       type: String,
-      default: "#ff2929",
+      default: '#ff2929',
     },
 
     // 是否禁用进度条可拖拽功能
@@ -313,18 +313,18 @@ export default {
   },
 
   emits: [
-    "pause",
-    "play-prev",
-    "play-next",
-    "timeupdate",
-    "loadedmetadata",
-    "ended",
-    "progress-start",
-    "progress-end",
-    "progress-move",
-    "progress-click",
-    "playing",
-    "play",
+    'pause',
+    'play-prev',
+    'play-next',
+    'timeupdate',
+    'loadedmetadata',
+    'ended',
+    'progress-start',
+    'progress-end',
+    'progress-move',
+    'progress-click',
+    'playing',
+    'play',
   ],
 
   data() {
@@ -338,10 +338,10 @@ export default {
       isShowVolume: false,
       isShowRates: false,
       timer: null,
-      noticeMessage: "",
-      duration: "", // 音频持续时间
+      noticeMessage: '',
+      duration: '', // 音频持续时间
       currentPlayIndex: 0, // 当前播放的音频位置索引
-      currentTime: "", // 音频当前播放时间
+      currentTime: '', // 音频当前播放时间
       currentVolume: 1, // 当前音量
       playbackRate: 1, // 当前播放速率
       at: null,
@@ -350,11 +350,11 @@ export default {
 
   computed: {
     currentTimeFormatted() {
-      return this.currentTime ? this.formatTime(this.currentTime) : "00:00";
+      return this.currentTime ? this.formatTime(this.currentTime) : '00:00';
     },
 
     durationFormatted() {
-      return this.duration ? this.formatTime(this.duration) : "00:00";
+      return this.duration ? this.formatTime(this.duration) : '00:00';
     },
   },
 
@@ -412,12 +412,12 @@ export default {
     // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
     onLoadedmetadata(event) {
       this.duration = this.$refs.audio.duration;
-      this.$emit("loadedmetadata", event);
+      this.$emit('loadedmetadata', event);
     },
 
     // 当前的播放位置发送改变时触发
     onTimeUpdate(event) {
-      this.$emit("timeupdate", event);
+      this.$emit('timeupdate', event);
     },
 
     // 格式化秒为分
@@ -428,19 +428,19 @@ export default {
       // 取得秒%60的余数，既得到秒数
       second = Math.ceil(second % 60);
       // 将变量转换为字符串
-      hour += "";
-      second += "";
+      hour += '';
+      second += '';
       // 如果只有一位数，前面增加一个0
-      hour = hour.length === 1 ? "0" + hour : hour;
-      second = second.length === 1 ? "0" + second : second;
-      return hour + ":" + second;
+      hour = hour.length === 1 ? '0' + hour : hour;
+      second = second.length === 1 ? '0' + second : second;
+      return hour + ':' + second;
     },
 
     // 音频播放完毕
     onEnded(event) {
       window.setTimeout(() => {
         this.pause();
-        this.$emit("ended", event);
+        this.$emit('ended', event);
 
         if (this.isLoop && this.isAutoPlayNext) {
           this.playNext();
@@ -452,7 +452,7 @@ export default {
       if (this.disabledProgressDrag) return;
 
       this.isDragging = true;
-      this.$emit("progress-start", event);
+      this.$emit('progress-start', event);
     },
 
     handleProgressPanend(event) {
@@ -461,7 +461,7 @@ export default {
       this.$refs.audio.currentTime = this.currentTime;
       this.play();
       this.isDragging = false;
-      this.$emit("progress-end", event);
+      this.$emit('progress-end', event);
     },
 
     handleProgressPanmove(event) {
@@ -480,11 +480,11 @@ export default {
       // 设置点点位置
       this.setPointPosition(offsetLeft);
       // 设置进度条
-      this.$refs.audioProgress.style.width = offsetLeft + "px";
+      this.$refs.audioProgress.style.width = offsetLeft + 'px';
       // 设置当前时间
       this.currentTime =
         (offsetLeft / this.$refs.audioProgressWrap.offsetWidth) * this.duration;
-      this.$emit("progress-move", event);
+      this.$emit('progress-move', event);
     },
 
     // 初始化音频进度的点击逻辑
@@ -505,15 +505,15 @@ export default {
       // 设置点点位置
       this.setPointPosition(offsetX);
       // 设置进度条
-      this.$refs.audioProgress.style.width = offsetX + "px";
+      this.$refs.audioProgress.style.width = offsetX + 'px';
       this.play();
-      this.$emit("progress-click", event);
+      this.$emit('progress-click', event);
     },
 
     // 设置点点位置
     setPointPosition(offsetLeft) {
       this.$refs.audioProgressPoint.style.left =
-        offsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + "px";
+        offsetLeft - this.$refs.audioProgressPoint.offsetWidth / 2 + 'px';
     },
 
     // 播放中
@@ -529,10 +529,10 @@ export default {
 
       this.currentTime = this.$refs.audio.currentTime;
       // 设置播放进度条
-      this.$refs.audioProgress.style.width = offsetLeft + "px";
+      this.$refs.audioProgress.style.width = offsetLeft + 'px';
       // 设置播放进度拖拽点位置
       this.setPointPosition(offsetLeft);
-      this.$emit("playing");
+      this.$emit('playing');
     },
 
     // 开始播放
@@ -570,13 +570,13 @@ export default {
             this.isLoading = false;
           });
 
-        this.$emit("play");
+        this.$emit('play');
       };
 
       // 解决 iOS 异步请求后无法播放
       if (this.isIOS) {
         console.log(
-          "为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误"
+          '为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误'
         );
         this.$refs.audio.play();
         this.$refs.audio.pause();
@@ -600,7 +600,7 @@ export default {
       this.$nextTick(() => {
         this.clearTimer();
         this.isPlaying = false;
-        this.$emit("pause");
+        this.$emit('pause');
       });
     },
 
@@ -623,7 +623,7 @@ export default {
 
         this.$nextTick(() => {
           this.play();
-          this.$emit("play-prev");
+          this.$emit('play-prev');
         });
       };
 
@@ -662,7 +662,7 @@ export default {
 
         this.$nextTick(() => {
           this.play();
-          this.$emit("play-next");
+          this.$emit('play-next');
         });
       };
 
@@ -889,7 +889,7 @@ export default {
 }
 
 .audio-player .audio__progress-point:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
