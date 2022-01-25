@@ -31,7 +31,7 @@ npm i -S @liripeng/vue-audio-player
 ```
 // 全局引入
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import '@liripeng/vue-audio-player/lib/style.css'
 
 Vue.use(AudioPlayer)
 ```
@@ -39,7 +39,7 @@ Vue.use(AudioPlayer)
 ```
 // 局部引入
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import '@liripeng/vue-audio-player/lib/style.css'
 
 components: {
   AudioPlayer
@@ -151,6 +151,9 @@ export default {
 
 ## 更新日志
 
+### v1.3.0【2022/01/25】
+- 优化：缩小包体积
+- 修改：样式引入改为 `import '@liripeng/vue-audio-player/lib/style.css'`
 ### v1.2.11【2021/06/17】
 - 新增：disabled-progress-drag 属性
 - 新增：disabled-progress-click 属性
@@ -162,18 +165,8 @@ export default {
 - 修改：暂停状态下拖拽进度条则直接播放
 ### v1.2.9【2021/04/26】
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS 进度条兼容性</a>
-### v1.2.8【2021/02/26】
-- 新增：按钮 `hover` 效果
-### v1.2.7【2021/01/29】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/28">show-playback-rate="false" 不生效</a>
-### v1.2.6【2021/01/27】
-- 新增：主题色属性 `theme-color`
-- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/27">关于可拖拽点位置初始化是否有必要的问题</a>
 
-## 许可证
-`MIT`
-
-## 常见疑问&解答
+## 常见疑问解答
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">不支持后台播放控制？</a>
 - <a href="https://github.com/1014156094/vue-audio-player/issues/46">部分手机的自带浏览器因为异步的问题导致加载完成后时长为 0</a>
@@ -183,6 +176,9 @@ export default {
 - Internet Explorer：不支持
 - Firefox：`53` 及以上
 - Chrome：`51` 及以上
+
+## 许可证
+`MIT`
 
 ## 最后
 使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`

@@ -31,7 +31,7 @@ npm i -S @liripeng/vue-audio-player
 ```
 // global import
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import '@liripeng/vue-audio-player/lib/style.css'
 
 Vue.use(AudioPlayer)
 ```
@@ -39,7 +39,7 @@ or
 ```
 // part import
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/vue-audio-player.css'
+import '@liripeng/vue-audio-player/lib/style.css'
 
 components: {
   AudioPlayer
@@ -151,6 +151,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.3.0【2022/01/25】
+- Improvement：Reduced package volume
+- Modify：Style import changed to `import '@liripeng/vue-audio-player/lib/style.css'`
 ### v1.2.11【2021/06/17】
 - Feature：disabled-progress-drag prop
 - Feature：disabled-progress-click prop
@@ -162,16 +165,6 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Modify：Pause and drag the progress bar to play directly
 ### v1.2.9【2021/04/26】
 - Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS progress bar compatibility</a>
-### v1.2.8【2021/02/26】
-- Feature：Button `hover` effect
-### v1.2.7【2021/01/29】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/28">show-playback-rate="false" inoperative</a>
-### v1.2.6【2021/01/27】
-- Feature：Theme color attribute `theme-color`
-- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/27">The question of whether initialization of drag-and-drop point positions is necessary</a>
-
-## License
-`MIT`
 
 ## FAQ
 
@@ -183,6 +176,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Internet Explorer：not support
 - Firefox：`53` and above
 - Chrome：`51` and above
+
+## License
+`MIT`
 
 ## Last
 Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.
