@@ -151,7 +151,7 @@ export default {
 
 ## 更新日志
 
-### v1.3.0【2022/01/25】
+### v1.3.0-beta5【2022/01/25】
 - 优化：缩小包体积
 - 修改：样式引入改为 `import '@liripeng/vue-audio-player/lib/style.css'`
 ### v1.2.11【2021/06/17】

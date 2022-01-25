@@ -151,7 +151,7 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
-### v1.3.0【2022/01/25】
+### v1.3.0-beta5【2022/01/25】
 - Improvement：Reduced package volume
 - Modify：Style import changed to `import '@liripeng/vue-audio-player/lib/style.css'`
 ### v1.2.11【2021/06/17】
