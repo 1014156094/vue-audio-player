@@ -192,8 +192,8 @@ export default {
 ## 许可证
 `MIT`
 
-## 如果觉得有帮助，可以扫码请作者喝杯奶茶😘
-<img src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
+## 如果觉得有帮助，可以扫码请作者喝杯奶茶😋
+<img width="300" src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
 
 ## 最后
 使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`
