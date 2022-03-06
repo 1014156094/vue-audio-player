@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/style.css'
+// import AudioPlayer from '@liripeng/vue-audio-player'
+// import '@liripeng/vue-audio-player/lib/style.css'
 // import AudioPlayer from '../../packages/index.js'
-// import '../../lib/style.css'
-// import AudioPlayer from '../../lib/vue-audio-player.es.js'
+import '../../lib/style.css'
+import AudioPlayer from '../../lib/vue-audio-player.es.js'
 
 export default {
   components: {

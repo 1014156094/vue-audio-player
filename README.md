@@ -201,8 +201,5 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 ## License
 `MIT`
 
-## Feel helpful, scan code please the author to drink a cup of favorite pearl milk tea 😋 or point a `Star`
-<img width="300" src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
-
 ## Last
-Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.
+😘If you think it's helpful, click a 'Star',Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.

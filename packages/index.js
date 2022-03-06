@@ -1,8 +1,8 @@
-import './fonts';
-import AudioPlayer from './audio-player/index.vue';
+import './icon'
+import AudioPlayer from './index.vue'
 
 AudioPlayer.install = (Vue) => {
-  Vue.component(AudioPlayer.name, AudioPlayer);
-};
+  Vue.component(AudioPlayer.name, AudioPlayer)
+}
 
-export default AudioPlayer;
+export default AudioPlayer
