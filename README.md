@@ -134,10 +134,10 @@ export default {
 ## Slot
 | Name | Explain |
 | - | - |
-| play-prev | Play prev button |
-| play-start | Play start button |
-| play-pause | Play pause button |
-| play-next | Play next button |
+| play-prev | Play prev button,The replaceable button icon function remains unchanged |
+| play-start | Play start button,The replaceable button icon function remains unchanged |
+| play-pause | Play pause button,The replaceable button icon function remains unchanged |
+| play-next | Play next button,The replaceable button icon function remains unchanged |
 
 ## Data
 | Variable | Explain | Default |
@@ -164,6 +164,7 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ### v1.4.0【2022/03/05】
 - Feature：Slot `play-prev`、`play-start`、`play-pause` and `play-next`
+- Feature：`play-error` event
 - Improvement：Appearance and layout
 ### v1.3.0【2022/01/25】
 - Improvement：Reduced package volume

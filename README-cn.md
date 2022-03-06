@@ -134,10 +134,10 @@ export default {
 ## 插槽
 | 名称 | 说明 |
 | - | - |
-| play-prev | 播放上一首按钮 |
-| play-start | 播放开始按钮 |
-| play-pause | 播放暂停按钮 |
-| play-next | 播放下一首按钮 |
+| play-prev | 播放上一首按钮，可替换按钮图标功能不变 |
+| play-start | 播放开始按钮，可替换按钮图标功能不变 |
+| play-pause | 播放暂停按钮，可替换按钮图标功能不变 |
+| play-next | 播放下一首按钮，可替换按钮图标功能不变 |
 
 ## 变量
 | 变量 | 说明 | 默认值 |
@@ -163,7 +163,8 @@ export default {
 ## 更新日志
 
 ### v1.4.0【2022/03/05】
-- 新增：插槽 `play-prev`、`play-start`、`play-pause` 和 `play-next`，可实现替换图标功能不变
+- 新增：插槽 `play-prev`、`play-start`、`play-pause` 和 `play-next`
+- 新增：`play-error` 事件
 - 优化：外观和布局
 ### v1.3.0【2022/01/25】
 - 优化：缩小包体积
