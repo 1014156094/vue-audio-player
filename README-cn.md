@@ -182,6 +182,12 @@ export default {
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">不支持后台播放控制？</a>
 - <a href="https://github.com/1014156094/vue-audio-player/issues/46">部分手机的自带浏览器因为异步的问题导致加载完成后时长为 0</a>
+- 怎么实现自定义播放位置或续播？
+
+  例如：
+  ```js
+  this.$refs.audioPlayer.$refs.audio.currentTime = 100 // 跳到 100 秒
+  ```
 
 ## 浏览器兼容性
 
@@ -192,7 +198,7 @@ export default {
 ## 许可证
 `MIT`
 
-## 如果觉得有帮助，可以扫码请作者喝杯奶茶😋
+## 觉得有帮助，扫码请作者喝杯喜欢的珍珠奶茶😋
 <img width="300" src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
 
 ## 最后
