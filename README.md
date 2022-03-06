@@ -14,6 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">Online Demo</a>
 
+## The `Vue3` + `TypeScript` reconstruction version is available later
+
 ## Features
 - Simple and practical
 - High versatility
@@ -197,6 +199,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## License
 `MIT`
+
+## Feel helpful, scan code please the author to drink a cup of favorite pearl milk tea 😋 or point a `Star`
+<img width="300" src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
 
 ## Last
 Any problem found in the process of use can be raised `Issue`, also very welcome to mention `PR`.

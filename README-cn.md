@@ -14,6 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">在线预览 Demo</a>
 
+## `Vue3` + `TypeScript` 重构版本后续出
+
 ## 特性
 - 简单实用
 - 通用性高
@@ -198,7 +200,7 @@ export default {
 ## 许可证
 `MIT`
 
-## 觉得有帮助，扫码请作者喝杯喜欢的珍珠奶茶😋
+## 觉得有帮助，扫码请作者喝杯喜欢的珍珠奶茶😋或点个 `Star`
 <img width="300" src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg" />
 
 ## 最后
