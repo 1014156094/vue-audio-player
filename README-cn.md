@@ -14,9 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">在线预览 Demo</a>
 
-## `Vue3` + `TypeScript` 重构版本后续出
-
 ## 特性
+- 支持 `Vue2` 和 `Vue3`
 - 简单实用
 - 通用性高
 - 支持进度条拖拽
@@ -33,7 +32,6 @@ npm i -S @liripeng/vue-audio-player
 ```
 // 全局引入
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/style.css'
 
 Vue.use(AudioPlayer)
 ```
@@ -41,7 +39,6 @@ Vue.use(AudioPlayer)
 ```
 // 局部引入
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/style.css'
 
 components: {
   AudioPlayer
@@ -162,6 +159,9 @@ export default {
 
 ## 更新日志
 
+### v1.5.0【2022/03/20】
+- 新增：`Vue2` 和 `Vue3` 运行都没问题
+- 新增：无需单独引入 `CSS` 文件
 ### v1.4.0【2022/03/05】
 - 新增：插槽 `play-prev`、`play-start`、`play-pause` 和 `play-next`
 - 新增：`play-error` 事件
@@ -176,10 +176,6 @@ export default {
 - 新增：`progress-move` 事件
 - 新增：`progress-end` 事件
 - 新增：`progress-click` 事件
-### v1.2.10【2021/05/13】
-- 修改：暂停状态下拖拽进度条则直接播放
-### v1.2.9【2021/04/26】
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS 进度条兼容性</a>
 
 ## 常见疑问解答
 

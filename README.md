@@ -14,9 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">Online Demo</a>
 
-## The `Vue3` + `TypeScript` reconstruction version is available later
-
 ## Features
+- `Vue2` and `Vue3` are supported
 - Simple and practical
 - High versatility
 - Support for progress bar dragging
@@ -33,7 +32,6 @@ npm i -S @liripeng/vue-audio-player
 ```
 // global import
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/style.css'
 
 Vue.use(AudioPlayer)
 ```
@@ -41,7 +39,6 @@ or
 ```
 // part import
 import AudioPlayer from '@liripeng/vue-audio-player'
-import '@liripeng/vue-audio-player/lib/style.css'
 
 components: {
   AudioPlayer
@@ -162,6 +159,9 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.5.0【2022/03/20】
+- Feature：`Vue2` and `Vue3` work fine
+- Feature：Don't need import `CSS` file
 ### v1.4.0【2022/03/05】
 - Feature：Slot `play-prev`、`play-start`、`play-pause` and `play-next`
 - Feature：`play-error` event
@@ -176,10 +176,6 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Feature：`progress-move` event
 - Feature：`progress-end` event
 - Feature：`progress-click` event
-### v1.2.10【2021/05/13】
-- Modify：Pause and drag the progress bar to play directly
-### v1.2.9【2021/04/26】
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/32">iOS progress bar compatibility</a>
 
 ## FAQ
 
