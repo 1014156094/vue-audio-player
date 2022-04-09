@@ -181,6 +181,7 @@ export default {
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">不支持后台播放控制？</a>
 - <a href="https://github.com/1014156094/vue-audio-player/issues/46">部分手机的自带浏览器因为异步的问题导致加载完成后时长为 0</a>
+- <a href="https://github.com/1014156094/vue-audio-player/issues/50">无法自动播放？</a>
 - 怎么实现自定义播放位置或续播？
 
   例如：

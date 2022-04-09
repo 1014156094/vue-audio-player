@@ -181,6 +181,7 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 - <a href="https://github.com/1014156094/vue-audio-player/issues/21">Background playback control is not supported?</a>
 - <a href="https://github.com/1014156094/vue-audio-player/issues/46">The browser of some mobile phones is 0 after loading due to asynchronous problems</a>
+- <a href="https://github.com/1014156094/vue-audio-player/issues/50">Unable to play automatically?</a>
 - Realize custom play position or continue to play?
 
   Example:
