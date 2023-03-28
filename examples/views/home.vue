@@ -28,7 +28,7 @@ export default {
       audioList: [
         {
           name: 'audio 1',
-          url: 'https://link.jscdn.cn/sharepoint/aHR0cHM6Ly8xZHJpdi1teS5zaGFyZXBvaW50LmNvbS86dTovZy9wZXJzb25hbC9zdG9yXzFkcml2X29ubWljcm9zb2Z0X2NvbS9FYWF6RUxSb2U0Uk5pdjJyc21JaG01SUJseF9fdXc5M1VDdHN2bExDRVI0YkRn.mp3',
+          url: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
         },
         {
           name: 'audio 2',

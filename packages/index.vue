@@ -560,7 +560,7 @@ export default {
               if (this.isAutoPlayNext) {
                 window.setTimeout(() => {
                   this.playNext()
-                }, 1000)
+                }, 3000)
               }
             }
 

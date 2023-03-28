@@ -30,19 +30,19 @@
     "url": "https://github.com/1014156094/vue-audio-player.git"
   },
   "dependencies": {
-    "@any-touch/core": "^2.0.2",
-    "@any-touch/pan": "^2.0.2",
+    "@any-touch/core": "^2.2.0",
+    "@any-touch/pan": "^2.2.0",
     "@liripeng/vue-audio-player": "1.5.0",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.4",
-    "@vue/eslint-config-prettier": "^7.0.0",
-    "eslint": "^8.11.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.5.0",
-    "prettier": "^2.6.0",
-    "vite": "^2.8.6"
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "eslint": "^8.36.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.10.0",
+    "prettier": "^2.8.7",
+    "vite": "^4.2.1"
   }
 }
