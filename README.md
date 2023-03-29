@@ -159,6 +159,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.5.1【2023/03/29】
+- Improvement: Beautify UI
 ### v1.5.0【2022/03/20】
 - Feature：`Vue2` and `Vue3` work fine
 - Feature：Don't need import `CSS` file

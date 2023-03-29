@@ -82,7 +82,7 @@
         >
           <slot name="play-pause">
             <svg class="audio__play-icon" aria-hidden="true">
-              <use xlink:href="#icon-play-pause" />
+              <use xlink:href="#icon-pause" />
             </svg>
           </slot>
         </div>
@@ -116,9 +116,7 @@
           @click.stop="handleVolumeIconTouchstart"
         >
           <use
-            :xlink:href="
-              currentVolume ? `#icon-play-volume` : `#icon-play-volume-no`
-            "
+            :xlink:href="currentVolume ? `#icon-volume` : `#icon-volume-no`"
           />
         </svg>
 
@@ -292,7 +290,7 @@ export default {
 
     themeColor: {
       type: String,
-      default: '#ff2929',
+      default: '#EC4141',
     },
 
     // 是否禁用进度条可拖拽功能
@@ -524,10 +522,8 @@ export default {
         this.$refs.audioProgressWrap.offsetWidth
 
       this.currentTime = this.$refs.audio.currentTime
-      // 设置播放进度条
-      this.$refs.audioProgress.style.width = offsetLeft + 'px'
-      // 设置播放进度拖拽点位置
-      this.setPointPosition(offsetLeft)
+      this.$refs.audioProgress.style.width = offsetLeft + 'px' // 设置播放进度条
+      this.setPointPosition(offsetLeft) // 设置播放进度拖拽点位置
       this.$emit('playing')
     },
 
@@ -540,11 +536,15 @@ export default {
           .play()
           .then(() => {
             this.$nextTick(() => {
-              this.clearTimer()
-              this.timer = window.setInterval(
-                this.playing,
-                this.progressInterval
-              )
+              if (this.timer) {
+                this.currentTime = this.$refs.audio.currentTime
+              } else {
+                this.timer = window.setInterval(
+                  this.playing,
+                  this.progressInterval
+                )
+              }
+
               this.isPlaying = true
               this.isLoading = false
             })
@@ -739,7 +739,7 @@ export default {
 
 .audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap {
   position: absolute;
-  width: 21px;
+  width: 14px;
   height: 50px;
   bottom: 21px;
   left: 0;
@@ -766,7 +766,7 @@ export default {
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
-  font-size: 16px;
+  font-size: 14px;
   margin-right: 16px;
 }
 
@@ -888,9 +888,9 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
   background: #fff;
   border-radius: 50%;
 }
