@@ -547,6 +547,7 @@ export default {
 
               this.isPlaying = true
               this.isLoading = false
+              this.$refs.audio.playbackRate = this.playbackRate
             })
             this.$emit('play')
           })

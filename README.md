@@ -159,6 +159,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.5.2【2023/07/12】
+- Fix: When I select double playback speed, it doesn't work when the next song is played.
 ### v1.5.1【2023/03/29】
 - Improvement: Beautify UI
 ### v1.5.0【2022/03/20】
