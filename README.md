@@ -199,6 +199,10 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 - Firefox：`53` and above
 - Chrome：`51` and above
 
+## Reward the author with milk tea
+
+<img src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg?raw=true" width="200">
+
 ## License
 `MIT`
 

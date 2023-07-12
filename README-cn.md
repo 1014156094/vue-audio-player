@@ -199,6 +199,10 @@ export default {
 - Firefox：`53` 及以上
 - Chrome：`51` 及以上
 
+## 奖励作者喝奶茶
+
+<img src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg?raw=true" width="200">
+
 ## 许可证
 `MIT`
 
