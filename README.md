@@ -101,6 +101,7 @@ export default {
 | show-volume-button | Whether to display the volume button | `Boolean` | `true` |
 | show-progress-bar | Whether to display a progress bar | `Boolean` | `true` |
 | show-playback-rate | Whether to display the play rate button | `Boolean` | `true` |
+| show-play-loading | Whether to display loading on playback | `Boolean` | `true` |
 | isLoop | Whether the list plays in a loop | `Boolean` | `true` |
 | disabled-progress-drag | Disable progress bar drag functionality | `Boolean` | `false` |
 | disabled-progress-click | Disable progress bar clickable functionality | `Boolean` | `false` |
@@ -159,6 +160,8 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.5.3【2023/11/29】
+- Feature: `showPlayLoading` prop
 ### v1.5.2【2023/07/12】
 - Fix: When I select double playback speed, it doesn't work when the next song is played.
 ### v1.5.1【2023/03/29】

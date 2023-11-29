@@ -101,6 +101,7 @@ export default {
 | show-volume-button | 是否显示音量按钮 | `Boolean` | `true` |
 | show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
 | show-playback-rate | 是否显示播放速率按钮 | `Boolean` | `true` |
+| show-play-loading | 是否显示播放时的 loading | `Boolean` | `true` |
 | isLoop | 是否列表循环播放 | `Boolean` | `true` |
 | disabled-progress-drag | 是否禁用进度条可拖拽功能 | `Boolean` | `false` |
 | disabled-progress-click | 是否禁用进度条可点击功能 | `Boolean` | `false` |
@@ -159,6 +160,8 @@ export default {
 
 ## 更新日志
 
+### v1.5.3【2023/11/29】
+- 新增: `showPlayLoading` 属性
 ### v1.5.2【2023/07/12】
 - 修复: 选择了两倍播放，下一首的时候又默认变回一倍了
 ### v1.5.1【2023/03/29】

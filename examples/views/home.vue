@@ -7,14 +7,15 @@
       ref="audioPlayer"
       :audio-list="audioList.map((elm) => elm.url)"
       :before-play="handleBeforePlay"
+      :show-play-loading="false"
     >
     </audio-player>
   </div>
 </template>
 
 <script>
-import AudioPlayer from '@liripeng/vue-audio-player'
-// import AudioPlayer from '../../packages/index.js'
+// import AudioPlayer from '@liripeng/vue-audio-player'
+import AudioPlayer from '../../packages/index.js'
 
 export default {
   components: {

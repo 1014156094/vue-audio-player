@@ -46,7 +46,7 @@
         </slot>
       </div>
 
-      <div v-if="isLoading" class="audio__play-loading">
+      <div v-if="isLoading && showPlayLoading" class="audio__play-loading">
         <span
           v-for="item in 8"
           :key="item"
@@ -283,6 +283,12 @@ export default {
       default: true,
     },
 
+    // 是否显示播放时的 loading
+    showPlayLoading: {
+      type: Boolean,
+      default: true,
+    },
+
     playbackRates: {
       type: Array,
       default: () => [0.5, 1, 1.5, 2],
@@ -468,7 +474,7 @@ export default {
 
       offsetLeft = Math.min(
         offsetLeft,
-        this.$refs.audioProgressWrap.offsetWidth
+        this.$refs.audioProgressWrap.offsetWidth,
       )
       offsetLeft = Math.max(offsetLeft, 0)
       // 设置点点位置
@@ -541,7 +547,7 @@ export default {
               } else {
                 this.timer = window.setInterval(
                   this.playing,
-                  this.progressInterval
+                  this.progressInterval,
                 )
               }
 
@@ -573,7 +579,7 @@ export default {
       // 解决 iOS 异步请求后无法播放
       if (this.isIOS) {
         console.log(
-          '为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误'
+          '为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误',
         )
         this.$refs.audio.play()
         this.$refs.audio.pause()

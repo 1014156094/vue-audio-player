@@ -1,6 +1,6 @@
 {
   "name": "@liripeng/vue-audio-player",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Simple and practical Vue audio player component for PC mobile terminal（简单实用的 PC 移动端的 Vue 音频播放器组件）",
   "license": "MIT",
   "author": "liripeng <1014156094@qq.com>",
@@ -10,7 +10,6 @@
   ],
   "main": "./packages/index.js",
   "keywords": [
-    "liripeng",
     "vue-audio-player",
     "vue-audio",
     "vue-music",
@@ -18,7 +17,10 @@
     "audio",
     "音频",
     "音乐",
-    "播放器"
+    "播放器",
+    "liripeng",
+    "vue3",
+    "vue2"
   ],
   "scripts": {
     "dev": "vite",
