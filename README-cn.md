@@ -76,21 +76,21 @@ export default {
       currentAudioName: '',
       audioList: [
         {
-          src: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
-          title: 'Audio Title 1',
-          artist: 'Artist Name 1',
-          album: 'Album Name 1',
+          src: 'http://music.163.com/song/media/outer/url?id=317151.mp3', // required
+          title: 'Audio Title 1', // optional
+          artist: 'Artist Name 1', // optional
+          album: 'Album Name 1', // optional
           artwork: [
             {
               src: 'https://upload.jianshu.io/users/upload_avatars/1696356/c358e43854eb?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp',
               sizes: '512x512',
               type: 'image/jpg',
             },
-          ],
+          ], // optional
         },
         {
-          src: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
-          title: 'Audio Title 2',
+          src: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3', // required
+          title: 'Audio Title 2', // optional
         },
       ],
     }
