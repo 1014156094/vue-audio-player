@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="name">
-      {{ currentAudioName || audioList[0].name }}
+      {{ currentAudioName || audioList[0].title }}
     </div>
     <audio-player
       ref="audioPlayer"
-      :audio-list="audioList.map((elm) => elm.url)"
+      :audio-list="audioList?.map((item) => item.src)"
       :before-play="handleBeforePlay"
       :show-play-loading="false"
     >
@@ -27,12 +27,21 @@ export default {
       currentAudioName: '',
       audioList: [
         {
-          name: 'audio 1',
-          url: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
+          src: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
+          title: 'Audio Title 1',
+          artist: 'Artist Name 1',
+          album: 'Album Name 1',
+          artwork: [
+            {
+              src: 'https://upload.jianshu.io/users/upload_avatars/1696356/c358e43854eb?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp',
+              sizes: '512x512',
+              type: 'image/jpg',
+            },
+          ],
         },
         {
-          name: 'audio 2',
-          url: 'http://music.163.com/song/media/outer/url?id=281951.mp3',
+          src: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
+          title: 'Audio Title 2',
         },
       ],
     }
@@ -42,7 +51,7 @@ export default {
     // Use this function if you want to do something before you start playing
     handleBeforePlay(next) {
       this.currentAudioName =
-        this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
+        this.audioList[this.$refs.audioPlayer.currentPlayIndex].title
 
       next() // Start play
     },

@@ -15,6 +15,7 @@
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">在线预览 Demo</a>
 
 ## 特性
+
 - 支持 `Vue2` 和 `Vue3`
 - 简单实用
 - 通用性高
@@ -23,19 +24,24 @@
 - 完善的文档和示例
 
 ## 使用
+
 ### 第一步：
+
 ```
 npm i -S @liripeng/vue-audio-player
 ```
 
 ### 第二步：
+
 ```
 // 全局引入
 import AudioPlayer from '@liripeng/vue-audio-player'
 
 Vue.use(AudioPlayer)
 ```
+
 或者
+
 ```
 // 局部引入
 import AudioPlayer from '@liripeng/vue-audio-player'
@@ -46,16 +52,20 @@ components: {
 ```
 
 ### 第三步：
+
 ```
 <template>
   <div>
-    {{ currentAudioName || audioList[0].name }}
+    <div class="name">
+      {{ currentAudioName || audioList[0].title }}
+    </div>
     <audio-player
       ref="audioPlayer"
-      :audio-list="audioList.map(elm => elm.url)"
+      :audio-list="audioList?.map((item) => item.src)"
       :before-play="handleBeforePlay"
-      theme-color="#ff2929"
-    />
+      :show-play-loading="false"
+    >
+    </audio-player>
   </div>
 </template>
 
@@ -66,117 +76,148 @@ export default {
       currentAudioName: '',
       audioList: [
         {
-          name: '音频1',
-          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+          src: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
+          title: 'Audio Title 1',
+          artist: 'Artist Name 1',
+          album: 'Album Name 1',
+          artwork: [
+            {
+              src: 'https://upload.jianshu.io/users/upload_avatars/1696356/c358e43854eb?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp',
+              sizes: '512x512',
+              type: 'image/jpg',
+            },
+          ],
         },
         {
-          name: '音频2',
-          url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
-        }
-      ]
+          src: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
+          title: 'Audio Title 2',
+        },
+      ],
     }
   },
 
   methods: {
-    // 播放前做的事
+    // Use this function if you want to do something before you start playing
     handleBeforePlay(next) {
-      // 这里可以做一些事情...
-      this.currentAudioName = this.audioList[this.$refs.audioPlayer.currentPlayIndex].name
+      this.currentAudioName =
+        this.audioList[this.$refs.audioPlayer.currentPlayIndex].title
 
-      next() // 开始播放
-    }
-  }
+      next() // Start play
+    },
+  },
 }
 </script>
 ```
 
 ## 属性
-| 参数 | 说明 | 类型 | 默认值 |
-| - | - | - | - |
-| audio-list | 音频播放列表 | `Array` | - |
-| playback-rates | 播放速率设定列表 | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
-| show-play-button | 是否显示播放按钮 | `Boolean` | `true` |
-| show-prev-button | 是否显示上一首按钮 | `Boolean` | `true` |
-| show-next-button | 是否显示下一首按钮 | `Boolean` | `true` |
-| show-volume-button | 是否显示音量按钮 | `Boolean` | `true` |
-| show-progress-bar | 是否显示进度条 | `Boolean` | `true` |
-| show-playback-rate | 是否显示播放速率按钮 | `Boolean` | `true` |
-| show-play-loading | 是否显示播放时的 loading | `Boolean` | `true` |
-| isLoop | 是否列表循环播放 | `Boolean` | `true` |
-| disabled-progress-drag | 是否禁用进度条可拖拽功能 | `Boolean` | `false` |
-| disabled-progress-click | 是否禁用进度条可点击功能 | `Boolean` | `false` |
-| progress-interval | 进度更新间隔 | `Number` | `1000` |
-| theme-color | 主题色 | `String` | `#e35924` |
-| before-play | 播放开始前的回调函数<br>调用 next() 后开始播放 | `(next)=>void` | - |
-| before-prev | 播放上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void` | - |
-| before-next | 播放下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void` | - |
+
+| 参数                      | 说明                                                   | 类型            | 默认值             |
+| ------------------------- | ------------------------------------------------------ | --------------- | ------------------ |
+| audio-list                | 音频播放列表                                           | `Array<Object>` | -                  |
+| playback-rates            | 播放速率设定列表                                       | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
+| show-play-button          | 是否显示播放按钮                                       | `Boolean`       | `true`             |
+| show-prev-button          | 是否显示上一首按钮                                     | `Boolean`       | `true`             |
+| show-next-button          | 是否显示下一首按钮                                     | `Boolean`       | `true`             |
+| show-volume-button        | 是否显示音量按钮                                       | `Boolean`       | `true`             |
+| show-progress-bar         | 是否显示进度条                                         | `Boolean`       | `true`             |
+| show-playback-rate        | 是否显示播放速率按钮                                   | `Boolean`       | `true`             |
+| show-play-loading         | 是否显示播放时的 loading                               | `Boolean`       | `true`             |
+| isLoop                    | 是否列表循环播放                                       | `Boolean`       | `true`             |
+| disabled-progress-drag    | 是否禁用进度条可拖拽功能                               | `Boolean`       | `false`            |
+| disabled-progress-click   | 是否禁用进度条可点击功能                               | `Boolean`       | `false`            |
+| progress-interval         | 进度更新间隔                                           | `Number`        | `1000`             |
+| theme-color               | 主题色                                                 | `String`        | `#e35924`          |
+| before-play               | 播放开始前的回调函数<br>调用 next() 后开始播放         | `(next)=>void`  | -                  |
+| before-prev               | 播放上一首前的回调函数<br>调用 next() 后开始播放上一首 | `(next)=>void`  | -                  |
+| before-next               | 播放下一首前的回调函数<br>调用 next() 后开始播放下一首 | `(next)=>void`  | -                  |
 | 其他的与原生 `audio` 一致 |
 
 ## 事件
-| 事件 | 说明 | 回调参数 |
-| - | - | - |
-| play | 播放开始后触发 | - |
-| pause | 播放暂停后触发 | - |
-| play-prev | 播放上一首后触发 | - |
-| play-next | 播放下一首后触发 | - |
-| play-error | 播放出错后触发，回调参数为原生 `play` 方法的一致 | `data` |
-| playing | 播放中每 `progressInterval` 秒触发 | - |
-| timeupdate | 当前的播放位置发送改变时触发 | `event` |
-| loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event` |
-| ended | 音频播放结束后触发 | `event` |
-| progress-start | 移动进度条前触发 | `event` |
-| progress-move | 移动进度条时触发 | `event` |
-| progress-end | 移动进度条后触发 | `event` |
-| progress-click | 点击进度条后触发 | `event` |
+
+| 事件           | 说明                                                     | 回调参数 |
+| -------------- | -------------------------------------------------------- | -------- |
+| play           | 播放开始后触发                                           | -        |
+| pause          | 播放暂停后触发                                           | -        |
+| play-prev      | 播放上一首后触发                                         | -        |
+| play-next      | 播放下一首后触发                                         | -        |
+| play-error     | 播放出错后触发，回调参数为原生 `play` 方法的一致         | `data`   |
+| playing        | 播放中每 `progressInterval` 秒触发                       | -        |
+| timeupdate     | 当前的播放位置发送改变时触发                             | `event`  |
+| loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event`  |
+| ended          | 音频播放结束后触发                                       | `event`  |
+| progress-start | 移动进度条前触发                                         | `event`  |
+| progress-move  | 移动进度条时触发                                         | `event`  |
+| progress-end   | 移动进度条后触发                                         | `event`  |
+| progress-click | 点击进度条后触发                                         | `event`  |
 
 ## 插槽
-| 名称 | 说明 |
-| - | - |
-| play-prev | 播放上一首按钮，可替换按钮图标功能不变 |
-| play-start | 播放开始按钮，可替换按钮图标功能不变 |
-| play-pause | 播放暂停按钮，可替换按钮图标功能不变 |
-| play-next | 播放下一首按钮，可替换按钮图标功能不变 |
+
+| 名称       | 说明                                   |
+| ---------- | -------------------------------------- |
+| play-prev  | 播放上一首按钮，可替换按钮图标功能不变 |
+| play-start | 播放开始按钮，可替换按钮图标功能不变   |
+| play-pause | 播放暂停按钮，可替换按钮图标功能不变   |
+| play-next  | 播放下一首按钮，可替换按钮图标功能不变 |
 
 ## 变量
-| 变量 | 说明 | 默认值 |
-| - | - | - |
-| currentPlayIndex | 当前播放的音频索引 | `0` |
-| isPlaying | 音频是否正在播放 | `false` |
-| duration | 音频持续时间 | `''` |
-| currentTime | 音频当前播放时间 | `''` |
-| playbackRate | 音频当前播放速率 | `1` |
+
+| 变量             | 说明               | 默认值  |
+| ---------------- | ------------------ | ------- |
+| currentPlayIndex | 当前播放的音频索引 | `0`     |
+| isPlaying        | 音频是否正在播放   | `false` |
+| duration         | 音频持续时间       | `''`    |
+| currentTime      | 音频当前播放时间   | `''`    |
+| playbackRate     | 音频当前播放速率   | `1`     |
 
 使用 `ref` 调用， 更多请自行查看组件 [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## 方法
-| 方法 | 说明 | 回调 |
-| - | - | - |
-| play | 开始播放 | - |
-| pause | 暂停播放 | - |
-| playPrev | 播放上一首 | - |
-| playNext | 播放下一首 | - |
+
+| 方法     | 说明       | 回调 |
+| -------- | ---------- | ---- |
+| play     | 开始播放   | -    |
+| pause    | 暂停播放   | -    |
+| playPrev | 播放上一首 | -    |
+| playNext | 播放下一首 | -    |
 
 使用 `ref` 调用， 更多请自行查看组件 [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## 更新日志
 
+### v1.6.0【2024/06/04】
+
+- 新增：锁屏可以设置封面和切换下一首等等
+
 ### v1.5.3【2023/11/29】
+
 - 新增: `showPlayLoading` 属性
+
 ### v1.5.2【2023/07/12】
+
 - 修复: 选择了两倍播放，下一首的时候又默认变回一倍了
+
 ### v1.5.1【2023/03/29】
+
 - 优化: 美化 `UI`
+
 ### v1.5.0【2022/03/20】
+
 - 新增：`Vue2` 和 `Vue3` 运行都没问题
 - 新增：无需单独引入 `CSS` 文件
+
 ### v1.4.0【2022/03/05】
+
 - 新增：插槽 `play-prev`、`play-start`、`play-pause` 和 `play-next`
 - 新增：`play-error` 事件
 - 优化：外观和布局
+
 ### v1.3.0【2022/01/25】
+
 - 优化：缩小包体积
 - 修改：样式引入改为 `import '@liripeng/vue-audio-player/lib/style.css'`
+
 ### v1.2.11【2021/06/17】
+
 - 新增：`disabled-progress-drag` 属性
 - 新增：`disabled-progress-click` 属性
 - 新增：`progress-start` 事件
@@ -192,6 +233,7 @@ export default {
 - 怎么实现自定义播放位置或续播？
 
   例如：
+
   ```js
   this.$refs.audioPlayer.$refs.audio.currentTime = 100 // 跳到 100 秒
   ```
@@ -207,7 +249,9 @@ export default {
 <img src="https://github.com/1014156094/vue-audio-player/blob/master/pay.jpg?raw=true" width="200">
 
 ## 许可证
+
 `MIT`
 
 ## 最后
+
 😘觉得有帮助点个 `Star` 吧，使用过程中发现任何问题都可以提 `Issue`，也非常欢迎提 `PR`

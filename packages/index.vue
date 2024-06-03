@@ -184,7 +184,7 @@
     <audio
       ref="audio"
       class="audio-player__audio"
-      :src="audioList[currentPlayIndex]"
+      :src="audioList?.[currentPlayIndex] || audioList?.[currentPlayIndex]?.src"
       v-bind="$attrs"
       @ended="onEnded"
       @timeupdate="onTimeUpdate"
@@ -207,7 +207,8 @@ export default {
   props: {
     // 音频播放列表
     audioList: {
-      default: null,
+      require: true,
+      default: () => [],
       type: Array,
     },
 
@@ -345,7 +346,7 @@ export default {
       currentTime: '', // 音频当前播放时间
       currentVolume: 1, // 当前音量
       playbackRate: 1, // 当前播放速率
-      at: null,
+      at: null, // 拖拽组件的实例
     }
   },
 
@@ -370,6 +371,33 @@ export default {
   },
 
   methods: {
+    updateMediaMetadata() {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: this.audioList[this.currentPlayIndex].title,
+          artist: this.audioList[this.currentPlayIndex].artist,
+          album: this.audioList[this.currentPlayIndex].album,
+          artwork: this.audioList[this.currentPlayIndex].artwork,
+        })
+
+        navigator.mediaSession.setActionHandler('play', () => {
+          this.play()
+        })
+
+        navigator.mediaSession.setActionHandler('pause', () => {
+          this.pause()
+        })
+
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+          this.playPrev()
+        })
+
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          this.playNext()
+        })
+      }
+    },
+
     handleVolumeIconTouchstart() {
       this.isShowVolume = !this.isShowVolume
     },
@@ -574,6 +602,8 @@ export default {
             this.isLoading = false
             this.$emit('play-error', data)
           })
+
+        this.updateMediaMetadata()
       }
 
       // 解决 iOS 异步请求后无法播放
