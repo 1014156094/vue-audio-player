@@ -1,4 +1,3 @@
-import './icon'
 import AudioPlayer from './index.vue'
 
 AudioPlayer.install = (Vue) => {

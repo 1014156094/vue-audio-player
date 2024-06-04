@@ -1,9 +1,9 @@
 <template>
-  <div class="audio-player">
-    <div class="audio__btn-wrap">
+  <div class="vue-audio-player">
+    <div class="vue-audio-player__btn-wrap">
       <div
         v-if="showPlaybackRate"
-        class="audio__play-rate"
+        class="vue-audio-player__play-rate"
         :style="{
           color: themeColor,
         }"
@@ -14,7 +14,7 @@
         <transition name="fade-rate">
           <div
             v-show="isShowRates"
-            class="audio__play-rate__dropdown"
+            class="vue-audio-player__play-rate__dropdown"
             :style="{
               backgroundColor: themeColor,
             }"
@@ -32,7 +32,7 @@
 
       <div
         v-if="showPrevButton"
-        class="audio__play-prev"
+        class="vue-audio-player__play-prev"
         :class="{ disable: !isLoop && currentPlayIndex === 0 }"
         @click.stop="playPrev"
         :style="{
@@ -40,13 +40,28 @@
         }"
       >
         <slot name="play-prev">
-          <svg class="audio__play-icon" aria-hidden="true">
-            <use xlink:href="#icon-play-prev" />
+          <svg
+            t="1717510776733"
+            class="vue-audio-player__play-icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="3657"
+            width="200"
+            height="200"
+          >
+            <path
+              d="M744.4353125 43.919375L280.94 425.3525 280.94 104.4359375a38.5096875 38.5096875 0 1 0-77.47875-0.916875l0 816.5034375a38.5096875 38.5096875 0 1 0 77.47875 0L280.94 596.35625l463.4953125 383.7253125a45.845625 45.845625 0 0 0 76.1034375-33.92625L820.53875 77.845625a45.845625 45.845625 0 0 0-76.1034375-33.92625z"
+              p-id="3658"
+            ></path>
           </svg>
         </slot>
       </div>
 
-      <div v-if="isLoading && showPlayLoading" class="audio__play-loading">
+      <div
+        v-if="isLoading && showPlayLoading"
+        class="vue-audio-player__play-loading"
+      >
         <span
           v-for="item in 8"
           :key="item"
@@ -59,30 +74,54 @@
       <template v-else>
         <div
           v-if="!isPlaying && showPlayButton"
-          class="audio__play-start"
+          class="vue-audio-player__play-start"
           @click.stop="play"
           :style="{
             color: themeColor,
           }"
         >
           <slot name="play-start">
-            <svg class="audio__play-icon" aria-hidden="true">
-              <use xlink:href="#icon-play" />
+            <svg
+              class="vue-audio-player__play-icon"
+              t="1717510855219"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="3799"
+              width="200"
+              height="200"
+            >
+              <path
+                d="M512 8.97941504c277.81531056 0 503.02058496 225.20527562 503.02058496 503.02058496s-225.20527562 503.02058496-503.02058496 503.02058496S8.97941504 789.81531056 8.97941504 512 234.18468944 8.97941504 512 8.97941504z m-70.12698734 325.48390806c-26.63050141 0-48.23079685 21.60029545-48.23079807 48.23079686v253.81827015a48.23079685 48.23079685 0 0 0 74.26951062 40.56712988l199.46245688-128.1518906a48.23079685 48.23079685 0 0 0-0.35507283-81.37097702l-199.46245689-125.66637833a48.23079685 48.23079685 0 0 0-25.71322921-7.42695094z"
+                p-id="3800"
+              ></path>
             </svg>
           </slot>
         </div>
 
         <div
           v-else-if="showPlayButton"
-          class="audio__play-pause"
+          class="vue-audio-player__play-pause"
           @click.stop="pause"
           :style="{
             color: themeColor,
           }"
         >
           <slot name="play-pause">
-            <svg class="audio__play-icon" aria-hidden="true">
-              <use xlink:href="#icon-pause" />
+            <svg
+              t="1717510886292"
+              class="vue-audio-player__play-icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="3945"
+              width="200"
+              height="200"
+            >
+              <path
+                d="M512 1012.62222187C234.38222187 1012.62222187 11.37777813 789.61777813 11.37777813 512S234.38222187 11.37777813 512 11.37777813s500.62222187 223.0044448 500.62222187 500.62222187-223.0044448 500.62222187-500.62222187 500.62222187z m136.53333333-682.66666667c-27.30666667 0-45.51111147 18.2044448-45.51111146 45.51111147v273.06666666c0 27.30666667 18.2044448 45.51111147 45.51111146 45.51111147s45.51111147-18.2044448 45.51111147-45.51111147V375.46666667c0-27.30666667-18.2044448-45.51111147-45.51111147-45.51111147zM375.46666667 329.9555552c-27.30666667 0-45.51111147 18.2044448-45.51111147 45.51111147v273.06666666c0 27.30666667 18.2044448 45.51111147 45.51111147 45.51111147s45.51111147-18.2044448 45.51111146-45.51111147V375.46666667c0-27.30666667-18.2044448-45.51111147-45.51111146-45.51111147z"
+                p-id="3946"
+              ></path>
             </svg>
           </slot>
         </div>
@@ -90,7 +129,7 @@
 
       <div
         v-if="showNextButton"
-        class="audio__play-next"
+        class="vue-audio-player__play-next"
         :class="{
           disable: !isLoop && currentPlayIndex === audioList.length - 1,
         }"
@@ -100,36 +139,58 @@
         }"
       >
         <slot name="play-next">
-          <svg class="audio__play-icon" aria-hidden="true">
-            <use xlink:href="#icon-play-next" />
+          <svg
+            t="1717510922648"
+            class="vue-audio-player__play-icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="4091"
+            width="200"
+            height="200"
+          >
+            <path
+              d="M279.5646875 980.080625L743.06 598.6475 743.06 919.5640625a38.5096875 38.5096875 0 1 0 77.47875 0.916875l0-816.5034375a38.5096875 38.5096875 0 1 0-77.47875 0L743.06 427.64375l-463.4953125-383.7253125a45.845625 45.845625 0 0 0-76.1034375 33.92625L203.46125 946.154375a45.845625 45.845625 0 0 0 76.1034375 33.92625z"
+              p-id="4092"
+            ></path>
           </svg>
         </slot>
       </div>
 
-      <div v-if="showVolumeButton" class="audio__play-volume-icon-wrap">
+      <div
+        v-if="showVolumeButton"
+        class="vue-audio-player__play-volume-icon-wrap"
+      >
         <svg
-          class="audio__play-icon"
-          aria-hidden="true"
+          t="1717511047008"
+          class="vue-audio-player__play-icon"
           :style="{
             color: themeColor,
           }"
           @click.stop="handleVolumeIconTouchstart"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="4233"
+          width="200"
+          height="200"
         >
-          <use
-            :xlink:href="currentVolume ? `#icon-volume` : `#icon-volume-no`"
-          />
+          <path
+            d="M1009.6852389 501.04265842v72.84551793c-12.28886699 137.14708366-93.42867683 254.45999047-208.60559588 317.12488904L762.68733667 817.14116381A318.92799715 318.92799715 0 0 0 928.10158763 537.46541682a319.0112165 319.0112165 0 0 0-175.15102891-284.80766635l38.33682717-73.87190158c120.33657856 61.22241365 205.74836509 181.25385159 218.39785301 322.25680953z m-165.69165255 27.96202667a248.96745017 248.96745017 0 0 1-120.17013874 213.51559395l-38.55874617-74.0660827a165.77487189 165.77487189 0 0 0 75.50856761-139.44951125 165.77487189 165.77487189 0 0 0-78.03291762-141.08617842l38.44778667-74.01060238a248.96745017 248.96745017 0 0 1 122.80544825 215.0967808zM625.26285255 162.75206827V872.89877618c0 56.72851683-70.04376747 84.24670094-109.29601764 42.94168462l-182.44667619-166.55159523H110.71162937a83.2203173 83.2203173 0 0 1-83.2203173-83.2203173V388.44556857a83.2203173 83.2203173 0 0 1 78.31031808-83.0816165l5.60350208-0.1387008 224.9167781 3.74491478 179.67266474-189.13204224c39.22451001-41.33275762 109.2960165-13.78683221 109.29601764 42.94168348z"
+            p-id="4234"
+          ></path>
         </svg>
 
         <transition name="fade-volume">
           <div
             v-show="isShowVolume"
             ref="playVolumeWrap"
-            class="audio__play-volume-wrap"
+            class="vue-audio-player__play-volume-wrap"
             @click.stop="handleVolumePanmove"
           >
             <div
               ref="playVolume"
-              class="audio__play-volume"
+              class="vue-audio-player__play-volume"
               :style="{
                 height: currentVolume * 100 + '%',
                 backgroundColor: themeColor,
@@ -139,7 +200,7 @@
         </transition>
       </div>
 
-      <div v-show="isShowErrorMessage" class="audio__notice">
+      <div v-show="isShowErrorMessage" class="vue-audio-player__notice">
         {{ noticeMessage }}
       </div>
     </div>
@@ -147,7 +208,7 @@
     <div
       v-show="showProgressBar"
       ref="audioProgressWrap"
-      class="audio__progress-wrap"
+      class="vue-audio-player__progress-wrap"
       :style="{
         cursor: disabledProgressClick ? 'auto' : 'pointer',
       }"
@@ -155,14 +216,14 @@
     >
       <div
         ref="audioProgress"
-        class="audio__progress"
+        class="vue-audio-player__progress"
         :style="{
           backgroundColor: themeColor,
         }"
       />
       <div
         ref="audioProgressPoint"
-        class="audio__progress-point"
+        class="vue-audio-player__progress-point"
         :style="{
           backgroundColor: themeColor,
           boxShadow: `0 0 10px 0 ${themeColor}`,
@@ -171,18 +232,18 @@
       />
     </div>
 
-    <div v-show="showProgressBar" class="audio__time-wrap">
-      <div class="audio__current-time">
+    <div v-show="showProgressBar" class="vue-audio-player__time-wrap">
+      <div class="vue-audio-player__current-time">
         {{ currentTimeFormatted }}
       </div>
-      <div class="audio__duration">
+      <div class="vue-audio-player__duration">
         {{ durationFormatted }}
       </div>
     </div>
 
     <audio
       ref="audio"
-      class="audio-player__audio"
+      class="vue-audio-player__audio"
       :src="audioList?.[currentPlayIndex]?.src || audioList?.[currentPlayIndex]"
       v-bind="$attrs"
       @ended="onEnded"
@@ -196,7 +257,7 @@
 
 <script>
 export default {
-  name: 'AudioPlayer',
+  name: 'VueAudioPlayer',
 
   inheritAttrs: false,
 
@@ -327,7 +388,7 @@ export default {
 
   data() {
     return {
-      isIOS: /iPhone|iPad|iPod/i.test(window.navigator.userAgent), // 是否是IOS设备
+      isIOS: /iPhone|iPad|iPod/i.test(navigator.userAgent), // 是否是IOS设备
       isPlaying: false, // 音频是否正在播放
       isDragging: false, // 是否正在拖拽音频进度
       isDraggingVolume: false, // 是否正在拖拽音量进度
@@ -464,7 +525,7 @@ export default {
       this.noticeMessage = opts.message
       this.isShowErrorMessage = true
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         this.isShowErrorMessage = false
       }, opts.duration || 3000)
     },
@@ -498,7 +559,7 @@ export default {
 
     // 音频播放完毕
     onEnded(event) {
-      window.setTimeout(() => {
+      setTimeout(() => {
         this.pause()
         this.$emit('ended', event)
 
@@ -624,10 +685,7 @@ export default {
               if (this.timer) {
                 this.currentTime = this.$refs.audio.currentTime
               } else {
-                this.timer = window.setInterval(
-                  this.playing,
-                  this.progressInterval,
-                )
+                this.timer = setInterval(this.playing, this.progressInterval)
               }
 
               this.isPlaying = true
@@ -644,7 +702,7 @@ export default {
             // Failed to load because no supported source was found.
             if (data.code === 9) {
               if (this.isAutoPlayNext) {
-                window.setTimeout(() => {
+                setTimeout(() => {
                   this.playNext()
                 }, 3000)
               }
@@ -723,7 +781,7 @@ export default {
     },
 
     clearTimer() {
-      window.clearInterval(this.timer)
+      clearInterval(this.timer)
       this.timer = null
     },
 
@@ -800,21 +858,21 @@ export default {
   animation: fadeRate 0.3s reverse;
 }
 
-.audio-player .audio__btn-wrap {
+.vue-audio-player .vue-audio-player__btn-wrap {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.audio-player .audio__play-icon {
+.vue-audio-player .vue-audio-player__play-icon {
   width: 100%;
   height: 100%;
   fill: currentColor;
   overflow: hidden;
 }
 
-.audio-player .audio__play-volume-icon-wrap {
+.vue-audio-player .vue-audio-player__play-volume-icon-wrap {
   position: relative;
   width: 21px;
   height: 21px;
@@ -825,7 +883,9 @@ export default {
   margin-left: 16px;
 }
 
-.audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap {
+.vue-audio-player
+  .vue-audio-player__play-volume-icon-wrap
+  .vue-audio-player__play-volume-wrap {
   position: absolute;
   width: 14px;
   height: 50px;
@@ -835,10 +895,10 @@ export default {
   border-radius: 10px;
 }
 
-.audio-player
-  .audio__play-volume-icon-wrap
-  .audio__play-volume-wrap
-  .audio__play-volume {
+.vue-audio-player
+  .vue-audio-player__play-volume-icon-wrap
+  .vue-audio-player__play-volume-wrap
+  .vue-audio-player__play-volume {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -846,7 +906,7 @@ export default {
   border-radius: 10px;
 }
 
-.audio-player .audio__play-rate {
+.vue-audio-player .vue-audio-player__play-rate {
   position: relative;
   height: 21px;
   line-height: 21px;
@@ -858,7 +918,7 @@ export default {
   margin-right: 16px;
 }
 
-.audio-player .audio__play-rate__dropdown {
+.vue-audio-player .vue-audio-player__play-rate__dropdown {
   position: absolute;
   bottom: 100%;
   left: 50%;
@@ -870,24 +930,24 @@ export default {
   overflow: hidden;
 }
 
-.audio-player .audio__play-prev {
+.vue-audio-player .vue-audio-player__play-prev {
   cursor: pointer;
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
 }
 
-.audio-player .audio__play-prev svg {
+.vue-audio-player .vue-audio-player__play-prev svg {
   display: block;
   width: 21px;
   height: 33px;
 }
 
-.audio-player .audio__play-prev.disable {
+.vue-audio-player .vue-audio-player__play-prev.disable {
   opacity: 0.5;
 }
 
-.audio-player .audio__play-start {
+.vue-audio-player .vue-audio-player__play-start {
   margin: 0 16px;
   cursor: pointer;
   touch-action: none;
@@ -895,13 +955,13 @@ export default {
   -webkit-user-drag: none;
 }
 
-.audio-player .audio__play-start svg {
+.vue-audio-player .vue-audio-player__play-start svg {
   display: block;
   width: 42px;
   height: 42px;
 }
 
-.audio-player .audio__play-pause {
+.vue-audio-player .vue-audio-player__play-pause {
   margin: 0 16px;
   cursor: pointer;
   touch-action: none;
@@ -909,30 +969,30 @@ export default {
   -webkit-user-drag: none;
 }
 
-.audio-player .audio__play-pause svg {
+.vue-audio-player .vue-audio-player__play-pause svg {
   display: block;
   width: 42px;
   height: 42px;
 }
 
-.audio-player .audio__play-next {
+.vue-audio-player .vue-audio-player__play-next {
   cursor: pointer;
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
 }
 
-.audio-player .audio__play-next svg {
+.vue-audio-player .vue-audio-player__play-next svg {
   display: block;
   width: 21px;
   height: 33px;
 }
 
-.audio-player .audio__play-next.disable {
+.vue-audio-player .vue-audio-player__play-next.disable {
   opacity: 0.5;
 }
 
-.audio__notice {
+.vue-audio-player__notice {
   position: absolute;
   bottom: -15px;
   color: rgb(189, 178, 178);
@@ -940,7 +1000,7 @@ export default {
   font-size: 12px;
 }
 
-.audio-player .audio__progress-wrap {
+.vue-audio-player .vue-audio-player__progress-wrap {
   position: relative;
   background: #ddd;
   height: 4px;
@@ -953,7 +1013,7 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 
-.audio-player .audio__progress {
+.vue-audio-player .vue-audio-player__progress {
   position: absolute;
   left: 0;
   top: 0;
@@ -962,7 +1022,7 @@ export default {
   border-radius: 3px;
 }
 
-.audio-player .audio__progress-point {
+.vue-audio-player .vue-audio-player__progress-point {
   position: absolute;
   left: -8px;
   top: 50%;
@@ -972,7 +1032,7 @@ export default {
   margin-top: -8px;
 }
 
-.audio-player .audio__progress-point:after {
+.vue-audio-player .vue-audio-player__progress-point:after {
   content: '';
   position: absolute;
   top: 50%;
@@ -984,47 +1044,47 @@ export default {
   border-radius: 50%;
 }
 
-.audio-player .audio__time-wrap {
+.vue-audio-player .vue-audio-player__time-wrap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 7px;
 }
 
-.audio-player .audio__current-time {
+.vue-audio-player .vue-audio-player__current-time {
   font-size: 10px;
   color: #888;
 }
 
-.audio-player .audio__duration {
+.vue-audio-player .vue-audio-player__duration {
   font-size: 10px;
   color: #888;
 }
 
-.audio-player .audio-player__audio {
+.vue-audio-player .vue-audio-player__audio {
   display: block;
   margin: 0 auto;
 }
 
 @media (any-hover: hover) {
-  .audio-player .audio__play-rate:hover > span {
+  .vue-audio-player .vue-audio-player__play-rate:hover > span {
     opacity: 0.7;
   }
 
-  .audio-player .audio__play-rate__dropdown > div:hover,
-  .audio__play-icon:hover {
+  .vue-audio-player .vue-audio-player__play-rate__dropdown > div:hover,
+  .vue-audio-player__play-icon:hover {
     opacity: 0.7;
   }
 }
 
-.audio__play-loading {
+.vue-audio-player__play-loading {
   width: 42px;
   height: 42px;
   position: relative;
   margin: 0 16px;
 }
 
-.audio__play-loading span {
+.vue-audio-player__play-loading span {
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -1042,46 +1102,53 @@ export default {
   }
 }
 
-.audio__play-loading span:nth-child(1) {
+.vue-audio-player__play-loading span:nth-child(1) {
   left: 0;
   top: 50%;
   margin-top: -4px;
   animation-delay: 0.13s;
 }
-.audio__play-loading span:nth-child(2) {
+
+.vue-audio-player__play-loading span:nth-child(2) {
   left: 7px;
   top: 7px;
   animation-delay: 0.26s;
 }
-.audio__play-loading span:nth-child(3) {
+
+.vue-audio-player__play-loading span:nth-child(3) {
   left: 50%;
   top: 0;
   margin-left: -4px;
   animation-delay: 0.39s;
 }
-.audio__play-loading span:nth-child(4) {
+
+.vue-audio-player__play-loading span:nth-child(4) {
   top: 7px;
   right: 7px;
   animation-delay: 0.52s;
 }
-.audio__play-loading span:nth-child(5) {
+
+.vue-audio-player__play-loading span:nth-child(5) {
   right: 0;
   top: 50%;
   margin-top: -4px;
   animation-delay: 0.65s;
 }
-.audio__play-loading span:nth-child(6) {
+
+.vue-audio-player__play-loading span:nth-child(6) {
   right: 7px;
   bottom: 7px;
   animation-delay: 0.78s;
 }
-.audio__play-loading span:nth-child(7) {
+
+.vue-audio-player__play-loading span:nth-child(7) {
   bottom: 0;
   left: 50%;
   margin-left: -4px;
   animation-delay: 0.91s;
 }
-.audio__play-loading span:nth-child(8) {
+
+.vue-audio-player__play-loading span:nth-child(8) {
   bottom: 7px;
   left: 7px;
   animation-delay: 1.04s;

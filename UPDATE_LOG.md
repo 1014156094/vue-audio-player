@@ -1,0 +1,55 @@
+### v2.0.0【2024/06/04】
+
+- Feature：Support Nuxt SSR
+- Other：Change the default name of the component to 'vue-audio-player'
+
+### v1.6.2【2024/06/04】
+
+- Fix：Phone lock screen does not show music player Bug
+
+### v1.6.1【2024/06/04】
+
+- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">Mouse-over shows hand icon despite :disabled-progress-drag and :disabled-progress-click</a>
+
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">Since upgrading to 1.5.3: Sourcemap pointing to missing source files</a>
+
+### v1.6.0【2024/06/04】
+
+- Feature: Lock screen can set the cover and switch to the next song and so on
+
+### v1.5.3【2023/11/29】
+
+- Feature: `showPlayLoading` prop
+
+### v1.5.2【2023/07/12】
+
+- Fix: When I select double playback speed, it doesn't work when the next song is played.
+
+### v1.5.1【2023/03/29】
+
+- Improvement: Beautify UI
+
+### v1.5.0【2022/03/20】
+
+- Feature：`Vue2` and `Vue3` work fine
+- Feature：Don't need import `CSS` file
+
+### v1.4.0【2022/03/05】
+
+- Feature：Slot `play-prev`、`play-start`、`play-pause` and `play-next`
+- Feature：`play-error` event
+- Improvement：Appearance and layout
+
+### v1.3.0【2022/01/25】
+
+- Improvement：Reduced package volume
+- Modify：Style import changed to `import '@liripeng/vue-audio-player/lib/style.css'`
+
+### v1.2.11【2021/06/17】
+
+- Feature：`disabled-progress-drag` prop
+- Feature：`disabled-progress-click` prop
+- Feature：`progress-start` event
+- Feature：`progress-move` event
+- Feature：`progress-end` event
+- Feature：`progress-click` event
