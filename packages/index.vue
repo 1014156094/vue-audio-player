@@ -183,7 +183,7 @@
     <audio
       ref="audio"
       class="audio-player__audio"
-      :src="audioList?.[currentPlayIndex] || audioList?.[currentPlayIndex]?.src"
+      :src="audioList?.[currentPlayIndex]?.src || audioList?.[currentPlayIndex]"
       v-bind="$attrs"
       @ended="onEnded"
       @timeupdate="onTimeUpdate"

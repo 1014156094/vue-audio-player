@@ -6,7 +6,7 @@
 
     <audio-player
       ref="audioPlayer"
-      :audio-list="audioList?.map((item) => item.src)"
+      :audio-list="audioList"
       :before-play="handleBeforePlay"
       :show-play-loading="false"
       @ended="handleEnded"
