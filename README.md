@@ -186,6 +186,10 @@ Call with `ref`，see the components for more [methods](https://github.com/10141
 
 ## Update log
 
+### v1.6.2【2024/06/04】
+
+- Fix：Phone lock screen does not show music player Bug
+
 ### v1.6.1【2024/06/04】
 
 - Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">Mouse-over shows hand icon despite :disabled-progress-drag and :disabled-progress-click</a>

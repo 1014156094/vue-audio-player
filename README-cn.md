@@ -186,6 +186,10 @@ export default {
 
 ## 更新日志
 
+### v1.6.2【2024/06/04】
+
+- 修复：手机锁屏不显示播放器的 Bug
+
 ### v1.6.1【2024/06/04】
 
 - 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">:disabled-progress-drag 和 :disabled-progress-click 为 true 时不显示鼠标手</a>
