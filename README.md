@@ -38,19 +38,19 @@ npm i -S @liripeng/vue-audio-player
 
 ```
 // global import
-import AudioPlayer from '@liripeng/vue-audio-player'
+import VueAudioPlayer from '@liripeng/vue-audio-player'
 
-Vue.use(AudioPlayer)
+Vue.use(VueAudioPlayer)
 ```
 
 or
 
 ```
 // part import
-import AudioPlayer from '@liripeng/vue-audio-player'
+import VueAudioPlayer from '@liripeng/vue-audio-player'
 
 components: {
-  AudioPlayer
+  VueAudioPlayer
 }
 ```
 

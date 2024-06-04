@@ -388,7 +388,7 @@ export default {
 
   data() {
     return {
-      isIOS: /iPhone|iPad|iPod/i.test(navigator.userAgent), // 是否是IOS设备
+      isIOS: /iPhone|iPad|iPod/i.test(navigator?.userAgent), // 是否是IOS设备
       isPlaying: false, // 音频是否正在播放
       isDragging: false, // 是否正在拖拽音频进度
       isDraggingVolume: false, // 是否正在拖拽音量进度

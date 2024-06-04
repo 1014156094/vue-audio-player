@@ -38,19 +38,19 @@ npm i -S @liripeng/vue-audio-player
 
 ```
 // 全局引入
-import AudioPlayer from '@liripeng/vue-audio-player'
+import VueAudioPlayer from '@liripeng/vue-audio-player'
 
-Vue.use(AudioPlayer)
+Vue.use(VueAudioPlayer)
 ```
 
 或者
 
 ```
 // 局部引入
-import AudioPlayer from '@liripeng/vue-audio-player'
+import VueAudioPlayer from '@liripeng/vue-audio-player'
 
 components: {
-  AudioPlayer
+  VueAudioPlayer
 }
 ```
 
