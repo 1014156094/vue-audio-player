@@ -4,26 +4,26 @@
       {{ currentAudioName || audioList[0].title }}
     </div>
 
-    <audio-player
+    <vue-audio-player
       ref="audioPlayer"
       :audio-list="audioList"
       :before-play="handleBeforePlay"
       :show-play-loading="false"
       @ended="handleEnded"
     >
-    </audio-player>
+    </vue-audio-player>
 
     <button @click="handlePlaySpecify">Play the second audio</button>
   </div>
 </template>
 
 <script>
-// import AudioPlayer from '@liripeng/vue-audio-player'
-import AudioPlayer from '../../packages/index.js'
+// import VueAudioPlayer from '@liripeng/vue-audio-player'
+import VueAudioPlayer from '../../packages/index.js'
 
 export default {
   components: {
-    AudioPlayer,
+    VueAudioPlayer,
   },
 
   data() {

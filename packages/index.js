@@ -1,7 +1,7 @@
-import AudioPlayer from './index.vue'
+import VueAudioPlayer from './index.vue'
 
-AudioPlayer.install = (Vue) => {
-  Vue.component(AudioPlayer.name, AudioPlayer)
+VueAudioPlayer.install = (Vue) => {
+  Vue.component(VueAudioPlayer.name, VueAudioPlayer)
 }
 
-export default AudioPlayer
+export default VueAudioPlayer
