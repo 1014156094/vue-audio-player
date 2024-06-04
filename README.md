@@ -14,6 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">Online Demo</a>
 
+<img src="https://github.com/1014156094/vue-audio-player/blob/master/example.jpg?raw=true" width="300">
+
 ## Features
 
 - `Vue2` and `Vue3` are supported
@@ -183,6 +185,12 @@ Call with `ref`，see the components for more [data](https://github.com/10141560
 Call with `ref`，see the components for more [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## Update log
+
+### v1.6.1【2024/06/04】
+
+- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">Mouse-over shows hand icon despite :disabled-progress-drag and :disabled-progress-click</a>
+
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">Since upgrading to 1.5.3: Sourcemap pointing to missing source files</a>
 
 ### v1.6.0【2024/06/04】
 

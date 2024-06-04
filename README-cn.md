@@ -14,6 +14,8 @@
 
 ## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">在线预览 Demo</a>
 
+<img src="https://github.com/1014156094/vue-audio-player/blob/master/example.jpg?raw=true" width="300">
+
 ## 特性
 
 - 支持 `Vue2` 和 `Vue3`
@@ -183,6 +185,12 @@ export default {
 使用 `ref` 调用， 更多请自行查看组件 [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
 ## 更新日志
+
+### v1.6.1【2024/06/04】
+
+- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">:disabled-progress-drag 和 :disabled-progress-click 为 true 时不显示鼠标手</a>
+
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">出现警告：Since upgrading to 1.5.3: Sourcemap pointing to missing source files</a>
 
 ### v1.6.0【2024/06/04】
 

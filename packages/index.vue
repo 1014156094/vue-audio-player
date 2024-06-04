@@ -126,8 +126,6 @@
             ref="playVolumeWrap"
             class="audio__play-volume-wrap"
             @click.stop="handleVolumePanmove"
-            @panmove="handleVolumePanmove"
-            @panend="handleVolumePanend"
           >
             <div
               ref="playVolume"
@@ -150,6 +148,9 @@
       v-show="showProgressBar"
       ref="audioProgressWrap"
       class="audio__progress-wrap"
+      :style="{
+        cursor: disabledProgressClick ? 'auto' : 'pointer',
+      }"
       @click.stop="handleClickProgressWrap"
     >
       <div
@@ -165,10 +166,8 @@
         :style="{
           backgroundColor: themeColor,
           boxShadow: `0 0 10px 0 ${themeColor}`,
+          cursor: disabledProgressDrag ? 'auto' : 'pointer',
         }"
-        @panstart="handleProgressPanstart"
-        @panend="handleProgressPanend"
-        @panmove="handleProgressPanmove"
       />
     </div>
 
@@ -196,9 +195,6 @@
 </template>
 
 <script>
-import Core from '@any-touch/core'
-import Pan from '@any-touch/pan'
-
 export default {
   name: 'AudioPlayer',
 
@@ -346,7 +342,7 @@ export default {
       currentTime: '', // 音频当前播放时间
       currentVolume: 1, // 当前音量
       playbackRate: 1, // 当前播放速率
-      at: null, // 拖拽组件的实例
+      canProgressDrag: true,
     }
   },
 
@@ -361,13 +357,53 @@ export default {
   },
 
   mounted() {
-    this.at = new Core(this.$el, { preventDefault: false })
-    this.at.use(Pan)
+    this.$nextTick(() => {
+      this.$refs.audioProgressPoint.addEventListener(
+        'mousedown',
+        this.handleProgressPanstart,
+      )
+
+      document.addEventListener('mousemove', this.handleProgressPanmove)
+      document.addEventListener('mouseup', this.handleProgressPanend)
+
+      this.$refs.playVolumeWrap.addEventListener(
+        'touchmove',
+        this.handleVolumePanmove,
+      )
+
+      this.$refs.audioProgressPoint.addEventListener(
+        'touchstart',
+        this.handleProgressPanstart,
+      )
+
+      document.addEventListener('touchmove', this.handleProgressPanmove)
+      document.addEventListener('touchend', this.handleProgressPanend)
+    })
   },
 
   beforeUnmount() {
-    this.at.destroy()
     this.pause()
+
+    this.$refs.audioProgressPoint.removeEventListener(
+      'mousedown',
+      this.handleProgressPanstart,
+    )
+
+    document.removeEventListener('mousemove', this.handleProgressPanmove)
+    document.removeEventListener('mouseup', this.handleProgressPanend)
+
+    this.$refs.playVolumeWrap.removeEventListener(
+      'mousemove',
+      this.handleVolumePanmove,
+    )
+
+    this.$refs.audioProgressPoint.removeEventListener(
+      'touchstart',
+      this.handleProgressPanstart,
+    )
+
+    document.removeEventListener('touchmove', this.handleProgressPanmove)
+    document.removeEventListener('touchend', this.handleProgressPanend)
   },
 
   methods: {
@@ -404,7 +440,7 @@ export default {
 
     handleVolumePanmove(event) {
       let playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
-      let pageY = event.y
+      let pageY = event.pageY || event.touches[0].pageY
       let offsetTop
       let volume
 
@@ -414,10 +450,6 @@ export default {
       volume = Math.max(volume, 0)
       this.$refs.audio.volume = volume
       this.currentVolume = volume
-    },
-
-    handleVolumePanend() {
-      this.isShowVolume = false
     },
 
     // 设定播放速率
@@ -477,14 +509,18 @@ export default {
     },
 
     handleProgressPanstart(event) {
+      this.canProgressDrag = false // 点点拖拽的时候为了不执行点击进度条的逻辑
+
       if (this.disabledProgressDrag) return
 
       this.isDragging = true
+
       this.$emit('progress-start', event)
     },
 
     handleProgressPanend(event) {
-      if (this.disabledProgressDrag) return
+      console.log('handleProgressPanend')
+      if (this.disabledProgressDrag || !this.isDragging) return
 
       this.$refs.audio.currentTime = this.currentTime
       this.play()
@@ -493,47 +529,62 @@ export default {
     },
 
     handleProgressPanmove(event) {
-      if (this.disabledProgressDrag) return
+      if (this.disabledProgressDrag || !this.isDragging) return
 
-      let pageX = event.x
-      let bcr = event.target.getBoundingClientRect()
-      let targetLeft = parseInt(getComputedStyle(event.target).left)
+      let pageX = event.pageX || event.touches[0].pageX
+      let bcr = this.$refs.audioProgressPoint.getBoundingClientRect()
+
+      let targetLeft = parseInt(
+        getComputedStyle(this.$refs.audioProgressPoint).left,
+      )
+
       let offsetLeft = targetLeft + (pageX - bcr.left)
 
       offsetLeft = Math.min(
         offsetLeft,
         this.$refs.audioProgressWrap.offsetWidth,
       )
+
       offsetLeft = Math.max(offsetLeft, 0)
-      // 设置点点位置
-      this.setPointPosition(offsetLeft)
-      // 设置进度条
-      this.$refs.audioProgress.style.width = offsetLeft + 'px'
-      // 设置当前时间
+
+      this.setPointPosition(offsetLeft) // 设置点点位置
+
+      this.$refs.audioProgress.style.width = offsetLeft + 'px' // 设置进度条
+
       this.currentTime =
-        (offsetLeft / this.$refs.audioProgressWrap.offsetWidth) * this.duration
+        (offsetLeft / this.$refs.audioProgressWrap.offsetWidth) * this.duration // 设置当前时间
+
       this.$emit('progress-move', event)
     },
 
     // 初始化音频进度的点击逻辑
     handleClickProgressWrap(event) {
-      if (this.disabledProgressClick) return
+      // 如果是禁用状态或者一开始点击的是进度条的点点
+      if (this.disabledProgressClick || !this.canProgressDrag) {
+        this.canProgressDrag = true
+        return
+      }
 
       let target = event.target
-      let offsetX = event.offsetX
+      let pageX = event.pageX || event.touches[0].pageX
+      let bcr = target.getBoundingClientRect()
+      let targetLeft = parseInt(getComputedStyle(target).left)
+      let offsetLeft = targetLeft + (pageX - bcr.left)
 
       if (target === this.$refs.audioProgressPoint) {
         return
       }
 
-      // 设置当前播放位置
       this.currentTime =
-        (offsetX / this.$refs.audioProgressWrap.offsetWidth) * this.duration
+        (offsetLeft / this.$refs.audioProgressWrap.offsetWidth) * this.duration // 设置当前播放位置
+
       this.$refs.audio.currentTime = this.currentTime
-      // 设置点点位置
-      this.setPointPosition(offsetX)
-      // 设置进度条
-      this.$refs.audioProgress.style.width = offsetX + 'px'
+
+      this.setPointPosition(offsetLeft) // 设置点点位置
+
+      this.$refs.audioProgress.style.width = offsetLeft + 'px' // 设置进度条
+      this.canProgressDrag = true
+
       this.play()
       this.$emit('progress-click', event)
     },
@@ -895,10 +946,11 @@ export default {
   height: 4px;
   border-radius: 3px;
   margin-top: 20px;
-  cursor: pointer;
   touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .audio-player .audio__progress {

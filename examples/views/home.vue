@@ -3,6 +3,7 @@
     <div class="name">
       {{ currentAudioName || audioList[0].title }}
     </div>
+
     <audio-player
       ref="audioPlayer"
       :audio-list="audioList?.map((item) => item.src)"
