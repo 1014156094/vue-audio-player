@@ -12,7 +12,7 @@
 
 ## [中文文档](./README_CN.md) | **English Document**
 
-## <a href="https://codesandbox.io/p/sandbox/immutable-browser-cb57s?file=%2Fpackage.json%3A9%2C5&resolutionHeight=675&resolutionWidth=320">Online Demo</a>
+## <a href="https://codesandbox.io/p/sandbox/immutable-browser-cb57s?file=%2Fsrc%2FApp.vue%3A4%2C51&resolutionHeight=675&resolutionWidth=320">Online Demo</a>
 
 <img src="https://github.com/1014156094/vue-audio-player/blob/master/example.jpg?raw=true" width="300">
 
@@ -137,21 +137,22 @@ export default {
 
 ## Event
 
-| Event          | Explain                                                                                             | Callback |
-| -------------- | --------------------------------------------------------------------------------------------------- | -------- |
-| play           | Triggers when the play starts                                                                       | -        |
-| pause          | Trigger after play pause                                                                            | -        |
-| play-prev      | Triggers after playing the previous song                                                            | -        |
-| play-next      | Triggers after playing the next song                                                                | -        |
-| play-error     | Triggered after play error,The parameters are the same as those of the native 'play' method         | `data`   |
-| playing        | The play fires every `progressInterval` second                                                      | -        |
-| timeupdate     | Triggered when the current play position is sent to change                                          | `event`  |
-| loadedmetadata | The run script is triggered when the duration of the media element and other media have loaded data | `event`  |
-| ended          | Trigger after audio playback                                                                        | `event`  |
-| progress-start | Trigger before moving the progress bar                                                              | `event`  |
-| progress-move  | Triggered when moving the progress bar                                                              | `event`  |
-| progress-end   | Triggered after moving the progress bar                                                             | `event`  |
-| progress-click | Click the progress bar to trigger                                                                   | `event`  |
+| Event                                      | Explain                                                                                             | Callback |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- | -------- |
+| play                                       | Triggers when the play starts                                                                       | -        |
+| pause                                      | Trigger after play pause                                                                            | -        |
+| play-prev                                  | Triggers after playing the previous song                                                            | -        |
+| play-next                                  | Triggers after playing the next song                                                                | -        |
+| play-error                                 | Triggered after play error,The parameters are the same as those of the native 'play' method         | `data`   |
+| playing                                    | The play fires every `progressInterval` second                                                      | -        |
+| timeupdate                                 | Triggered when the current play position is sent to change                                          | `event`  |
+| loadedmetadata                             | The run script is triggered when the duration of the media element and other media have loaded data | `event`  |
+| ended                                      | Trigger after audio playback                                                                        | `event`  |
+| progress-start                             | Trigger before moving the progress bar                                                              | `event`  |
+| progress-move                              | Triggered when moving the progress bar                                                              | `event`  |
+| progress-end                               | Triggered after moving the progress bar                                                             | `event`  |
+| progress-click                             | Click the progress bar to trigger                                                                   | `event`  |
+| The rest is consistent with native `audio` |
 
 ## Slot
 

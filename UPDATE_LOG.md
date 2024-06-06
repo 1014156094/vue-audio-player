@@ -1,3 +1,12 @@
+### v2.0.2【2024/06/06】
+
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/56">Xiaomi's built-in browser will reset the playback after clicking</a>
+- Improvement：Progress bar speed
+
+### v2.0.1【2024/06/05】
+
+- Fix：Bug
+
 ### v2.0.0【2024/06/04】
 
 - Feature：Support Nuxt SSR

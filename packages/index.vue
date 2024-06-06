@@ -245,10 +245,10 @@
       ref="audio"
       class="vue-audio-player__audio"
       :src="audioList?.[currentPlayIndex]?.src || audioList?.[currentPlayIndex]"
+      preload="auto"
       v-bind="$attrs"
       @ended="onEnded"
-      @timeupdate="onTimeUpdate"
-      @loadedmetadata="onLoadedmetadata"
+      @durationchange="onDurationchange"
     >
       浏览器太老咯，请升级浏览器吧~
     </audio>
@@ -331,7 +331,7 @@ export default {
 
     // 进度更新间隔
     progressInterval: {
-      default: 1000,
+      default: 500,
       type: Number,
     },
 
@@ -375,7 +375,7 @@ export default {
     'play-prev',
     'play-next',
     'timeupdate',
-    'loadedmetadata',
+    'durationchange',
     'ended',
     'progress-start',
     'progress-end',
@@ -398,7 +398,7 @@ export default {
       isShowRates: false,
       timer: null,
       noticeMessage: '',
-      duration: '', // 音频持续时间
+      duration: 0, // 音频持续时间
       currentPlayIndex: 0, // 当前播放的音频位置索引
       currentTime: '', // 音频当前播放时间
       currentVolume: 1, // 当前音量
@@ -530,15 +530,13 @@ export default {
       }, opts.duration || 3000)
     },
 
-    // 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本
-    onLoadedmetadata(event) {
-      this.duration = this.$refs.audio.duration
-      this.$emit('loadedmetadata', event)
-    },
+    // 当音频/视频的时长已更改时触发
+    onDurationchange(event) {
+      if (!this.duration) {
+        this.duration = this.$refs.audio.duration
+      }
 
-    // 当前的播放位置发送改变时触发
-    onTimeUpdate(event) {
-      this.$emit('timeupdate', event)
+      this.$emit('durationchange', event)
     },
 
     // 格式化秒为分
@@ -554,19 +552,22 @@ export default {
       // 如果只有一位数，前面增加一个0
       hour = hour.length === 1 ? '0' + hour : hour
       second = second.length === 1 ? '0' + second : second
+
       return hour + ':' + second
     },
 
     // 音频播放完毕
     onEnded(event) {
+      // 等待最后一次的 currentTime 更新进度条后再停止播放
       setTimeout(() => {
         this.pause()
-        this.$emit('ended', event)
 
         if (this.isLoop && this.isAutoPlayNext) {
           this.playNext()
         }
-      }, 1000)
+
+        this.$emit('ended', event)
+      }, this.progressInterval)
     },
 
     handleProgressPanstart(event) {
@@ -580,12 +581,14 @@ export default {
     },
 
     handleProgressPanend(event) {
-      console.log('handleProgressPanend')
       if (this.disabledProgressDrag || !this.isDragging) return
 
-      this.$refs.audio.currentTime = this.currentTime
-      this.play()
       this.isDragging = false
+
+      this.play({
+        currentTime: this.currentTime,
+      })
+
       this.$emit('progress-end', event)
     },
 
@@ -639,14 +642,15 @@ export default {
       this.currentTime =
         (offsetLeft / this.$refs.audioProgressWrap.offsetWidth) * this.duration // 设置当前播放位置
 
-      this.$refs.audio.currentTime = this.currentTime
+      this.play({
+        currentTime: this.currentTime,
+      })
 
       this.setPointPosition(offsetLeft) // 设置点点位置
 
       this.$refs.audioProgress.style.width = offsetLeft + 'px' // 设置进度条
       this.canProgressDrag = true
 
-      this.play()
       this.$emit('progress-click', event)
     },
 
@@ -674,7 +678,7 @@ export default {
     },
 
     // 开始播放
-    play() {
+    play(opts = {}) {
       this.isLoading = true
 
       let handlePlay = () => {
@@ -682,6 +686,10 @@ export default {
           .play()
           .then(() => {
             this.$nextTick(() => {
+              if (opts?.currentTime) {
+                this.$refs.audio.currentTime = opts.currentTime
+              }
+
               if (this.timer) {
                 this.currentTime = this.$refs.audio.currentTime
               } else {
@@ -691,8 +699,9 @@ export default {
               this.isPlaying = true
               this.isLoading = false
               this.$refs.audio.playbackRate = this.playbackRate
+
+              this.$emit('play')
             })
-            this.$emit('play')
           })
           .catch((data) => {
             this.handleShowErrorMessage({
@@ -754,6 +763,7 @@ export default {
       }
 
       this.clearTimer()
+      this.duration = 0
 
       let handlePrev = () => {
         if (this.currentPlayIndex <= 0 && this.isLoop) {
@@ -793,6 +803,7 @@ export default {
       }
 
       this.clearTimer()
+      this.duration = 0
 
       let handleNext = () => {
         // 已经到达列表最后一首

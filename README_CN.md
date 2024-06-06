@@ -12,7 +12,7 @@
 
 ## **中文文档** | [English Document](./README.md)
 
-## <a href="https://codesandbox.io/p/sandbox/immutable-browser-cb57s?file=%2Fpackage.json%3A9%2C5&resolutionHeight=675&resolutionWidth=320">在线预览 Demo</a>
+## <a href="https://codesandbox.io/p/sandbox/immutable-browser-cb57s?file=%2Fsrc%2FApp.vue%3A4%2C51&resolutionHeight=675&resolutionWidth=320">在线预览 Demo</a>
 
 <img src="https://github.com/1014156094/vue-audio-player/blob/master/example.jpg?raw=true" width="300">
 
@@ -137,21 +137,22 @@ export default {
 
 ## 事件
 
-| 事件           | 说明                                                     | 回调参数 |
-| -------------- | -------------------------------------------------------- | -------- |
-| play           | 播放开始后触发                                           | -        |
-| pause          | 播放暂停后触发                                           | -        |
-| play-prev      | 播放上一首后触发                                         | -        |
-| play-next      | 播放下一首后触发                                         | -        |
-| play-error     | 播放出错后触发，回调参数为原生 `play` 方法的一致         | `data`   |
-| playing        | 播放中每 `progressInterval` 秒触发                       | -        |
-| timeupdate     | 当前的播放位置发送改变时触发                             | `event`  |
-| loadedmetadata | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event`  |
-| ended          | 音频播放结束后触发                                       | `event`  |
-| progress-start | 移动进度条前触发                                         | `event`  |
-| progress-move  | 移动进度条时触发                                         | `event`  |
-| progress-end   | 移动进度条后触发                                         | `event`  |
-| progress-click | 点击进度条后触发                                         | `event`  |
+| 事件                      | 说明                                                     | 回调参数 |
+| ------------------------- | -------------------------------------------------------- | -------- |
+| play                      | 播放开始后触发                                           | -        |
+| pause                     | 播放暂停后触发                                           | -        |
+| play-prev                 | 播放上一首后触发                                         | -        |
+| play-next                 | 播放下一首后触发                                         | -        |
+| play-error                | 播放出错后触发，回调参数为原生 `play` 方法的一致         | `data`   |
+| playing                   | 播放中每 `progressInterval` 秒触发                       | -        |
+| timeupdate                | 当前的播放位置发送改变时触发                             | `event`  |
+| loadedmetadata            | 当媒介元素的持续时间以及其它媒介已加载数据时运行脚本触发 | `event`  |
+| ended                     | 音频播放结束后触发                                       | `event`  |
+| progress-start            | 移动进度条前触发                                         | `event`  |
+| progress-move             | 移动进度条时触发                                         | `event`  |
+| progress-end              | 移动进度条后触发                                         | `event`  |
+| progress-click            | 点击进度条后触发                                         | `event`  |
+| 其他的与原生 `audio` 一致 |
 
 ## 插槽
 
