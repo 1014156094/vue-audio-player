@@ -114,7 +114,7 @@ export default {
 
 ## Prop
 
-| Prop                                       | Explain                                                                                                 | Type            | Default            |
+| Prop                                       | Description                                                                                             | Type            | Default            |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------- | --------------- | ------------------ |
 | audio-list                                 | Audio playlist                                                                                          | `Array<Object>` | -                  |
 | playback-rates                             | Playrate setting list                                                                                   | `Array<Number>` | `[0.5, 1, 1.5, 2]` |
@@ -137,7 +137,7 @@ export default {
 
 ## Event
 
-| Event                                      | Explain                                                                                             | Callback |
+| Event                                      | Description                                                                                         | Callback |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------------- | -------- |
 | play                                       | Triggers when the play starts                                                                       | -        |
 | pause                                      | Trigger after play pause                                                                            | -        |
@@ -156,7 +156,7 @@ export default {
 
 ## Slot
 
-| Name       | Explain                                                                  |
+| Name       | Description                                                              |
 | ---------- | ------------------------------------------------------------------------ |
 | play-prev  | Play prev button,The replaceable button icon function remains unchanged  |
 | play-start | Play start button,The replaceable button icon function remains unchanged |
@@ -165,7 +165,7 @@ export default {
 
 ## Data
 
-| Variable         | Explain                           | Default |
+| Variable         | Description                       | Default |
 | ---------------- | --------------------------------- | ------- |
 | currentPlayIndex | The audio index currently playing | `0`     |
 | isPlaying        | Whether the audio is playing      | `false` |
@@ -177,12 +177,12 @@ Call with `ref`，see the components for more [data](https://github.com/10141560
 
 ## Method
 
-| Method   | Explain  | Callback |
-| -------- | -------- | -------- |
-| play     | Start    | -        |
-| pause    | Pause    | -        |
-| playPrev | Previous | -        |
-| playNext | Next     | -        |
+| Method   | Description | Parameters                               |
+| -------- | ----------- | ---------------------------------------- |
+| play     | Start       | (opts?: { currentTime: number }) => void |
+| pause    | Pause       | -                                        |
+| playPrev | Previous    | -                                        |
+| playNext | Next        | -                                        |
 
 Call with `ref`，see the components for more [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 

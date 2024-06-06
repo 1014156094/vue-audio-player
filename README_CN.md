@@ -177,12 +177,12 @@ export default {
 
 ## 方法
 
-| 方法     | 说明       | 回调 |
-| -------- | ---------- | ---- |
-| play     | 开始播放   | -    |
-| pause    | 暂停播放   | -    |
-| playPrev | 播放上一首 | -    |
-| playNext | 播放下一首 | -    |
+| 方法     | 说明       | 参数                                     |
+| -------- | ---------- | ---------------------------------------- |
+| play     | 开始播放   | (opts?: { currentTime: number }) => void |
+| pause    | 暂停播放   | -                                        |
+| playPrev | 播放上一首 | -                                        |
+| playNext | 播放下一首 | -                                        |
 
 使用 `ref` 调用， 更多请自行查看组件 [methods](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
 
