@@ -12,7 +12,7 @@
 
 ## **中文文档** | [English Document](./README.md)
 
-## <a href="https://codesandbox.io/s/liripengvue-audio-player-issue-moban-cb57s?file=/src/App.vue&resolutionWidth=320&resolutionHeight=675">在线预览 Demo</a>
+## <a href="https://codesandbox.io/p/sandbox/immutable-browser-cb57s?file=%2Fpackage.json%3A9%2C5&resolutionHeight=675&resolutionWidth=320">在线预览 Demo</a>
 
 <img src="https://github.com/1014156094/vue-audio-player/blob/master/example.jpg?raw=true" width="300">
 
