@@ -541,19 +541,26 @@ export default {
 
     // 格式化秒为分
     formatTime(second) {
-      // 将秒数除以60，然后下舍入，既得到分钟数
-      let hour
-      hour = Math.floor(second / 60)
-      // 取得秒%60的余数，既得到秒数
-      second = Math.ceil(second % 60)
-      // 将变量转换为字符串
-      hour += ''
-      second += ''
+      let minute = 0
+
+      minute = Math.floor(second / 60) // 将秒数除以60，然后下舍入，既得到分钟数
+      second = Math.ceil(second % 60) // 取得秒%60的余数，既得到秒数
+
+      // 秒数为 60 时分钟 +1，秒数重置
+      if (second >= 60) {
+        minute++
+        second = 0
+      }
+
+      // 转换为字符串
+      minute = String(minute)
+      second = String(second)
+
       // 如果只有一位数，前面增加一个0
-      hour = hour.length === 1 ? '0' + hour : hour
+      minute = minute.length === 1 ? '0' + minute : minute
       second = second.length === 1 ? '0' + second : second
 
-      return hour + ':' + second
+      return minute + ':' + second
     },
 
     // 音频播放完毕

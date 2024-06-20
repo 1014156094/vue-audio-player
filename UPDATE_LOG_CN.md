@@ -1,6 +1,10 @@
+### v2.0.3【2024/06/20】
+
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/73" target="_blank">#73</a>
+
 ### v2.0.2【2024/06/06】
 
-- 修复：小米手机自带浏览器点击进度条会重新播放
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/56">#56</a>
 - 优化：进度条速度
 
 ### v2.0.1【2024/06/05】
@@ -18,9 +22,9 @@
 
 ### v1.6.1【2024/06/04】
 
-- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">:disabled-progress-drag 和 :disabled-progress-click 为 true 时不显示鼠标手</a>
+- 优化：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">#67</a>
 
-- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">出现警告：Since upgrading to 1.5.3: Sourcemap pointing to missing source files</a>
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">#63</a>
 
 ### v1.6.0【2024/06/04】
 

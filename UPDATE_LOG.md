@@ -1,6 +1,10 @@
+### v2.0.3【2024/06/20】
+
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/73" target="_blank">#73</a>
+
 ### v2.0.2【2024/06/06】
 
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/56">Xiaomi's built-in browser will reset the playback after clicking</a>
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/56">#56</a>
 - Improvement：Progress bar speed
 
 ### v2.0.1【2024/06/05】
@@ -18,9 +22,9 @@
 
 ### v1.6.1【2024/06/04】
 
-- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">Mouse-over shows hand icon despite :disabled-progress-drag and :disabled-progress-click</a>
+- Improvement：<a href="https://github.com/1014156094/vue-audio-player/issues/67" target="_blank">#67</a>
 
-- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">Since upgrading to 1.5.3: Sourcemap pointing to missing source files</a>
+- Fix：<a href="https://github.com/1014156094/vue-audio-player/issues/63" target="_blank">#63</a>
 
 ### v1.6.0【2024/06/04】
 
