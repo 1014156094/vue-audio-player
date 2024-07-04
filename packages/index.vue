@@ -245,7 +245,6 @@
       ref="audio"
       class="vue-audio-player__audio"
       :src="audioList?.[currentPlayIndex]?.src || audioList?.[currentPlayIndex]"
-      preload="auto"
       v-bind="$attrs"
       @ended="onEnded"
       @durationchange="onDurationchange"
@@ -419,26 +418,28 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
-      this.$refs.audioProgressPoint.addEventListener(
+      this.$refs.audioProgressPoint?.addEventListener?.(
         'mousedown',
         this.handleProgressPanstart,
       )
 
-      document.addEventListener('mousemove', this.handleProgressPanmove)
-      document.addEventListener('mouseup', this.handleProgressPanend)
+      document?.addEventListener?.('mousemove', this.handleProgressPanmove)
+      document?.addEventListener?.('mouseup', this.handleProgressPanend)
 
-      this.$refs.playVolumeWrap.addEventListener(
+      this.$refs.playVolumeWrap?.addEventListener?.(
         'touchmove',
         this.handleVolumePanmove,
       )
 
-      this.$refs.audioProgressPoint.addEventListener(
+      this.$refs.audioProgressPoint?.addEventListener?.(
         'touchstart',
         this.handleProgressPanstart,
       )
 
-      document.addEventListener('touchmove', this.handleProgressPanmove)
-      document.addEventListener('touchend', this.handleProgressPanend)
+      document?.addEventListener?.('touchmove', this.handleProgressPanmove)
+      document?.addEventListener?.('touchend', this.handleProgressPanend)
+
+      this.$refs.audio.load() // 强制加载音频元数据，否则第一次加载有的浏览器或 Next 框架导致 audio durationchange 事件不执行
     })
   },
 
@@ -532,9 +533,7 @@ export default {
 
     // 当音频/视频的时长已更改时触发
     onDurationchange(event) {
-      if (!this.duration) {
-        this.duration = this.$refs.audio.duration
-      }
+      this.duration = this.$refs.audio.duration // 需要用 durationchange 事件拿 duration，不能用 loadedmetadata 拿，因为 loadedmetadata 事件在小米等自带浏览器拿不到 duration
 
       this.$emit('durationchange', event)
     },
@@ -686,70 +685,75 @@ export default {
 
     // 开始播放
     play(opts = {}) {
-      this.isLoading = true
+      return new Promise((resolve, reject) => {
+        this.isLoading = true
 
-      let handlePlay = () => {
-        this.$refs.audio
-          .play()
-          .then(() => {
-            this.$nextTick(() => {
-              if (opts?.currentTime) {
-                this.$refs.audio.currentTime = opts.currentTime
+        let handlePlay = () => {
+          this.$refs.audio
+            .play()
+            .then(() => {
+              this.$nextTick(() => {
+                if (opts?.currentTime) {
+                  this.$refs.audio.currentTime = opts.currentTime
+                }
+
+                if (this.timer) {
+                  this.currentTime = this.$refs.audio.currentTime
+                } else {
+                  this.timer = setInterval(this.playing, this.progressInterval)
+                }
+
+                this.isPlaying = true
+                this.isLoading = false
+                this.$refs.audio.playbackRate = this.playbackRate
+
+                this.$emit('play')
+
+                resolve(this.$refs.audio)
+              })
+            })
+            .catch((data) => {
+              this.handleShowErrorMessage({
+                message: data.message,
+              })
+
+              // Failed to load because no supported source was found.
+              if (data.code === 9) {
+                if (this.isAutoPlayNext) {
+                  setTimeout(() => {
+                    this.playNext()
+                  }, 3000)
+                }
               }
 
-              if (this.timer) {
-                this.currentTime = this.$refs.audio.currentTime
-              } else {
-                this.timer = setInterval(this.playing, this.progressInterval)
-              }
-
-              this.isPlaying = true
               this.isLoading = false
-              this.$refs.audio.playbackRate = this.playbackRate
-
-              this.$emit('play')
-            })
-          })
-          .catch((data) => {
-            this.handleShowErrorMessage({
-              message: data.message,
+              this.$emit('play-error', data)
+              reject(data)
             })
 
-            // Failed to load because no supported source was found.
-            if (data.code === 9) {
-              if (this.isAutoPlayNext) {
-                setTimeout(() => {
-                  this.playNext()
-                }, 3000)
-              }
+          this.updateMediaMetadata()
+        }
+
+        // 解决 iOS 异步请求后无法播放
+        if (this.isIOS) {
+          console.log(
+            '为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误',
+          )
+          this.$refs.audio.play()
+          this.$refs.audio.pause()
+        }
+
+        if (this.beforePlay) {
+          this.beforePlay((state) => {
+            if (state !== false) {
+              handlePlay()
             }
-
-            this.isLoading = false
-            this.$emit('play-error', data)
           })
+          return
+        }
 
-        this.updateMediaMetadata()
-      }
-
-      // 解决 iOS 异步请求后无法播放
-      if (this.isIOS) {
-        console.log(
-          '为了解决 iOS 设备接口异步请求后出现无法播放问题，请无视 The play() request was interrupted by a call to pause() 错误',
-        )
-        this.$refs.audio.play()
-        this.$refs.audio.pause()
-      }
-
-      if (this.beforePlay) {
-        this.beforePlay((state) => {
-          if (state !== false) {
-            handlePlay()
-          }
-        })
-        return
-      }
-
-      handlePlay()
+        handlePlay()
+      })
     },
 
     // 暂停播放

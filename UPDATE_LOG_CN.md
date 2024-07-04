@@ -1,3 +1,7 @@
+### v2.0.4【2024/07/04】
+
+- 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/74" target="_blank">#74</a>
+
 ### v2.0.3【2024/06/20】
 
 - 修复：<a href="https://github.com/1014156094/vue-audio-player/issues/73" target="_blank">#73</a>
