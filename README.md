@@ -173,7 +173,7 @@ export default {
 | currentTime      | Current playback time of audio    | `''`    |
 | playbackRate     | Current playback rate of audio    | `1`     |
 
-Call with `ref`，see the components for more [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/audio-player/index.vue)
+Call with `ref`，see the components for more [data](https://github.com/1014156094/vue-audio-player/blob/master/packages/index.vue)
 
 ## Method
 
